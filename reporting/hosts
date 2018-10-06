@@ -1,0 +1,14 @@
+[isp]
+10.0.10.202
+10.0.10.203
+10.0.10.204
+
+[cust]
+10.0.10.201
+10.0.10.205
+
+[all:vars]
+ansible_user=admin
+ansible_ssh_pass=paladin
+ansible_connection=network_cli
+ansible_network_os=ios

@@ -1,0 +1,3 @@
+{% for host in ansible_play_hosts %}
+{{ host }};{{ hostvars[host]['uptime'] }},
+{% endfor %}

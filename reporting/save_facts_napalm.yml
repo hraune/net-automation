@@ -1,0 +1,13 @@
+ - name: get facts from device
+   hosts: all
+   tasks:
+    - napalm_get_facts:
+     #hostname={{ inventory_hostname }}
+     #username={{ user }}
+     #dev_os={{ os }}
+     #password={{ passwd }}
+        filter='facts,interfaces,bgp_neighbors'
+      register: result
+
+    #- name: print data
+    - debug: var=result

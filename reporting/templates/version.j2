@@ -1,0 +1,5 @@
+{% for host in ansible_play_hosts %}
+{% if hostvars[host]['ansible_device_os'] is defined %}
+{{ host }};{{ hostvars[host]['ansible_device_os'] }},
+{% endif %}
+{% endfor %}
