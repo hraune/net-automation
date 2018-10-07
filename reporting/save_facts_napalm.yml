@@ -14,10 +14,8 @@
       username: "{{ ansible_user }}"
       dev_os: 'ios'   
       password: "{{ ansible_ssh_pass }}"
-      filter: 'facts'
+      filter: 'facts, bgp_neighbors, interfaces, interfaces_ip, lldp_neighbors, mac_address_table'
     register: result              
-
-  - debug: msg="{{ result }}"
 
   - name: Create directory
     file:
@@ -31,3 +29,5 @@
       src: "{{ template_path }}/basic.j2"
       dest: "{{ output_path }}/basic_report.html"
     run_once: true
+
+  - debug: msg="{{ result }}"
