@@ -28,6 +28,27 @@ th, td {
     {% endfor %}
 </table>
 
+<p>IP addresses in use:</p>
+napalm_interfaces_ip"
+
+<table>
+    <tr>
+        <th>Host</th><th>Interface</th><th>IP Address</th><th>Mask</th>
+    </tr>
+    {% for host in ansible_play_hosts %}
+    <tr>
+        <td rowspan="{{ host['napalm_interfaces_ip']|length }}">{{ host }}</td>
+        {% for interface in host['napalm_interfaces_ip'] %}
+        <td>{{ interface.key }}</td>
+        <td>{{ interface['ipv4'].key }}</td>
+        <td>{{ interface['ipv4']['prefix_length'] }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+
+
 <p>Report generated at {{ '%Y-%m-%d %H:%M:%S' | strftime }}</p>
 
 </body>
