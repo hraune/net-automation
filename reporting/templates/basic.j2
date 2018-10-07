@@ -15,7 +15,7 @@ th, td {
 <p>A basic report showing <b>hostname</b>, <b>serial number</b>, <b>SW version</b> and <b>uptime</b> for devices in the lab</p>
 <table>
     <tr>
-        <th>Host</th><th>Hostname</th><th>Serial Number</th><th>SW Version</th><td>Uptime</th>
+        <th>Host</th><th>Hostname</th><th>Serial Number</th><th>SW Version</th><th>Uptime</th>
     </tr>
     {% for host in ansible_play_hosts %}
     <tr>
@@ -28,6 +28,7 @@ th, td {
     {% endfor %}
 </table>
 
-    
+<p>Report generated at {{ '%Y-%m-%d %H:%M:%S' }}</p>
+
 </body>
 </html>
