@@ -9,8 +9,7 @@
 
   tasks:
   - name: Get facts with napalm
-  - napalm_get_facts: 
-    #optional_args: {'secret': password}  #
+    napalm_get_facts: 
       hostname: "{{ inventory_hostname }}"
       username: "{{ ansible_user }}"
       dev_os: 'ios'   
