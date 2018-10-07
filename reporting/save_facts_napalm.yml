@@ -3,15 +3,32 @@
   hosts: all
   connection: local
   gather_facts: no
+  vars:
+  - output_path: output
+  - template_path: templates
 
-  tasks:                      
-    - napalm_get_facts: 
-      #optional_args: {'secret': password}  #
-        hostname: "{{ inventory_hostname }}"
-        username: "{{ ansible_user }}"
-        dev_os: 'ios'   
-        password: "{{ ansible_ssh_pass }}"
-        filter: 'facts'
-      register: result              
+  tasks:
+  - name: Get facts with napalm
+  - napalm_get_facts: 
+    #optional_args: {'secret': password}  #
+      hostname: "{{ inventory_hostname }}"
+      username: "{{ ansible_user }}"
+      dev_os: 'ios'   
+      password: "{{ ansible_ssh_pass }}"
+      filter: 'facts'
+    register: result              
 
-    - debug: msg="{{ result }}"
+  - debug: msg="{{ result }}"
+
+  - name: Create directory
+    file:
+      path: "{{ output_path }}"
+      state: directory
+    run_once: true
+  #- debug: var=vars
+  
+  - name: Create report
+    template:
+      src: "{{ template_path }}/basic.j2"
+      dest: "{{ output_path }}/basic_report.html"
+    run_once: true
