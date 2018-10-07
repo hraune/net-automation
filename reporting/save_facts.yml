@@ -7,20 +7,29 @@
   - output_path: output
   - template_path: templates
   tasks:
-  - ios_facts:
+  - name: Gather IOS facts
+    ios_facts:
       gather_subset: 
         - all
-  - ios_command:
+  
+  - name: Get IOS version
+    ios_command:
       commands: show version
     register: version
-  - set_fact:
+  
+  - name: Save uptime
+    set_fact:
       uptime: "{{ version.stdout[0]|regex_search('uptime is (.+)') }}"
-  - file:
+  
+  - name: Create directory
+    file:
       path: "{{ output_path }}"
       state: directory
     run_once: true
   #- debug: var=vars
-  - template:
+  
+  - name: Create report
+    template:
       src: "{{ template_path }}/uptime.j2"
       dest: "{{ output_path }}/uptimes.csv"
     run_once: true

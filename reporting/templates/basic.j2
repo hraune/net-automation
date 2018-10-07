@@ -1,0 +1,34 @@
+<html>
+<head>
+Basic Report
+</head>
+<body>
+
+<table>
+<tr>
+<td>Host</td><td>Hostname</td><td>Serial Number</td><td>SW Version</td><td>Uptime</td>
+</tr>
+{% for host in ansible_play_hosts %}
+<tr>
+<td>
+{{ host }}
+</td>
+<td>
+{{ hostvars[host]['napalm_hostname'] }},
+</td>
+<td>
+{{ hostvars[host]['napalm_serial_number'] }},
+</td>
+<td>
+{{ hostvars[host]['napalm_os_version'] }},
+</td>
+<td>
+{{ hostvars[host]['napalm_uptime'] }},
+</td>
+</tr>
+{% endfor %}
+</table>
+
+
+</body>
+</html>
