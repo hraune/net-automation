@@ -39,9 +39,12 @@ napalm_interfaces_ip"
     <tr>
         <td rowspan="{{ hostvars[host]['napalm_interfaces_ip']|length }}">{{ host }}</td>
         {% for interface in hostvars[host]['napalm_interfaces_ip'] %}
+        <td>{{ interface }}</td>
+        {#
         <td>{{ hostvars[host]['napalm_interfaces_ip'][interface] }}</td>
         <td>{{ hostvars[host]['napalm_interfaces_ip'][interface]['ipv4'] }}</td>
         <td>{{ hostvars[host]['napalm_interfaces_ip'][interface]['ipv4']['prefix_length'] }}</td>
+        #}
         {% endfor %}
     </tr>
     {% endfor %}
