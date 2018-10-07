@@ -1,34 +1,29 @@
 <html>
 <head>
-Basic Report
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
 </head>
 <body>
-
+<h2>Basic Report</h2>
+<p>A basic report showing <b>hostname</b>, <b>serial number</b>, <b>SW version</b> and <b>uptime</b> for devices in the lab</p>
 <table>
-<tr>
-<td>Host</td><td>Hostname</td><td>Serial Number</td><td>SW Version</td><td>Uptime</td>
-</tr>
-{% for host in ansible_play_hosts %}
-<tr>
-<td>
-{{ host }}
-</td>
-<td>
-{{ hostvars[host]['napalm_hostname'] }},
-</td>
-<td>
-{{ hostvars[host]['napalm_serial_number'] }},
-</td>
-<td>
-{{ hostvars[host]['napalm_os_version'] }},
-</td>
-<td>
-{{ hostvars[host]['napalm_uptime'] }},
-</td>
-</tr>
-{% endfor %}
+    <tr>
+        <th>Host</th><th>Hostname</th><th>Serial Number</th><th>SW Version</th><td>Uptime</th>
+    </tr>
+    {% for host in ansible_play_hosts %}
+    <tr>
+        <td>{{ host }}</td>
+        <td>{{ hostvars[host]['napalm_hostname'] }}</td>
+        <td>{{ hostvars[host]['napalm_serial_number'] }}</td>
+        <td>{% set sw_comp = hostvars[host]['napalm_os_version'].split(',') %}{{ sw_comp[1] }}</td>
+        <td>{{ hostvars[host]['napalm_uptime'] }} s</td>
+    </tr>
+    {% endfor %}
 </table>
 
-
+    
 </body>
 </html>
