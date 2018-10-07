@@ -28,7 +28,7 @@ th, td {
     {% endfor %}
 </table>
 
-<p>Report generated at {{ '%Y-%m-%d %H:%M:%S' }}</p>
+<p>Report generated at {{ '%Y-%m-%d %H:%M:%S' | strftime }}</p>
 
 </body>
 </html>
