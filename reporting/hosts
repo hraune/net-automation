@@ -7,6 +7,13 @@
 10.0.10.201
 10.0.10.205
 
+[pe]
+10.0.10.202
+10.0.10.204
+
+[core]
+10.0.10.203
+
 [all:vars]
 ansible_user=admin
 ansible_ssh_pass=paladin
