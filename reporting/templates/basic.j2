@@ -15,21 +15,19 @@ th, td {
 <p>A basic report showing <b>hostname</b>, <b>serial number</b>, <b>SW version</b> and <b>uptime</b> for devices in the lab</p>
 <table>
     <tr>
-        <th>Host</th><th>Hostname</th><th>Serial Number</th><th>SW Version</th><th>Uptime</th>
+        <th>Host</th><th>Serial Number</th><th>SW Version</th><th>Uptime</th>
     </tr>
     {% for host in ansible_play_hosts %}
     <tr>
         <td>{{ hostvars[host]['napalm_hostname'] }}</td>
         <td>{{ hostvars[host]['napalm_serial_number'] }}</td>
         <td>{% set sw_comp = hostvars[host]['napalm_os_version'].split(',') %}{{ sw_comp[1] }}</td>
-        <td>{{ hostvars[host]['napalm_uptime'] }} s</td>
+        <td>{{ hostvars[host]['napalm_uptime']|format_uptime }} s</td>
     </tr>
     {% endfor %}
 </table>
 
 <p>IP addresses in use:</p>
-napalm_interfaces_ip"
-
 <table>
     <tr>
         <th>Host</th><th>Interface</th><th>Description</th><th>IP Address</th><th>Mask</th>
@@ -47,8 +45,7 @@ napalm_interfaces_ip"
         <td>{{ hostvars[host]['napalm_interfaces_ip'][interface]['ipv4'][ip]['prefix_length'] }}</td>
         {% endfor %}
     </tr>
-    {% endfor %}
-    
+    {% endfor %}    
     {% endfor %}
 </table>
 

@@ -9,6 +9,9 @@ def split_newlines(arg,index):
 def timestamper(arg):
     return str('{:%Y%m%d-%H%M%S}'.format(datetime.datetime.now()))+'_'+arg
 
+def format_uptime(arg):
+    return str(datetime.timedelta(seconds=arg))
+
 def get_key(arg, i=0):
     return list(arg.keys())[i]
 
