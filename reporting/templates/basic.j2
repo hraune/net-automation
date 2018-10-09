@@ -38,7 +38,7 @@ napalm_interfaces_ip"
     {% for host in ansible_play_hosts %}
     {% for interface in hostvars[host]['napalm_interfaces_ip'] %}
     <tr>
-        {% if interface == hostvars[host]['napalm_interfaces_ip'][0] %}
+        {% if interface == hostvars[host]['napalm_interfaces_ip']|get_key %}
         <td rowspan="{{ hostvars[host]['napalm_interfaces_ip']|length }}">{{ host }}</td>
         {% endif %}
         <td>{{ interface }}</td>
