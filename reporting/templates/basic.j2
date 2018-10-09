@@ -36,16 +36,19 @@ napalm_interfaces_ip"
         <th>Host</th><th>Interface</th><th>IP Address</th><th>Mask</th>
     </tr>
     {% for host in ansible_play_hosts %}
+    {% for interface in hostvars[host]['napalm_interfaces_ip'] %}
     <tr>
+        {% if interface == hostvars[host]['napalm_interfaces_ip'][0] %}
         <td rowspan="{{ hostvars[host]['napalm_interfaces_ip']|length }}">{{ host }}</td>
-        {% for interface in hostvars[host]['napalm_interfaces_ip'] %}
+        {% endif %}
         <td>{{ interface }}</td>
         <td>{{ hostvars[host]['napalm_interfaces_ip'][interface]['ipv4']|get_key }}</td>
         {% for ip in hostvars[host]['napalm_interfaces_ip'][interface]['ipv4'] %}
         <td>{{ hostvars[host]['napalm_interfaces_ip'][interface]['ipv4'][ip]['prefix_length'] }}</td>
         {% endfor %}
-        {% endfor %}
     </tr>
+    {% endfor %}
+    
     {% endfor %}
 </table>
 
