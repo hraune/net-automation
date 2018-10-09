@@ -19,7 +19,6 @@ th, td {
     </tr>
     {% for host in ansible_play_hosts %}
     <tr>
-        <td>{{ host }}</td>
         <td>{{ hostvars[host]['napalm_hostname'] }}</td>
         <td>{{ hostvars[host]['napalm_serial_number'] }}</td>
         <td>{% set sw_comp = hostvars[host]['napalm_os_version'].split(',') %}{{ sw_comp[1] }}</td>
@@ -33,15 +32,16 @@ napalm_interfaces_ip"
 
 <table>
     <tr>
-        <th>Host</th><th>Interface</th><th>IP Address</th><th>Mask</th>
+        <th>Host</th><th>Interface</th><th>Description</th><th>IP Address</th><th>Mask</th>
     </tr>
     {% for host in ansible_play_hosts %}
     {% for interface in hostvars[host]['napalm_interfaces_ip'] %}
     <tr>
         {% if interface == hostvars[host]['napalm_interfaces_ip']|get_key %}
-        <td rowspan="{{ hostvars[host]['napalm_interfaces_ip']|length }}">{{ host }}</td>
+        <td rowspan="{{ hostvars[host]['napalm_interfaces_ip']|length }}">{{ hostvars[host]['napalm_hostname'] }}</td>
         {% endif %}
         <td>{{ interface }}</td>
+        <td>{{ hostvars[host]['napalm_interfaces'][interface]['description'] }}</td>
         <td>{{ hostvars[host]['napalm_interfaces_ip'][interface]['ipv4']|get_key }}</td>
         {% for ip in hostvars[host]['napalm_interfaces_ip'][interface]['ipv4'] %}
         <td>{{ hostvars[host]['napalm_interfaces_ip'][interface]['ipv4'][ip]['prefix_length'] }}</td>
