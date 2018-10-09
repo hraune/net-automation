@@ -24,6 +24,7 @@ class FilterModule(object):
         'uppercase_all': uppercase_all,
         'split_newlines': split_newlines,
         'timestamper': timestamper,
+        'format_uptime': format_uptime,
         'get_keys': get_keys,
         'get_key': get_key,
         } 
