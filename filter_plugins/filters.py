@@ -20,7 +20,7 @@ class FilterModule(object):
         return {
         'uppercase_all': uppercase_all,
         'split_newlines': split_newlines,
-        'timestamper': timestamper
-        'get_keys': get_keys
-        'get_key': get_key
+        'timestamper': timestamper,
+        'get_keys': get_keys,
+        'get_key': get_key,
         } 
