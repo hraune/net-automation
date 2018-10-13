@@ -18,9 +18,6 @@
         - 'facts'
         - 'interfaces'
         - 'interfaces_ip'
-        - 'mac_address_table'
-        - 'ntp_peers'
-        - 'ntp_servers'
         - 'ntp_stats'
     register: result              
 

@@ -48,6 +48,25 @@ th, td {
     {% endfor %}
 </table>
 
+<p>NTP stats:</p>
+<table>
+    <tr>
+        <th>Host</th><th>Synchronized</th><th>Stratum</th><th>Remote</th><th>Reference</th><th>Delay</th><th>Jitter</th><th>Offset</th>
+    </tr>
+    {% for host in ansible_play_hosts %}
+    <tr>
+        <td>{{ hostvars[host]['napalm_hostname'] }}</td>
+        {% set synchronized = hostvars[host]['napalm_ntp_stats'][0]['synchronized'] %}
+        <td style="color: white" bgcolor="{% '#7FFF00' if synchronized else '#DC143C' %}">{{ synchronized }}</td>
+        <td>{{ hostvars[host]['napalm_ntp_stats'][0]['stratum'] }}
+        <td>{{ hostvars[host]['napalm_ntp_stats'][0]['remote'] }}
+        <td>{{ hostvars[host]['napalm_ntp_stats'][0]['referenceid'] }}
+        <td>{{ hostvars[host]['napalm_ntp_stats'][0]['delay'] }}
+        <td>{{ hostvars[host]['napalm_ntp_stats'][0]['jitter'] }}
+        <td>{{ hostvars[host]['napalm_ntp_stats'][0]['offset'] }}
+    </tr>
+    {% endfor %}
+</table>
 
 
 <p>Report generated at {{ '%Y-%m-%d %H:%M:%S' | strftime }}</p>
