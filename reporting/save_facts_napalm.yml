@@ -14,7 +14,14 @@
       username: "{{ ansible_user }}"
       dev_os: 'ios'   
       password: "{{ ansible_ssh_pass }}"
-      filter: ['facts', 'interfaces', 'interfaces_ip', 'lldp_neighbors', 'mac_address_table']
+      filter: 
+        - 'facts'
+        - 'interfaces'
+        - 'interfaces_ip'
+        - 'mac_address_table'
+        - 'get_ntp_peers'
+        - 'get_ntp_servers'
+        - 'get_ntp_stats'
     register: result              
 
   - name: Create directory
