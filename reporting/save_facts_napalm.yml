@@ -19,7 +19,6 @@
         - 'interfaces'
         - 'interfaces_ip'
         - 'mac_address_table'
-        - 'get_ntp_peers'
         - 'get_ntp_servers'
         - 'get_ntp_stats'
     register: result              
