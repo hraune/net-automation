@@ -19,8 +19,9 @@
         - 'interfaces'
         - 'interfaces_ip'
         - 'mac_address_table'
-        - 'get_ntp_servers'
-        - 'get_ntp_stats'
+        - 'ntp_peers'
+        - 'ntp_servers'
+        - 'ntp_stats'
     register: result              
 
   - name: Create directory
