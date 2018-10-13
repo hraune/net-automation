@@ -22,7 +22,7 @@ th, td {
         <td>{{ hostvars[host]['napalm_hostname'] }}</td>
         <td>{{ hostvars[host]['napalm_serial_number'] }}</td>
         <td>{% set sw_comp = hostvars[host]['napalm_os_version'].split(',') %}{{ sw_comp[1] }}</td>
-        <td>{{ hostvars[host]['napalm_uptime']|format_uptime }} s</td>
+        <td>{{ hostvars[host]['napalm_uptime']|format_uptime }}</td>
     </tr>
     {% endfor %}
 </table>
@@ -40,10 +40,9 @@ th, td {
         {% endif %}
         <td>{{ interface }}</td>
         <td>{{ hostvars[host]['napalm_interfaces'][interface]['description'] }}</td>
-        <td>{{ hostvars[host]['napalm_interfaces_ip'][interface]['ipv4']|get_key }}</td>
-        {% for ip in hostvars[host]['napalm_interfaces_ip'][interface]['ipv4'] %}
+        {% set ip = hostvars[host]['napalm_interfaces_ip'][interface]['ipv4']|get_key %}
+        <td>{{ ip }}</td>
         <td>{{ hostvars[host]['napalm_interfaces_ip'][interface]['ipv4'][ip]['prefix_length'] }}</td>
-        {% endfor %}
     </tr>
     {% endfor %}    
     {% endfor %}
