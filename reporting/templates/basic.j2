@@ -57,7 +57,7 @@ th, td {
     <tr>
         <td>{{ hostvars[host]['napalm_hostname'] }}</td>
         {% set synchronized = hostvars[host]['napalm_ntp_stats'][0]['synchronized'] %}
-        <td style="color: white" bgcolor="{% '#7FFF00' if synchronized else '#DC143C' %}">{{ synchronized }}</td>
+        <td style="color: white" bgcolor="{{ '#7FFF00' if synchronized else '#DC143C' }}">{{ synchronized }}</td>
         <td>{{ hostvars[host]['napalm_ntp_stats'][0]['stratum'] }}
         <td>{{ hostvars[host]['napalm_ntp_stats'][0]['remote'] }}
         <td>{{ hostvars[host]['napalm_ntp_stats'][0]['referenceid'] }}
