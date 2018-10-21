@@ -6,10 +6,9 @@
 <p>A graph of the OSPF neighbors</p>
 
 {% for host in ansible_play_hosts %}
-
+{{ hostvars[host]['ospf_id'] }}:
 {% for neighbor in hostvars[host]['ospf_neighbor'] %}
 {{ neighbor['NEIGHBOR_ID'] }}
-
 {% endfor %}
 
 <p>Report generated at {{ '%Y-%m-%d %H:%M:%S' | strftime }}</p>

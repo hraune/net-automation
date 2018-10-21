@@ -20,8 +20,9 @@
   #- debug: var=vars
 
   - set_fact: 
-      ospf_neighbor: "{{ result.stdout[0] | parse_cli_textfsm(textfsm_ospf_neighbor) }}"
-      
+      ospf_id: "{{ result.stdout_lines[0][0].split(' with ID ')[1] }}"
+      ospf_neighbor: "{{ result.stdout[1] | parse_cli_textfsm(textfsm_ospf_neighbor) }}"
+
   - name: Create directory
     file:
       path: "{{ output_path }}"
