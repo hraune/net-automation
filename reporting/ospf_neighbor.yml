@@ -32,7 +32,7 @@
   - name: Create report
     template:
       src: "{{ template_path }}/ospf_neighbor_graph.j2"
-      dest: "{{ output_path }}/ospf_neighbor.html"
+      dest: "{{ output_path }}/ospf_neighbor.dot"
     run_once: true
 
   #- debug: var=vars
