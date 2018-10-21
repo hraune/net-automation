@@ -4,7 +4,7 @@
   connection: local
   gather_facts: no
   vars:
-  - textfsm_template_path: ../../ntc-templates/templates
+  - textfsm_template_path: "../../ntc-templates/templates"
 
   tasks:  
   - name: Get OSPF neighbors
