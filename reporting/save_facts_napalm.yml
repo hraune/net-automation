@@ -6,6 +6,7 @@
   vars:
   - output_path: output
   - template_path: templates
+  - textfsm_template_path: ../../ntc-templates/templates
 
   tasks:
   - name: Get facts with napalm
@@ -19,7 +20,18 @@
         - 'interfaces'
         - 'interfaces_ip'
         - 'ntp_stats'
-    register: result              
+    register: result
+  #- debug: msg="{{ result }}"
+  
+  - name: Get OSPF neighbors
+    ios_command:
+      commands: show ip ospf neighbor
+    register: result
+
+  - debug: msg="{{ result }}"
+
+  - set_fact: 
+      ospf_neighbor: {{ result | parse_cli_textfsm('{{ textfsm_template_path }}/cisco_ios_show_ip_ospf_neighbor.template') }}
 
   - name: Create directory
     file:
@@ -34,4 +46,4 @@
       dest: "{{ output_path }}/basic_report.html"
     run_once: true
 
-  - debug: msg="{{ result }}"
+  
