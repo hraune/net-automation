@@ -4,20 +4,34 @@
   connection: local
   gather_facts: no
   vars:
+  - output_path: output
+  - template_path: templates
   - textfsm_ospf_neighbor: '../../ntc-templates/templates/cisco_ios_show_ip_ospf_neighbor.template'
 
-  tasks:  
+  tasks:
   - name: Get OSPF neighbors
     ios_command:
-      commands: show ip ospf neighbor
+      commands:
+        - show ip ospf
+        - show ip ospf neighbor
     register: result
 
-  #- debug: msg="{{ result }}"
+  - debug: msg="{{ result }}"
   #- debug: var=vars
 
   - set_fact: 
       ospf_neighbor: "{{ result.stdout[0] | parse_cli_textfsm(textfsm_ospf_neighbor) }}"
-      #ospf_neighbor: "{{ result.stdout[0] | parse_cli_textfsm('{{ textfsm_template_path }}/cisco_ios_show_ip_ospf_neighbor.template') }}"
 
+  - name: Create directory
+      file:
+        path: "{{ output_path }}"
+        state: directory
+      run_once: true
+    
+  - name: Create report
+    template:
+      src: "{{ template_path }}/ospf_neighbor_graph.j2"
+      dest: "{{ output_path }}/ospf_neighbor.html"
+    run_once: true
 
-  - debug: var=vars
+  #- debug: var=vars
