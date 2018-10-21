@@ -4,7 +4,7 @@
   connection: local
   gather_facts: no
   vars:
-  - textfsm_template_path: "../../ntc-templates/templates"
+  - textfsm_template_path: ../../ntc-templates/templates
 
   tasks:  
   - name: Get OSPF neighbors
@@ -16,6 +16,8 @@
   - debug: var=vars
 
   - set_fact: 
-      ospf_neighbor: "{{ result.stdout[0] | parse_cli_textfsm('{{ textfsm_template_path }}/cisco_ios_show_ip_ospf_neighbor.template') }}"
+      ospf_neighbor: "{{ result.stdout[0] | parse_cli_textfsm('../../ntc-templates/templates/cisco_ios_show_ip_ospf_neighbor.template') }}"
+      #ospf_neighbor: "{{ result.stdout[0] | parse_cli_textfsm('{{ textfsm_template_path }}/cisco_ios_show_ip_ospf_neighbor.template') }}"
+
 
   - debug: var=vars
