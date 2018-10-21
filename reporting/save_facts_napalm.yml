@@ -31,7 +31,7 @@
   - debug: msg="{{ result }}"
 
   - set_fact: 
-      ospf_neighbor: {{ result | parse_cli_textfsm('{{ textfsm_template_path }}/cisco_ios_show_ip_ospf_neighbor.template') }}
+      ospf_neighbor: "{{ result | parse_cli_textfsm('{{ textfsm_template_path }}/cisco_ios_show_ip_ospf_neighbor.template') }}"
 
   - name: Create directory
     file:
