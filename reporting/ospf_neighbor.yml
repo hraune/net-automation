@@ -12,7 +12,7 @@
       commands: show ip ospf neighbor
     register: result
 
-  - debug: "{{ result }}"
+  - debug: msg="{{ result }}"
 
   - set_fact: 
       ospf_neighbor: "{{ result.stdout[0] | parse_cli_textfsm('{{ textfsm_template_path }}/cisco_ios_show_ip_ospf_neighbor.template') }}"
