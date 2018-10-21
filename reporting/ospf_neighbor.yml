@@ -1,6 +1,6 @@
 ---
 - name: OSPF neighbor DOT
-  hosts: all
+  hosts: isp
   connection: local
   gather_facts: no
   vars:
