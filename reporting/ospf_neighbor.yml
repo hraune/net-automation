@@ -21,12 +21,12 @@
 
   - set_fact: 
       ospf_neighbor: "{{ result.stdout[0] | parse_cli_textfsm(textfsm_ospf_neighbor) }}"
-
+      
   - name: Create directory
-      file:
-        path: "{{ output_path }}"
-        state: directory
-      run_once: true
+    file:
+      path: "{{ output_path }}"
+      state: directory
+    run_once: true
     
   - name: Create report
     template:
