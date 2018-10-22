@@ -32,6 +32,9 @@
     file:
       path: "{{ output_path }}/ospf_neighbor.dot"
       state: absent
+    run_once: true
+    
+  - name: Clean up old graph images
     file:
       path: "{{ output_path }}/ospf_neighbor.png"
       state: absent
@@ -45,5 +48,6 @@
 
   - name: Create graph
     command: "dot -Tpng {{ output_path }}/ospf_neighbor.dot > {{ output_path }}/ospf_neighbor.png"
+    run_once: true
 
   #- debug: var=vars
