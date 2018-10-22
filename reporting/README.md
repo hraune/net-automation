@@ -6,6 +6,6 @@ These playbooks gathers various information from the lab and will generate repor
 * Topology generated from OSPF neighbors
 
 ## Sample output
-![Basic report](basic_report.html)
+[Basic report](output/basic_report.html)
 
-![OSPF topology](ospf_neighbor.png)
+![OSPF topology](output/ospf_neighbor.png)
