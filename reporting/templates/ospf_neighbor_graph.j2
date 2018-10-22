@@ -1,6 +1,6 @@
 graph ospf {
 {% set ns = namespace() %}
-{% ns.vectors = [] %}
+{% ns.vectors = false %}
 {% for host in ansible_play_hosts %}
 {% for neighbor in hostvars[host]['ospf_neighbor'] %}
 {% vectors.append((hostvars[host]['ospf_id'],neighbor['NEIGHBOR_ID'])) %}
