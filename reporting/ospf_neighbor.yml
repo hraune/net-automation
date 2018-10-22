@@ -16,8 +16,7 @@
         - show ip ospf neighbor
     register: result
 
-  - debug: msg="{{ result }}"
-  #- debug: var=vars
+  #- debug: msg="{{ result }}"
 
   - set_fact: 
       ospf_id: "{{ result.stdout_lines[0][0].split(' with ID ')[1] }}"
