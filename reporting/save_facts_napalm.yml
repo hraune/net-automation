@@ -1,5 +1,5 @@
 ---
-- name: Test Inventory
+- name: Gather napalm facts and create basic report
   hosts: all
   connection: local
   gather_facts: no
@@ -38,5 +38,3 @@
       src: "{{ template_path }}/basic.j2"
       dest: "{{ output_path }}/basic_report.html"
     run_once: true
-
-  
