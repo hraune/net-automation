@@ -12,4 +12,5 @@ These playbooks gathers various information from the lab and will generate repor
 
 ### OSPF topology
 [OSPF topology](output/ospf_neighbor.dot)
+
 ![OSPF topology](output/ospf_neighbor.png)
