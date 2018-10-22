@@ -1,0 +1,75 @@
+<html>
+<head>
+<style>
+table {
+    border: 1px solid black;
+}
+th, td {
+    padding: 5px;
+    border: 1px solid black;
+}
+</style>
+</head>
+<body>
+<h2>Basic Report</h2>
+<p>A basic report showing <b>hostname</b>, <b>serial number</b>, <b>SW version</b> and <b>uptime</b> for devices in the lab</p>
+<table>
+    <tr>
+        <th>Host</th><th>Serial Number</th><th>SW Version</th><th>Uptime</th>
+    </tr>
+    {% for host in ansible_play_hosts %}
+    <tr>
+        <td>{{ hostvars[host]['napalm_hostname'] }}</td>
+        <td>{{ hostvars[host]['napalm_serial_number'] }}</td>
+        <td>{% set sw_comp = hostvars[host]['napalm_os_version'].split(',') %}{{ sw_comp[1] }}</td>
+        <td>{{ hostvars[host]['napalm_uptime']|format_uptime }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<p>IP addresses in use:</p>
+<table>
+    <tr>
+        <th>Host</th><th>Interface</th><th>Description</th><th>IP Address</th><th>Mask</th>
+    </tr>
+    {% for host in ansible_play_hosts %}
+    {% for interface in hostvars[host]['napalm_interfaces_ip'] %}
+    <tr>
+        {% if interface == hostvars[host]['napalm_interfaces_ip']|get_key %}
+        <td rowspan="{{ hostvars[host]['napalm_interfaces_ip']|length }}">{{ hostvars[host]['napalm_hostname'] }}</td>
+        {% endif %}
+        <td>{{ interface }}</td>
+        <td>{{ hostvars[host]['napalm_interfaces'][interface]['description'] }}</td>
+        {% set ip = hostvars[host]['napalm_interfaces_ip'][interface]['ipv4']|get_key %}
+        <td>{{ ip }}</td>
+        <td>{{ hostvars[host]['napalm_interfaces_ip'][interface]['ipv4'][ip]['prefix_length'] }}</td>
+    </tr>
+    {% endfor %}    
+    {% endfor %}
+</table>
+
+<p>NTP stats:</p>
+<table>
+    <tr>
+        <th>Host</th><th>Synchronized</th><th>Stratum</th><th>Remote</th><th>Reference</th><th>Delay</th><th>Jitter</th><th>Offset</th>
+    </tr>
+    {% for host in ansible_play_hosts %}
+    <tr>
+        <td>{{ hostvars[host]['napalm_hostname'] }}</td>
+        {% set synchronized = hostvars[host]['napalm_ntp_stats'][0]['synchronized'] %}
+        <td style="color: white" bgcolor="{{ '#7FFF00' if synchronized else '#DC143C' }}">{{ synchronized }}</td>
+        <td>{{ hostvars[host]['napalm_ntp_stats'][0]['stratum'] }}
+        <td>{{ hostvars[host]['napalm_ntp_stats'][0]['remote'] }}
+        <td>{{ hostvars[host]['napalm_ntp_stats'][0]['referenceid'] }}
+        <td>{{ hostvars[host]['napalm_ntp_stats'][0]['delay'] }}
+        <td>{{ hostvars[host]['napalm_ntp_stats'][0]['jitter'] }}
+        <td>{{ hostvars[host]['napalm_ntp_stats'][0]['offset'] }}
+    </tr>
+    {% endfor %}
+</table>
+
+
+<p>Report generated at {{ '%Y-%m-%d %H:%M:%S' | strftime }}</p>
+
+</body>
+</html>

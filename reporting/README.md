@@ -1,8 +1,14 @@
 # Reporting
 These playbooks gathers various information from the lab and will generate reports on the following:
-* blah1
-* blah2
-* blah3
+* Hostname, serial number, SW version and uptime for each device
+* All configured IP addresses
+* NTP configuration
+* Topology generated from OSPF neighbors
 
-## Blah1
-foo
+## Sample output
+
+### Basic report
+[Basic report](output/basic_report.html)
+
+### OSPF topology
+![OSPF topology](output/ospf_neighbor.png)
