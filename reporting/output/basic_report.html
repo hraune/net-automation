@@ -1,0 +1,250 @@
+<html>
+<head>
+<style>
+table {
+    border: 1px solid black;
+}
+th, td {
+    padding: 5px;
+    border: 1px solid black;
+}
+</style>
+</head>
+<body>
+<h2>Basic Report</h2>
+<p>A basic report showing <b>hostname</b>, <b>serial number</b>, <b>SW version</b> and <b>uptime</b> for devices in the lab</p>
+<table>
+    <tr>
+        <th>Host</th><th>Serial Number</th><th>SW Version</th><th>Uptime</th>
+    </tr>
+        <tr>
+        <td>P-1</td>
+        <td>910659U9A39</td>
+        <td> Version 16.6.4</td>
+        <td>14 days, 22:49:00</td>
+    </tr>
+        <tr>
+        <td>PE-1</td>
+        <td>9F8U52DEUZF</td>
+        <td> Version 16.6.4</td>
+        <td>15 days, 3:13:00</td>
+    </tr>
+        <tr>
+        <td>PE-2</td>
+        <td>99GBTEM3NMA</td>
+        <td> Version 16.6.4</td>
+        <td>14 days, 22:45:00</td>
+    </tr>
+        <tr>
+        <td>CE-1</td>
+        <td>9E25SKR8GEQ</td>
+        <td> Version 16.6.4</td>
+        <td>14 days, 22:36:00</td>
+    </tr>
+        <tr>
+        <td>CE-2</td>
+        <td>993LGUK9AZP</td>
+        <td> Version 16.6.4</td>
+        <td>14 days, 22:29:00</td>
+    </tr>
+    </table>
+
+<p>IP addresses in use:</p>
+<table>
+    <tr>
+        <th>Host</th><th>Interface</th><th>Description</th><th>IP Address</th><th>Mask</th>
+    </tr>
+            <tr>
+                <td rowspan="4">P-1</td>
+                <td>Loopback0</td>
+        <td></td>
+                <td>10.2.2.2</td>
+        <td>32</td>
+    </tr>
+        <tr>
+                <td>GigabitEthernet1</td>
+        <td>P-1/Gig1_to_PE-2/Gig2</td>
+                <td>10.0.34.2</td>
+        <td>24</td>
+    </tr>
+        <tr>
+                <td>GigabitEthernet2</td>
+        <td>P-1/Gig2_to_PE-1/Gig1</td>
+                <td>10.0.23.2</td>
+        <td>24</td>
+    </tr>
+        <tr>
+                <td>GigabitEthernet3</td>
+        <td>P-1_mgmt</td>
+                <td>10.0.10.203</td>
+        <td>24</td>
+    </tr>
+        
+            <tr>
+                <td rowspan="5">PE-1</td>
+                <td>GigabitEthernet2.101</td>
+        <td></td>
+                <td>192.168.3.2</td>
+        <td>24</td>
+    </tr>
+        <tr>
+                <td>Loopback0</td>
+        <td></td>
+                <td>10.1.1.1</td>
+        <td>32</td>
+    </tr>
+        <tr>
+                <td>GigabitEthernet1</td>
+        <td>PE-1/Gig1_to_P-1/Gig2</td>
+                <td>10.0.23.1</td>
+        <td>24</td>
+    </tr>
+        <tr>
+                <td>GigabitEthernet2</td>
+        <td>PE-1/Gig2_to_CE-1/Gig1</td>
+                <td>192.168.1.2</td>
+        <td>24</td>
+    </tr>
+        <tr>
+                <td>GigabitEthernet3</td>
+        <td>PE-1_mgmt</td>
+                <td>10.0.10.202</td>
+        <td>24</td>
+    </tr>
+        
+            <tr>
+                <td rowspan="4">PE-2</td>
+                <td>Loopback0</td>
+        <td></td>
+                <td>10.3.3.3</td>
+        <td>32</td>
+    </tr>
+        <tr>
+                <td>GigabitEthernet1</td>
+        <td>PE-2/Gig1_to_CE-2/Gig2</td>
+                <td>192.168.2.2</td>
+        <td>24</td>
+    </tr>
+        <tr>
+                <td>GigabitEthernet2</td>
+        <td>PE-2/Gig2_to_P-1/Gig1</td>
+                <td>10.0.34.1</td>
+        <td>24</td>
+    </tr>
+        <tr>
+                <td>GigabitEthernet3</td>
+        <td>PE-2_mgmt</td>
+                <td>10.0.10.204</td>
+        <td>24</td>
+    </tr>
+        
+            <tr>
+                <td rowspan="4">CE-1</td>
+                <td>GigabitEthernet3</td>
+        <td>CE-1_mgmt</td>
+                <td>10.0.10.201</td>
+        <td>24</td>
+    </tr>
+        <tr>
+                <td>Loopback0</td>
+        <td></td>
+                <td>172.16.1.1</td>
+        <td>32</td>
+    </tr>
+        <tr>
+                <td>GigabitEthernet1</td>
+        <td>CE-1/Gig1_to_PE-1/Gig2</td>
+                <td>192.168.1.1</td>
+        <td>24</td>
+    </tr>
+        <tr>
+                <td>GigabitEthernet1.101</td>
+        <td></td>
+                <td>192.168.3.1</td>
+        <td>24</td>
+    </tr>
+        
+            <tr>
+                <td rowspan="3">CE-2</td>
+                <td>Loopback0</td>
+        <td></td>
+                <td>172.16.2.2</td>
+        <td>32</td>
+    </tr>
+        <tr>
+                <td>GigabitEthernet2</td>
+        <td>CE-2/Gig2_to_PE-2/Gig1</td>
+                <td>192.168.2.1</td>
+        <td>24</td>
+    </tr>
+        <tr>
+                <td>GigabitEthernet3</td>
+        <td>CE-2_mgmt</td>
+                <td>10.0.10.205</td>
+        <td>24</td>
+    </tr>
+        
+    </table>
+
+<p>NTP stats:</p>
+<table>
+    <tr>
+        <th>Host</th><th>Synchronized</th><th>Stratum</th><th>Remote</th><th>Reference</th><th>Delay</th><th>Jitter</th><th>Offset</th>
+    </tr>
+        <tr>
+        <td>P-1</td>
+                <td style="color: white" bgcolor="#7FFF00">True</td>
+        <td>2
+        <td>10.0.10.1
+        <td>192.36.143.130
+        <td>0.979
+        <td>1.123
+        <td>-2.394
+    </tr>
+        <tr>
+        <td>PE-1</td>
+                <td style="color: white" bgcolor="#7FFF00">True</td>
+        <td>2
+        <td>10.0.10.1
+        <td>81.166.75.50
+        <td>0.017
+        <td>7.641
+        <td>-2.397
+    </tr>
+        <tr>
+        <td>PE-2</td>
+                <td style="color: white" bgcolor="#7FFF00">True</td>
+        <td>2
+        <td>10.0.10.1
+        <td>192.36.143.130
+        <td>0.024
+        <td>1.099
+        <td>-5.248
+    </tr>
+        <tr>
+        <td>CE-1</td>
+                <td style="color: white" bgcolor="#7FFF00">True</td>
+        <td>2
+        <td>10.0.10.1
+        <td>81.166.75.50
+        <td>0.016
+        <td>1.065
+        <td>-0.917
+    </tr>
+        <tr>
+        <td>CE-2</td>
+                <td style="color: white" bgcolor="#7FFF00">True</td>
+        <td>2
+        <td>10.0.10.1
+        <td>192.36.143.130
+        <td>0.017
+        <td>1.106
+        <td>-3.394
+    </tr>
+    </table>
+
+
+<p>Report generated at 2018-10-21 14:38:15</p>
+
+</body>
+</html>
