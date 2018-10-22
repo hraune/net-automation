@@ -1,5 +1,5 @@
 ---
-- name: OSPF neighbor DOT
+- name: Create OSPF neighbor DOT and PNG
   hosts: isp
   connection: local
   gather_facts: no
@@ -9,20 +9,19 @@
   - textfsm_ospf_neighbor: '../../ntc-templates/templates/cisco_ios_show_ip_ospf_neighbor.template'
 
   tasks:
-  - name: Get OSPF neighbors
+  - name: Get OSPF id and neighbors
     ios_command:
       commands:
         - show ip ospf
         - show ip ospf neighbor
     register: result
 
-  #- debug: msg="{{ result }}"
-
-  - set_fact: 
+  - name: Extract ospf neighbor data with textfsm
+    set_fact: 
       ospf_id: "{{ result.stdout_lines[0][0].split(' with ID ')[1] }}"
       ospf_neighbor: "{{ result.stdout[1] | parse_cli_textfsm(textfsm_ospf_neighbor) }}"
 
-  - name: Create directory
+  - name: Create output directory
     file:
       path: "{{ output_path }}"
       state: directory
@@ -40,14 +39,12 @@
       state: absent
     run_once: true
 
-  - name: Create report
+  - name: Create graph dot-file
     template:
       src: "{{ template_path }}/ospf_neighbor_graph.j2"
       dest: "{{ output_path }}/ospf_neighbor.dot"
     run_once: true
 
-  - name: Create graph
-    command: "dot -Tpng {{ output_path }}/ospf_neighbor.dot > {{ output_path }}/ospf_neighbor.png"
+  - name: Create graph image
+    shell: "dot -Tpng {{ output_path }}/ospf_neighbor.dot > {{ output_path }}/ospf_neighbor.png"
     run_once: true
-
-  #- debug: var=vars
