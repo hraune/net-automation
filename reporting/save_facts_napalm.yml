@@ -6,7 +6,6 @@
   vars:
   - output_path: output
   - template_path: templates
-  - textfsm_template_path: ../../ntc-templates/templates
 
   tasks:
   - name: Get facts with napalm
@@ -21,14 +20,18 @@
         - 'interfaces_ip'
         - 'ntp_stats'
     register: result
-  #- debug: msg="{{ result }}"
  
-  - name: Create directory
+  - name: Create output directory
     file:
       path: "{{ output_path }}"
       state: directory
     run_once: true
   
+  - name: Clean up old report
+    file:
+      path: "{{ output_path }}/basic_report.html"
+      state: absent
+    run_once: true
   
   - name: Create report
     template:
