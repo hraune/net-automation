@@ -29,12 +29,12 @@
     run_once: true
     
   - name: Clean up old graph files
-    - file:
-        path: {{ output_path }}/ospf_neighbor.dot
-        state: absent
-    - file:
-        path: {{ output_path }}/ospf_neighbor.png
-        state: absent
+    file:
+      path: {{ output_path }}/ospf_neighbor.dot
+      state: absent
+    file:
+      path: {{ output_path }}/ospf_neighbor.png
+      state: absent
     run_once: true
 
   - name: Create report
