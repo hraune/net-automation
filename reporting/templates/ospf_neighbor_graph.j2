@@ -2,7 +2,9 @@ graph ospf {
 {% with vectors = [] %}
 {% for host in ansible_play_hosts %}
 {% for neighbor in hostvars[host]['ospf_neighbor'] %}
-    {% if (hostvars[host]['ospf_id'],neighbor['NEIGHBOR_ID']) not in vectors or (neighbor['NEIGHBOR_ID'],hostvars[host]['ospf_id']) not in vectors %}
+    {% if (hostvars[host]['ospf_id'],neighbor['NEIGHBOR_ID']) in vectors or (neighbor['NEIGHBOR_ID'],hostvars[host]['ospf_id']) in vectors %}
+    foo
+    {% else %}
     {% do vectors.append((hostvars[host]['ospf_id'],neighbor['NEIGHBOR_ID'])) %}
     "{{ hostvars[host]['ospf_id'] }}" -- "{{ neighbor['NEIGHBOR_ID'] }}"
     {% endif %}
