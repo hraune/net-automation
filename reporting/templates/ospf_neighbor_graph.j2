@@ -1,11 +1,11 @@
 graph ospf {
 {% with vectors = [] %}
-{% for host in ansible_play_hosts %}
+{% for host in ansible_play_hosts|dictsort %}
 {##}{% for neighbor in hostvars[host]['ospf_neighbor'] %}
 {##}{##}{% set neighbors = (neighbor['NEIGHBOR_ID'],hostvars[host]['ospf_id']) %}
 {##}{##}{% if not (neighbors in vectors or neighbors[::-1] in vectors ) %}
 {##}{##}{##}{% do vectors.append(neighbors) %}
-    "{{ neighbors[1] }}" -- "{{ neighbors[0] }}"
+    "{{ neighbors[0] }}" -- "{{ neighbors[1] }}"
 {##}{##}{% endif %}
 {##}{% endfor %}
 {% endfor %}
