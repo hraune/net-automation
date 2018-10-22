@@ -1,13 +1,13 @@
 graph ospf {
 {% with vectors = [] %}
 {% for host in ansible_play_hosts %}
-{% for neighbor in hostvars[host]['ospf_neighbor'] %}
-{% set tup = (neighbor['NEIGHBOR_ID'],hostvars[host]['ospf_id']) %}
-{% if not (tup in vectors or tup[::-1] in vectors ) %}
-{% do vectors.append(tup) %}
-    "{{ tup[0] }}" -- "{{ tup[1] }}"
-{% endif %}
-{% endfor %}
+{##}{% for neighbor in hostvars[host]['ospf_neighbor'] %}
+{##}{##}{% set neighbors = (neighbor['NEIGHBOR_ID'],hostvars[host]['ospf_id']) %}
+{##}{##}{% if not (neighbors in vectors or neighbors[::-1] in vectors ) %}
+{##}{##}{##}{% do vectors.append(neighbors) %}
+    "{{ neighbors[0] }}" -- "{{ neighbors[1] }}"
+{##}{##}{% endif %}
+{##}{% endfor %}
 {% endfor %}
 {% endwith %}
     }}

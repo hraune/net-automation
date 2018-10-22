@@ -28,10 +28,22 @@
       state: directory
     run_once: true
     
+  - name: Clean up old graph files
+    - file:
+        path: {{ output_path }}/ospf_neighbor.dot
+        state: absent
+    - file:
+        path: {{ output_path }}/ospf_neighbor.png
+        state: absent
+    run_once: true
+
   - name: Create report
     template:
       src: "{{ template_path }}/ospf_neighbor_graph.j2"
       dest: "{{ output_path }}/ospf_neighbor.dot"
     run_once: true
+
+  - name: Create graph
+    command: dot -Tpng {{ output_path }}/ospf_neighbor.dot > {{ output_path }}/ospf_neighbor.png
 
   #- debug: var=vars
