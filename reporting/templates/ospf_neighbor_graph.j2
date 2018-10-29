@@ -5,11 +5,9 @@ graph ospf {
 {##}{##}{% set neighbors = (neighbor['NEIGHBOR_ID'],hostvars[host]['ospf_id']) %}
 {##}{##}{% if not (neighbors in vectors or neighbors[::-1] in vectors) %}
 {##}{##}{##}{% do vectors.append(neighbors) %}
-    "{{ neighbors[0] }}" -- "{{ neighbors[1] }}"
 {##}{##}{% endif %}
 {##}{% endfor %}
 {% endfor %}
-###
 {% set vectors = vectors|balance_graph() %}
 {% for vector in vectors %}
     "{{ vector[0] }}" -- "{{ vector[1] }}"
