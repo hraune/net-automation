@@ -55,8 +55,8 @@
   - name: Write all OSPF neighbor data to file
     template:
       src: "{{ template_path }}/ospf_neighbor_data.j2"
-      dest: "{{ output_path }}/temp/ospf_neighbor_{{ ansible_net_hostname }}.json"
-    run_once: true    
+      dest: "{{ temp_path }}/ospf_neighbor_{{ inventory_hostname }}.json"
+    run_once: 
 
   - name: Create graph dot-file
     template:
