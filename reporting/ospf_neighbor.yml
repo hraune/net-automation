@@ -4,6 +4,7 @@
   connection: local
   gather_facts: no
   vars:
+  - temp_path: temp
   - output_path: output
   - template_path: templates
   - textfsm_ospf_neighbor: '../../ntc-templates/templates/cisco_ios_show_ip_ospf_neighbor.template'
@@ -26,7 +27,19 @@
       path: "{{ output_path }}"
       state: directory
     run_once: true
-    
+  
+  - name: Clean temp directory
+    file:
+      path: "{{ temp_path }}"
+      state: absent
+    run_once: true  
+
+  - name: Create temp directory
+    file:
+      path: "{{ temp_path }}"
+      state: directory
+    run_once: true
+
   - name: Clean up old graph files
     file:
       path: "{{ output_path }}/ospf_neighbor.dot"
@@ -39,12 +52,19 @@
       state: absent
     run_once: true
 
+  - name: Write all OSPF neighbor data to file
+    template:
+      src: "{{ template_path }}/ospf_neighbor_data.j2"
+      dest: "{{ output_path }}/temp/ospf_neighbor_{{ ansible_net_hostname }}.json"
+    run_once: true    
+
   - name: Create graph dot-file
     template:
-      src: "{{ template_path }}/ospf_neighbor_graph.j2"
+      src: "{{ template_path }}/ospf_neighbor_graph_2.j2"
       dest: "{{ output_path }}/ospf_neighbor.dot"
     run_once: true
 
   - name: Create graph image
     shell: "dot -Tpng {{ output_path }}/ospf_neighbor.dot > {{ output_path }}/ospf_neighbor.png"
     run_once: true
+

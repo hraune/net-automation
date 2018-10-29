@@ -1,0 +1,5 @@
+{% for host in ansible_play_hosts %}
+{##}{% for neighbor in hostvars[host]['ospf_neighbor'] %}
+{{ neighbor }}
+{##}{% endfor %}
+{% endfor %}
