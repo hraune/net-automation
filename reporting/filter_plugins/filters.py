@@ -24,7 +24,7 @@ def balance_graph(graph):
     neigh_count = {}
     for tup in graph:
         total = count[tup[0]]+count[tup[1]]
-        if count[total] in neigh_count:
+        if total in neigh_count:
             neigh_count[total].append(tup)
         else:
             neigh_count[total] = [tup]
