@@ -9,5 +9,10 @@ graph ospf {
 {##}{##}{% endif %}
 {##}{% endfor %}
 {% endfor %}
+###
+{% do vectors = vectors|balance_graph() %}
+{% for vector in vectors %}
+    "{{ vector[0] }}" -- "{{ vector[1] }}"
+{%endfor%}
 {% endwith %}
     }
