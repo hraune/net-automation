@@ -55,7 +55,7 @@
   - name: Write all OSPF neighbor data to file
     template:
       src: "{{ template_path }}/ospf_neighbor_data.j2"
-      dest: "{{ temp_path }}/ospf_neighbor_{{ inventory_hostname }}.json"
+      dest: "{{ temp_path }}/ospf_neighbor_{{ ospf_id }}.json"
     run_once: 
 
   - name: Create graph dot-file
