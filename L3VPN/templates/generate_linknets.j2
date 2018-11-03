@@ -1,4 +1,4 @@
 {% for network in linknet %}
     {% set subnet = network.net|string + '/' + network.mask|string %}
-    {{ subnet }}
+    {{ subnet }} gives {{ subnet|ipsubnet(30) }} /30 subnets
 {% endfor %}
