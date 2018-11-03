@@ -5,9 +5,9 @@
 # Could put this in a separate place that we can import from, and export
 # revised networks to after we have taken needed networks.
 linknet:
-  10.25.25.176/28
-  10.99.100.96/27
-  10.203.55.0/24
+  - 10.25.25.176/28
+  - 10.99.100.96/27
+  - 10.203.55.0/24
 
 # How everything is hooked up, gi3 is reserved for mgmt on all devices.
 fabric:
