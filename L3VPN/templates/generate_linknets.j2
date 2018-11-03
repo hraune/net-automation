@@ -1,4 +1,4 @@
 {% for network in linknet %}
-    {% set subnet = network.net/network.mask %}
+    {% set subnet = network.net + '/' + network.mask %}
     {{ subnet }}
 {% endfor %}
