@@ -4,7 +4,7 @@
 ~
 {% set linknets = [] %}
 {% for subnet in linknet.available_subnets %}
-    {% for i in range(subnet|ipsubnet(linknet.size)) %}
+    {% for i in range(subnet|ipsubnet(linknet.size|int)) %}
         {% if true %}
             {% do linknets.append(subnet|ipsubnet(30,i)) %}
             - {{ subnet|ipsubnet(30,i) }}
