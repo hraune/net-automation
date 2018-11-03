@@ -4,10 +4,18 @@
 ~
 {% set linknets = [] %}
 {% for subnet in linknet.available_subnets %}
-{##}{% for i in range(subnet|ipsubnet(linknet.size)|int-1) %}
+{##}{% for i in range(subnet|ipsubnet(linknet.size)|int) %}
 {##}{##}{% if linknets|length < fabric|length %}
 {##}{##}{##}{% do linknets.append(subnet|ipsubnet(linknet.size,i)) %}
 {##}{##}{##}- {{ subnet|ipsubnet(linknet.size,i) }}
 {##}{##}{% endif %}
+{##}{% endfor %}
+{% endfor %}
+~
+New list of remaining linknets:
+{% for subnet in linknet.available_subnets %}
+{##}{% set new_subnets = subnet|subtract_subnet(linknets) %}
+{##}{% for new_subnet in new_subnets %}
+{##}{##}{{ new_subnet }}
 {##}{% endfor %}
 {% endfor %}
