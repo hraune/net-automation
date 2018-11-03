@@ -1,0 +1,46 @@
+---
+
+nodes:
+  P1:
+    mgmt: 10.0.10.203
+    loopback: 10.2.2.2
+    role: core
+    igp: ospf
+
+  PE1:
+    mgmt: 10.0.10.202
+    loopback: 10.1.1.1
+    role: pe
+    igp: ospf
+    asn: 65001
+
+  PE2:
+    mgmt: 10.0.10.204
+    loopback: 10.3.3.3
+    role: pe
+    igp: ospf
+    asn: 65001
+
+  CE1:
+    mgmt: 10.0.10.201
+    loopback: 172.16.1.1
+    role: ce
+    igp: ospf
+
+  CE2:
+    mgmt: 10.0.10.205
+    loopback: 172.16.2.2
+    role: ce
+    igp: ospf
+
+  CE3:
+    mgmt: 10.0.10.206
+    loopback: 172.16.3.3
+    role: ce
+    igp: ospf
+
+  CE4:
+    mgmt: 10.0.10.207
+    loopback: 172.16.4.4
+    role: ce
+    igp: ospf

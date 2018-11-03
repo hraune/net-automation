@@ -1,0 +1,63 @@
+---
+# Fabric
+
+# List of available ipv4 networks that we can pull linknets(/30) from.
+# Could put this in a separate place that we can import from, and export
+# revised networks to after we have taken needed networks.
+linknet:
+  - { net: 10.99.100.96, mask:27 }
+  - { net: 10.25.25.176, mask:28 }
+  - { net: 10.203.55.0, mask:24 }
+
+# How everything is hooked up, gi3 is reserved for mgmt on all devices.
+fabric:
+  - { left: PE1, left_port: GigabitEthernet1,
+      right: P1, right_port: GigabitEthernet2 }
+  - { left: P1, left_port: GigabitEthernet1,
+      right: PE2, right_port: GigabitEthernet2 }
+  - { left: CE1, left_port: GigabitEthernet1,
+      right: PE1, right_port: GigabitEthernet2 }
+  - { left: PE2, left_port: GigabitEthernet1,
+      right: CE2, right_port: GigabitEthernet2 }
+  - { left: CE3, left_port: GigabitEthernet1,
+      right: PE1, right_port: GigabitEthernet4 }
+  - { left: PE2, left_port: GigabitEthernet4,
+      right: CE4, right_port: GigabitEthernet2 }
+
+# OSPF as IGP
+ospf:
+  1:
+    area: 0
+    members: [P1, PE1, PE2]
+
+# No BGP in core, only MP-BGP between PE nodes to facilitate the VPNs
+mpbgp:
+  - { left: PE1, left_asn: 65001, left_ip: 10.1.1.1,
+      right: PE2, right_asn: 65001, right_ip: 10.3.3.3 }
+
+# Services we are offering
+services: [IPV4, VPNV4]
+
+# All the nodes
+nodes:
+  - name: P1
+    mgmt: 10.0.10.203
+    loopback: 10.2.2.2
+  - name: PE1
+    mgmt: 10.0.10.202
+    loopback: 10.1.1.1
+  - name: PE2
+    mgmt: 10.0.10.204
+    loopback: 10.3.3.3
+  - name: CE1
+    mgmt: 10.0.10.201
+    loopback: 172.16.1.1
+  - name: CE2
+    mgmt: 10.0.10.205
+    loopback: 172.16.2.2
+  - name: CE3
+    mgmt: 10.0.10.206
+    loopback: 172.16.3.3
+  - name: CE4
+    mgmt: 10.0.10.207
+    loopback: 172.16.4.4
