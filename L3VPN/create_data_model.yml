@@ -6,6 +6,11 @@
     - output_path: output
   vars_files: [fabric.yml]
   tasks:
+    - name: Create output directory
+      file:
+        path: "{{ output_path }}"
+        state: directory
+
     - name: Generate linknets
       template:
         src: "{{ template_path }}/generate_linknets.j2"
