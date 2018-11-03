@@ -1,14 +1,6 @@
 # filters
 from netaddr import IPSet
 
-def uppercase_all(arg): 
-    return arg.upper() 
-
-
-def split_newlines(arg,index):
-    return arg.split('\n')[index]
-
-
 def subtract_subnet(original_subnet, remove_subnets):
     """Remove a list of subnets from original subnet and returns a
     list of new subnets sans those removed"""
@@ -21,6 +13,5 @@ def subtract_subnet(original_subnet, remove_subnets):
 class FilterModule(object): 
     def filters(self): 
         return {
-        'uppercase_all': uppercase_all,
-        'split_newlines': split_newlines,
+        'subtract_subnet': subtract_subnet,
         }
