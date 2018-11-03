@@ -1,13 +1,8 @@
 {% for subnet in linknet.available_subnets %}
     {{ subnet }} gives {{ subnet|ipsubnet(linknet.size) }} /{{ linknet.size }} subnets
-{% endfor %}
-~
-{% set linknets = [] %}
-{% for subnet in linknet.available_subnets %}
-    {% for i in range(subnet|ipsubnet(linknet.size|int)) %}
-        {% if true %}
-            {% do linknets.append(subnet|ipsubnet(30,i)) %}
-            - {{ subnet|ipsubnet(30,i) }}
-        {% endif %}
-{% endfor %}
+
+    - {{ subnet|ipsubnet(linknet.size,0) }}
+    - {{ subnet|ipsubnet(linknet.size,1) }}
+    - {{ subnet|ipsubnet(linknet.size,2) }}
+    - {{ subnet|ipsubnet(linknet.size,3) }}
 {% endfor %}
