@@ -1,6 +1,7 @@
 {% for subnet in linknet.available_subnets %}
     {{ subnet }} gives {{ subnet|ipsubnet(linknet.size) }} /{{ linknet.size }} subnets
-    {{ subnet|ipsubnet(linknet.size|int) }}
-    
+    {% for i in range(subnet|ipsubnet(linknet.size)|int) %}
+        - {{ subnet|ipsubnet(linknet.size,i) }}
+    {% endfor %}
 
 {% endfor %}
