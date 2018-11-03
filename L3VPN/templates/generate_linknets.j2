@@ -6,8 +6,8 @@
 {% for subnet in linknet.available_subnets %}
     {% for i in range(subnet|ipsubnet(linknet.size)) %}
         {% if linknets|length < fabric|length %}
-            {% do linknets.append(subnet|ipsubnet(30,i)) %}
-            - {{ subnet|ipsubnet(30,i) }}
+            {% do linknets.append(subnet|ipsubnet(30,0)) %}
+            - {{ subnet|ipsubnet(30,0) }}
         {% endif %}
     {% endfor %}
 {% endfor %}
