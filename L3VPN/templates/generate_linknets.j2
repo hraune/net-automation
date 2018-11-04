@@ -7,15 +7,31 @@ linknet:
   size: {{ linknet.size }}
   # List of linknets generated, will be updated if fabrict is updated
   fabric_linknets:
-
-
-{% set linknets = linknet.fabric_linknets %}
-{% if linknets != None %}
-{##}{% for existing in linknets %}
-{##}{##}{% if linknets|length < fabric|length %}
+{% if linknet.available_subnets != None %}
+{##}{% set linknets = linknet.fabric_linknets if linknet.fabric_linknets != None else [] %}
+{##}{% if linknets != None %}
+{##}{##}{% for existing in linknets %}
+{##}{##}{##}{% if linknets|length < fabric|length %}
     - {{ existing }}
-{##}{##}{% endif %}
+{##}{##}{##}{% endif %}
+{##}{##}{% endfor %}
+{##}{% endif %}
+{##}{% for subnet in linknet.available_subnets %}
+{##}{##}{% for i in range(subnet|ipsubnet(linknet.size)|int) %}
+{##}{##}{##}{% if linknets|length < fabric|length %}
+{##}{##}{##}{##}{% do linknets.append(subnet|ipsubnet(linknet.size,i)) %}
+    - {{ subnet|ipsubnet(linknet.size,i) }}
+{##}{##}{##}{% endif %}
+{##}{##}{% endfor %}
 {##}{% endfor %}
-{% else %}
-foo i foo
+{% endif %}
+  # List of available subnets to pull linknets from
+  available_subnets:
+{% if linknet.available_subnets|length > 0 %}
+{##}{% for subnet in linknet.available_subnets %}
+{##}{##}{% set new_subnets = subnet|subtract_subnet(linknets) %}
+{##}{##}{% for new_subnet in new_subnets %}
+    - {{ new_subnet }}
+{##}{##}{% endfor %}
+{##}{% endfor %}
 {% endif %}
