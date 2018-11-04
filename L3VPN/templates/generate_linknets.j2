@@ -8,7 +8,7 @@ linknet:
   # List of linknets generated, will add/remove addresses if fabric is updated
   fabric_linknets:
 {% set linknets = linknet.fabric_linknets[:fabric|length] if linknet.fabric_linknets != None else [] %}
-{% set leftover = linknet.fabric_linknets[fabric|length:] if linknet.fabric_linknets != None %}
+{% set leftover = linknet.fabric_linknets[fabric|length:] if linknet.fabric_linknets != None else [] %}
 {% set subnets = linknet.available_subnets if linknet.available_subnets != None else [] %}
 {% for existing in linknets %}
     - {{ existing }}
