@@ -5,13 +5,16 @@
 linknet:
   # Size of linknets
   size: {{ linknet.size }}
-  # List of linknets generated, will be updated if fabrict is updated
+  # List of linknets generated, will add/remove addresses if fabric is updated
   fabric_linknets:
 {% set linknets = linknet.fabric_linknets if linknet.fabric_linknets != None else [] %}
+{% set leftover = [] %}
 {% set subnets = linknet.available_subnets if linknet.available_subnets != None else [] %}
 {% for existing in linknets %}
 {##}{% if linknets|length < fabric|length %}
     - {{ existing }}
+{##}{% else %}
+{##}{##}{% do leftover.append(existing) %}
 {##}{% endif %}
 {% endfor %}
 {% for subnet in subnets %}
@@ -25,7 +28,7 @@ linknet:
   # List of available subnets to pull linknets from
   available_subnets:
 {% for subnet in subnets if subnets|length > 0 %}
-{##}{% set new_subnets = subnet|subtract_subnet(linknets) %}
+{##}{% set new_subnets = (subnet|subtract_subnet(linknets) + leftover)|cidr_merge %}
 {##}{% for new_subnet in new_subnets %}
     - {{ new_subnet }}
 {##}{% endfor %}
