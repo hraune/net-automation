@@ -8,13 +8,11 @@ linknet:
   # List of linknets generated, will be updated if fabrict is updated
   fabric_linknets:
 {% if linknet.available_subnets|length > 0 %}
-{##}{% if linknet.fabric_linknets|length > 0 %}
-{##}{##}{% for existing in linknet.fabric_linknets %}
-{##}{##}{##}{% if linknets|length < fabric|length %}
+{##}{% for existing in linknet.fabric_linknets if is not none %}
+{##}{##}{% if linknets|length < fabric|length %}
     - {{ existing }}
-{##}{##}{##}{% endif %}    
-{##}{##}{% endfor %}
-{##}{% endif %}
+{##}{##}{% endif %}
+{##}{% endfor %}
 {##}{% for subnet in linknet.available_subnets %}
 {##}{##}{% for i in range(subnet|ipsubnet(linknet.size)|int) %}
 {##}{##}{##}{% if linknets|length < fabric|length %}
