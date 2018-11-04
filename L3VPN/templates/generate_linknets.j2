@@ -21,11 +21,10 @@ linknet:
 {##}{##}{% endif %}
 {##}{% endfor %}
 {% endfor %}
-# leftover : {{ leftover | length }}
   # List of available subnets to pull linknets from
   available_subnets:
 {% for subnet in subnets if subnets|length > 0 %}
-{##}{% set new_subnets = subnet|subtract_subnet(linknets) + leftover %}
+{##}{% set new_subnets = (subnet|subtract_subnet(linknets)|list + leftover|list)|cidr_merge %}
 {##}{% for new_subnet in new_subnets %}
     - {{ new_subnet }}
 {##}{% endfor %}
