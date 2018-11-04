@@ -5,9 +5,9 @@
 linknet:
   # Size of linknets
   size: 30
-  # List of linknets generated for this run, this will be overwritten on each run
+  # List of linknets generated for this run, this will be overwritten on each run.
   fabric_linknets:
-  # List of available subnets to pull linknets from
+  # List of available subnets to pull linknets from.
   available_subnets:
     - 10.25.25.176/28
     - 10.99.100.96/27
