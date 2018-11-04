@@ -3,7 +3,9 @@
 # Could put this in a separate place that we can import from, and export
 # revised networks to after we have taken needed networks.
 linknet:
+  # Size of linknets
   size: {{ linknet.size }}
+  # List of linknets generated for this run, this will be overwritten on each run
   fabric_linknets:
 {% set linknets = [] %}
 {% for subnet in linknet.available_subnets %}
@@ -14,8 +16,8 @@ linknet:
 {##}{##}{% endif %}
 {##}{% endfor %}
 {% endfor %}
-~
-available_subnets:
+  # List of available subnets to pull linknets from
+  available_subnets:
 {% for subnet in linknet.available_subnets %}
 {##}{% set new_subnets = subnet|subtract_subnet(linknets) %}
 {##}{% for new_subnet in new_subnets %}

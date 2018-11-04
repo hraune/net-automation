@@ -14,4 +14,4 @@
     - name: Generate linknets
       template:
         src: "{{ template_path }}/generate_linknets.j2"
-        dest: "{{ output_path }}/ip_addresses.yml"
+        dest: ip_addresses.yml
