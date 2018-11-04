@@ -4,7 +4,7 @@
   vars:
     - template_path: templates
     - output_path: output
-  vars_files: [fabric.yml]
+  vars_files: [fabric.yml, ip_addresses.yml]
   tasks:
     - name: Create output directory
       file:
@@ -14,4 +14,4 @@
     - name: Generate linknets
       template:
         src: "{{ template_path }}/generate_linknets.j2"
-        dest: "{{ output_path }}/linknets.csv"
+        dest: "{{ output_path }}/ip_addresses.yml"

@@ -1,0 +1,15 @@
+---
+# List of available ipv4 networks that we can pull linknets(/30) from.
+# Could put this in a separate place that we can import from, and export
+# revised networks to after we have taken needed networks.
+linknet:
+  # Size of linknets
+  size: 30
+  # List of linknets generated for this run, this will be overwritten on each run
+  fabric_linknets:
+    - 0.0.0.0
+  # List of available subnets to pull linknets from
+  available_subnets:
+    - 10.25.25.176/28
+    - 10.99.100.96/27
+    - 10.203.55.0/24
