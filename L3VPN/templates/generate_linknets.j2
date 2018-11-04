@@ -8,7 +8,7 @@ linknet:
   # List of linknets generated, will be updated if fabrict is updated
   fabric_linknets:
 {% if linknet.available_subnets|length > 0 %}
-{##}{% set linknets = linknets.fabric_linknets %}
+{##}{% set linknets = linknet.fabric_linknets %}
 {##}{% for existing in linknets %}
 {##}{##}{% if linknets|length < fabric|length %}
     - {{ existing }}
