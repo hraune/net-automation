@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+    - template_path: templates
+  vars_files: [fabric.yml, ip_addresses.yml]
+  tasks:
+    - name: Generate linknets
+      template:
+        src: "{{ template_path }}/generate_linknets.j2"
+        dest: output/ip_addresses.yml
