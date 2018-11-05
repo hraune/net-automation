@@ -3,7 +3,7 @@
   gather_facts: no
   vars:
     - template_path: templates
-  vars_files: [fabric.yml, ip_addresses.yml]
+  vars_files: [fabric.yml, ip_addresses.yml, services.yml]
   tasks:
     - name: Remove old node datamodels
       file:
