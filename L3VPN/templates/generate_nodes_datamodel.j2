@@ -7,9 +7,9 @@ nodes:
   {{ node.name }}:
     mgmt: {{ node.mgmt }}
     loopback: {{ node.loopback }}
-    bgp:
 {##}{% set asn = false %}
 {##}{% set rd = false %}
+    bgp:
 {##}{% for bgp in mpbgp %}
 {##}{##}{% if bgp.left == node.name %}
 {##}{##}{##}{% set asn = bgp.left_asn %}
@@ -31,6 +31,7 @@ nodes:
 {##}{##}{% endif %}
 {##}{##}{% if pair.left in isp_nodes or pair.right in isp_nodes %}
       ospf: {id: 1, area: 0}
+{##}{##}{% break %}
 {##}{##}{% else  %}
 {##}{##}{##}{% for vpn in VPNV4 %}
 {##}{##}{##}{##}{% if vpn|in_list_of_tuples(pair.left) or vpn|in_list_of_tuples(pair.right) %}
