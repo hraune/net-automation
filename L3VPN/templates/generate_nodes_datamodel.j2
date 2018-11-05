@@ -19,7 +19,7 @@ nodes:
       - { neighbor: {{ bgp.left }}, ip: {{ bgp.left_ip }}, asn: {{ bgp.left_asn }} }
 {##}{##}{% endif %}
 {##}{% endfor %}
-{##}{% if asn =! false %}
+{##}{% if asn != false %}
     asn: {{ asn }}
 {##}{% endif %}
     interfaces:
