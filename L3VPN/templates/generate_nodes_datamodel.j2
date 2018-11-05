@@ -8,8 +8,8 @@ nodes:
     mgmt: {{ node.mgmt }}
     loopback: {{ node.loopback }}
     bgp:
-{##}{% set asn = "" %}
-{##}{% set rd = "" %}
+{##}{% set asn = false %}
+{##}{% set rd = false %}
 {##}{% for bgp in mpbgp %}
 {##}{##}{% if bgp.left == node.name %}
 {##}{##}{##}{% set asn = bgp.left_asn %}
@@ -19,7 +19,7 @@ nodes:
       - { neighbor: {{ bgp.left }}, ip: {{ bgp.left_ip }}, asn: {{ bgp.left_asn }} }
 {##}{##}{% endif %}
 {##}{% endfor %}
-{##}{% if asn =! "" %}
+{##}{% if asn =! false %}
     asn: {{ asn }}
 {##}{% endif %}
     interfaces:
@@ -41,7 +41,7 @@ nodes:
 {##}{##}{##}{% endfor %}
 {##}{##}{% endif %}
 {##}{% endfor %}
-{##}{% if rd != "" %}
+{##}{% if rd != false %}
     rd: {{ rd }}
 {##}{% endif %}
 {% endfor %}
