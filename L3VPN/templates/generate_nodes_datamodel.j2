@@ -9,6 +9,7 @@ nodes:
     loopback: {{ node.loopback }}
 {##}{% set asn = false %}
 {##}{% set rd = false %}
+{##}{% set isp_ospf = false %}
     bgp:
 {##}{% for bgp in mpbgp %}
 {##}{##}{% if bgp.left == node.name %}
@@ -30,8 +31,7 @@ nodes:
       {{ pair.right_port }}: {{ linknet.fabric_linknets[loop.index0]|ipaddr('2') }}
 {##}{##}{% endif %}
 {##}{##}{% if pair.left in isp_nodes or pair.right in isp_nodes %}
-      ospf: {id: 1, area: 0}
-{##}{##}{% break %}
+{##}{##}{##}{% set isp_ospf = true %}
 {##}{##}{% else  %}
 {##}{##}{##}{% for vpn in VPNV4 %}
 {##}{##}{##}{##}{% if vpn|in_list_of_tuples(pair.left) or vpn|in_list_of_tuples(pair.right) %}
@@ -40,6 +40,10 @@ nodes:
 {##}{##}{##}{##}{##}{% set rd = vpn.rd %}
 {##}{##}{##}{##}{% endif %}
 {##}{##}{##}{% endfor %}
+{##}{##}{% endif %}
+{##}{##}{% if isp_ospf %}
+      ospf: {id: 1, area: 0}
+{##}{##}{##}{% set isp_ospf = false %}
 {##}{##}{% endif %}
 {##}{% endfor %}
 {##}{% if rd != false %}
