@@ -5,6 +5,11 @@
     - template_path: templates
   vars_files: [fabric.yml, ip_addresses.yml]
   tasks:
+    - name: Remove old linknets
+      file:
+        path: ip_addresses.yml
+        state: absent
+
     - name: Generate linknets
       template:
         src: "{{ template_path }}/generate_linknets.j2"
