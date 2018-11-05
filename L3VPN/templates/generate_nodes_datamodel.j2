@@ -17,6 +17,7 @@ nodes:
 {##}{##}{% elif bgp.right == node.name %}
 {##}{##}{##}{% set asn = bgp.right_asn %}
       - { neighbor: {{ bgp.left }}, ip: {{ bgp.left_ip }}, asn: {{ bgp.left_asn }} }
+{##}{##}{% endif %}
 {##}{% endfor %}
 {##}{% if asn =! "" %}
     asn: {{ asn }}
@@ -28,11 +29,9 @@ nodes:
 {##}{##}{% elif pair.right == node.name %}
       {{ pair.right_port }}: {{ fabric_linknets[loop.index0]|ipaddr('2') }}
 {##}{##}{% endif %}
-
 {##}{##}{% if pair.left in isp_nodes or pair.right in isp_nodes %}
       ospf: {id: 1, area: 0}
 {##}{##}{% else  %}
-
 {##}{##}{##}{% for vpn in VPNV4 %}
 {##}{##}{##}{##}{% if vpn|in_list_of_tuples(pair.left) or vpn|in_list_of_tuples(pair.right) %}
       ospf: {id: vpn.ospfid, area: 0}
