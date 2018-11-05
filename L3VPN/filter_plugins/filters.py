@@ -11,7 +11,7 @@ def subtract_subnet(original_subnet, remove_subnets):
 
 def in_list_of_tuples(ls, value):
     """Checks if value is present in a list of tuples"""
-    return len([tup for tup in a if value in tup]) > 0
+    return len([tup for tup in ls if value in tup]) > 0
 
 class FilterModule(object): 
     def filters(self): 
