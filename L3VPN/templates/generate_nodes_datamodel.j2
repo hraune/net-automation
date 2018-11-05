@@ -25,9 +25,9 @@ nodes:
     interfaces:
 {##}{% for pair in fabric %} 
 {##}{##}{% if pair.left == node.name %}
-      {{ pair.left_port }}: {{ fabric_linknets[loop.index0]|ipaddr('1') }}
+      {{ pair.left_port }}: {{ linknet.fabric_linknets[loop.index0]|ipaddr('1') }}
 {##}{##}{% elif pair.right == node.name %}
-      {{ pair.right_port }}: {{ fabric_linknets[loop.index0]|ipaddr('2') }}
+      {{ pair.right_port }}: {{ linknet.fabric_linknets[loop.index0]|ipaddr('2') }}
 {##}{##}{% endif %}
 {##}{##}{% if pair.left in isp_nodes or pair.right in isp_nodes %}
       ospf: {id: 1, area: 0}
