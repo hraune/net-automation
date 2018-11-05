@@ -34,8 +34,8 @@ nodes:
 {##}{##}{##}{% if pair.left in isp_nodes and pair.right in isp_nodes %}
       ospf: {id: 1, area: 0}
 {##}{##}{##}{% else  %}
-{##}{##}{##}{##}{% for vpn in VPNV4 %}
-{##}{##}{##}{##}{##}{% if vpn.nodes|in_list_of_tuples(pair.left) or vpn.nodes|in_list_of_tuples(pair.right) %}
+{##}{##}{##}{##}{% for vpn,params in VPNV4 %}
+{##}{##}{##}{##}{##}{% if params.nodes|in_list_of_tuples(pair.left) or params.nodes|in_list_of_tuples(pair.right) %}
       ospf: {id: vpn.ospfid, area: 0}
       vrf: {{ vpn }}
 {##}{##}{##}{##}{##}{##}{% set rd = vpn.rd %}
