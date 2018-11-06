@@ -9,7 +9,7 @@ nodes:
     mgmt: {{ node.mgmt }}
     loopback: {{ node.loopback }}
 {##}{% set asn = false %}
-{##}{% set rd = false %}
+{##}{% set vpns = [] %}
     bgp:
 {##}{% for bgp in mpbgp %}
 {##}{##}{% if bgp.left == node.name %}
@@ -28,10 +28,10 @@ nodes:
 {##}{% for pair in fabric %} 
 {##}{##}{% if pair.left == node.name or pair.right == node.name %}
 {##}{##}{##}{% if pair.left == node.name %}
-      {{ pair.left_port }}: {{ linknet.fabric_linknets[loop.index0]|ipaddr('1') }}
+      {{ pair.left_port }}: { ip: {{ linknet.fabric_linknets[loop.index0]|ipaddr('1') }},
       {% set to_node = pair.right %}
 {##}{##}{##}{% else %}
-      {{ pair.right_port }}: {{ linknet.fabric_linknets[loop.index0]|ipaddr('2') }}
+      {{ pair.right_port }}: { ip: {{ linknet.fabric_linknets[loop.index0]|ipaddr('2') }},
       {% set to_node = pair.left %}
 {##}{##}{##}{% endif %}
 {##}{##}{##}{% if pair.left in isp_nodes and pair.right in isp_nodes %}
@@ -40,18 +40,23 @@ nodes:
 {##}{##}{##}{##}{% for vpn in VPNV4 %}
 {##}{##}{##}{##}{##}{% for key,value in vpn.nodes.items() %}
 {##}{##}{##}{##}{##}{##}{% if node.name in isp_nodes and value == node.name and key == to_node %}
-      ospf: {id: {{ vpn.ospfid }}, area: 0}
-      vrf: {{ vpn.name }}
+      ospf: {id: {{ vpn.ospfid }}, area: 0},
+      vrf: {{ vpn.name }},
+{##}{##}{##}{##}{##}{##}{##}{% do vpns.append({name: vpn.name, rd: vpn.rd}) %}
 {##}{##}{##}{##}{##}{##}{% elif key == node.name %}
-      ospf: {id: {{ vpn.ospfid }}, area: 0}
+      ospf: {id: {{ vpn.ospfid }}, area: 0},
 {##}{##}{##}{##}{##}{##}{% endif %}
-{##}{##}{##}{##}{##}{##}{% set rd = vpn.rd %}
+      }
 {##}{##}{##}{##}{##}{% endfor %}
 {##}{##}{##}{##}{% endfor %}
 {##}{##}{##}{% endif %}
 {##}{##}{% endif %}
 {##}{% endfor %}
-{##}{% if rd != false %}
-    rd: {{ rd }}
+{##}{% if vpns|length > 0 %}
+    vpn:
+{##}{##}{% for vpn in vpns %}
+      - name: {{ vpn[name] }}
+        rd: {{ vpn[rd] }}
+{##}{##}{% endfor %}
 {##}{% endif %}
 {% endfor %}
