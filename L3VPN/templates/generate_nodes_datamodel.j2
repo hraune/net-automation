@@ -3,8 +3,7 @@
 
 nodes:
 
-{% for node in nodes -%}
-
+{% for node in nodes %}
   {{ node.name }}:
     mgmt: {{ node.mgmt }}
     loopback: {{ node.loopback }}
@@ -60,4 +59,4 @@ nodes:
         rd: {{ vpn['rd'] }}
 {##}{##}{%- endfor %}
 {##}{% endif %}
-{%- endfor %}
+{% endfor %}
