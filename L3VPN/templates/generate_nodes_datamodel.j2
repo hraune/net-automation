@@ -35,15 +35,13 @@ nodes:
       ospf: {id: 1, area: 0}
 {##}{##}{##}{% else  %}
 {##}{##}{##}{##}{% for vpn in VPNV4 %}
-{##}{##}{##}{##}{##}{% if  (vpn.nodes|is_in_tuplist(pair.left) or 
-                            vpn.nodes|is_in_tuplist(pair.right)) and 
-                            vpn.nodes|is_in_tuplist(node.name) %}
+{##}{##}{##}{##}{##}{% for tup in vpn.nodes if node.name in tup %}
       ospf: {id: {{ vpn.ospfid }}, area: 0}
 {##}{##}{##}{##}{##}{##}{% if node.name in isp_nodes %}
       vrf: {{ vpn.name }}
 {##}{##}{##}{##}{##}{##}{% endif %}
 {##}{##}{##}{##}{##}{##}{% set rd = vpn.rd %}
-{##}{##}{##}{##}{##}{% endif %}
+{##}{##}{##}{##}{##}{% endfor %}
 {##}{##}{##}{##}{% endfor %}
 {##}{##}{##}{% endif %}
 {##}{##}{% endif %}
