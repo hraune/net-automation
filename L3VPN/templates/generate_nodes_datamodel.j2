@@ -35,9 +35,9 @@ nodes:
       ospf: {id: 1, area: 0}
 {##}{##}{##}{% else  %}
 {##}{##}{##}{##}{% for vpn in VPNV4 %}
-{##}{##}{##}{##}{##}{% if vpn.nodes|in_list(pair.left) or vpn.nodes|in_list(pair.right) %}
+{##}{##}{##}{##}{##}{% if vpn.nodes|is_in_tuplist(pair.left) or vpn.nodes|is_in_tuplist(pair.right) %}
       ospf: {id: vpn.ospfid, area: 0}
-      vrf: {{ vpn }}
+      vrf: {{ vpn.name }}
 {##}{##}{##}{##}{##}{##}{% set rd = vpn.rd %}
 {##}{##}{##}{##}{##}{% endif %}
 {##}{##}{##}{##}{% endfor %}
