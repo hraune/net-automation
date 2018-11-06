@@ -35,7 +35,7 @@ nodes:
       ospf: {id: 1, area: 0}
 {##}{##}{##}{% else  %}
 {##}{##}{##}{##}{% for vpn in VPNV4 %}
-{##}{##}{##}{##}{##}{% for key,value in vpn.nodes %}
+{##}{##}{##}{##}{##}{% for key,value in vpn.nodes.items() %}
 {##}{##}{##}{##}{##}{##}{% if node.name in isp_nodes and value == node.name %}
       ospf: {id: {{ vpn.ospfid }}, area: 0}
       vrf: {{ vpn.name }}
