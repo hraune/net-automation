@@ -42,7 +42,7 @@ nodes:
 {##}{##}{##}{##}{##}{##}{% if node.name in isp_nodes and value == node.name and key == to_node %}
       ospf: {id: {{ vpn.ospfid }}, area: 0},
       vrf: {{ vpn.name }},
-{##}{##}{##}{##}{##}{##}{##}{% do vpns.append({name: vpn.name, rd: vpn.rd}) %}
+{##}{##}{##}{##}{##}{##}{##}{% do vpns.append({'name': vpn.name, 'rd': vpn.rd}) %}
 {##}{##}{##}{##}{##}{##}{% elif key == node.name %}
       ospf: {id: {{ vpn.ospfid }}, area: 0},
 {##}{##}{##}{##}{##}{##}{% endif %}
@@ -55,8 +55,8 @@ nodes:
 {##}{% if vpns|length > 0 %}
     vpn:
 {##}{##}{% for vpn in vpns %}
-      - name: {{ vpn[name] }}
-        rd: {{ vpn[rd] }}
+      - name: {{ vpn['name'] }}
+        rd: {{ vpn['rd'] }}
 {##}{##}{% endfor %}
 {##}{% endif %}
 {% endfor %}
