@@ -3,7 +3,7 @@
 
 nodes:
 
-{% for node in nodes %}
+{% for node in nodes -%}
 
   {{ node.name }}:
     mgmt: {{ node.mgmt }}
@@ -11,7 +11,7 @@ nodes:
 {##}{% set asn = false %}
 {##}{% set vpns = [] %}
     bgp:
-{##}{% for bgp in mpbgp %}
+{##}{% for bgp in mpbgp -%}
 {##}{##}{% if bgp.left == node.name %}
 {##}{##}{##}{% set asn = bgp.left_asn %}
       - { neighbor: {{ bgp.right }}, ip: {{ bgp.right_ip }}, asn: {{ bgp.right_asn }} }
@@ -19,13 +19,13 @@ nodes:
 {##}{##}{##}{% set asn = bgp.right_asn %}
       - { neighbor: {{ bgp.left }}, ip: {{ bgp.left_ip }}, asn: {{ bgp.left_asn }} }
 {##}{##}{% endif %}
-{##}{% endfor %}
+{##}{%- endfor %}
 {##}{% if asn != false %}
     asn: {{ asn }}
 {##}{% endif %}
     interfaces:
 {##}{% set to_node = "" %}
-{##}{% for pair in fabric %} 
+{##}{% for pair in fabric -%} 
 {##}{##}{% if pair.left == node.name or pair.right == node.name %}
 {##}{##}{##}{% if pair.left == node.name %}
       - name: {{ pair.left_port }}
@@ -39,25 +39,25 @@ nodes:
 {##}{##}{##}{% if pair.left in isp_nodes and pair.right in isp_nodes %}
         ospf: {id: 1, area: 0}
 {##}{##}{##}{% else  %}
-{##}{##}{##}{##}{% for vpn in VPNV4 %}
-{##}{##}{##}{##}{##}{% for key,value in vpn.nodes.items() %}
+{##}{##}{##}{##}{% for vpn in VPNV4 -%}
+{##}{##}{##}{##}{##}{% for key,value in vpn.nodes.items() -%}
 {##}{##}{##}{##}{##}{##}{% if node.name in isp_nodes and value == node.name and key == to_node %}
-        ospf: {id: {{ vpn.ospfid }}, area: 0},
-        vrf: {{ vpn.name }},
+        ospf: {id: {{ vpn.ospfid }}, area: 0}
+        vrf: {{ vpn.name }}
 {##}{##}{##}{##}{##}{##}{##}{% do vpns.append({'name': vpn.name, 'rd': vpn.rd}) %}
 {##}{##}{##}{##}{##}{##}{% elif key == node.name %}
-        ospf: {id: {{ vpn.ospfid }}, area: 0},
+        ospf: {id: {{ vpn.ospfid }}, area: 0}
 {##}{##}{##}{##}{##}{##}{% endif %}
-{##}{##}{##}{##}{##}{% endfor %}
-{##}{##}{##}{##}{% endfor %}
-{##}{##}{##}{% endif %}
+{##}{##}{##}{##}{##}{%- endfor %}
+{##}{##}{##}{##}{%- endfor %}
+{##}{##}{##}{%- endif %}
 {##}{##}{% endif %}
-{##}{% endfor %}
+{##}{%- endfor %}
 {##}{% if vpns|length > 0 %}
     vpn:
-{##}{##}{% for vpn in vpns %}
+{##}{##}{% for vpn in vpns -%}
       - name: {{ vpn['name'] }}
         rd: {{ vpn['rd'] }}
-{##}{##}{% endfor %}
+{##}{##}{%- endfor %}
 {##}{% endif %}
-{% endfor %}
+{%- endfor %}
