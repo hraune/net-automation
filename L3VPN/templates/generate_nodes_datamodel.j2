@@ -24,30 +24,19 @@ nodes:
     asn: {{ asn }}
 {##}{% endif %}
     interfaces:
-    {% set left = false %}
 {##}{% for pair in fabric %} 
 {##}{##}{% if pair.left == node.name or pair.right == node.name %}
 {##}{##}{##}{% if pair.left == node.name %}
       {{ pair.left_port }}: {{ linknet.fabric_linknets[loop.index0]|ipaddr('1') }}
-      {% set left = false %}
 {##}{##}{##}{% else %}
       {{ pair.right_port }}: {{ linknet.fabric_linknets[loop.index0]|ipaddr('2') }}
-      {% set left = true %}
 {##}{##}{##}{% endif %}
 {##}{##}{##}{% if pair.left in isp_nodes and pair.right in isp_nodes %}
       ospf: {id: 1, area: 0}
 {##}{##}{##}{% else  %}
 {##}{##}{##}{##}{% for vpn in VPNV4 %}
-{##}{##}{##}{##}{##}{% for tup in vpn.nodes if node.name in tup %}
-                        {% if left %}
-                            {% if pair.left in node %}
+{##}{##}{##}{##}{##}{% for tup in vpn.nodes if tup == (pair.left, pair.right) or tup == (pair.right, pair.left) %}
       ospf: {id: {{ vpn.ospfid }}, area: 0}
-                            {% endif %}
-                        {% else %}
-                            {% if pair.right in node %}
-      ospf: {id: {{ vpn.ospfid }}, area: 0}
-                            {% endif %}
-                        {% endif %}
 {##}{##}{##}{##}{##}{##}{% if node.name in isp_nodes %}
       vrf: {{ vpn.name }}
 {##}{##}{##}{##}{##}{##}{% endif %}
