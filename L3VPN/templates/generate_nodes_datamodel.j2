@@ -24,18 +24,21 @@ nodes:
     asn: {{ asn }}
 {##}{% endif %}
     interfaces:
+    {% set connects_to = false %}
 {##}{% for pair in fabric %} 
 {##}{##}{% if pair.left == node.name or pair.right == node.name %}
 {##}{##}{##}{% if pair.left == node.name %}
       {{ pair.left_port }}: {{ linknet.fabric_linknets[loop.index0]|ipaddr('1') }}
+      {% set connects_to = pair.right %}
 {##}{##}{##}{% else %}
       {{ pair.right_port }}: {{ linknet.fabric_linknets[loop.index0]|ipaddr('2') }}
+      {% set connects_to = pair.left %}
 {##}{##}{##}{% endif %}
 {##}{##}{##}{% if pair.left in isp_nodes and pair.right in isp_nodes %}
       ospf: {id: 1, area: 0}
 {##}{##}{##}{% else  %}
 {##}{##}{##}{##}{% for vpn in VPNV4 %}
-{##}{##}{##}{##}{##}{% for tup in vpn.nodes if (node.name in tup and (pair.left in tup or pair.right in tup) ) %}
+{##}{##}{##}{##}{##}{% for tup in vpn.nodes if (node.name in tup and connects_to in tup %}
       ospf: {id: {{ vpn.ospfid }}, area: 0}
 {##}{##}{##}{##}{##}{##}{% if node.name in isp_nodes %}
       vrf: {{ vpn.name }}
