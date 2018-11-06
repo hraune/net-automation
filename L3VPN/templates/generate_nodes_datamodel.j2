@@ -4,6 +4,7 @@
 nodes:
 
 {% for node in nodes %}
+
   {{ node.name }}:
     mgmt: {{ node.mgmt }}
     loopback: {{ node.loopback }}
@@ -54,9 +55,9 @@ nodes:
 {##}{%- endfor %}
 {##}{% if vpns|length > 0 %}
     vpn:
-{##}{##}{% for vpn in vpns -%}
+{##}{##}{% for vpn in vpns %}
       - name: {{ vpn['name'] }}
         rd: {{ vpn['rd'] }}
-{##}{##}{%- endfor %}
+{##}{##}{% endfor %}
 {##}{% endif %}
 {% endfor %}
