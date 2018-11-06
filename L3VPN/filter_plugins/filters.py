@@ -17,5 +17,5 @@ class FilterModule(object):
     def filters(self): 
         return {
         'subtract_subnet': subtract_subnet,
-        'in_list': in_list,
+        'is_in_tuplist': is_in_tuplist,
         }
