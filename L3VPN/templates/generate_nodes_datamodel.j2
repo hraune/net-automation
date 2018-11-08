@@ -7,9 +7,9 @@ nodes:
 
   {{ node.name }}:
     mgmt: {{ node.mgmt }}
-    loopback: {{ node.loopback }}
-{##}{% set asn = false %}
+{##}{% set asn = 0 %}
 {##}{% set vpns = [] %}
+{##}{% set lo_ospf_id = 1 %}
     bgp:
 {##}{% for bgp in mpbgp -%}
 {##}{##}{% if bgp.left == node.name %}
@@ -20,7 +20,7 @@ nodes:
       - { neighbor: {{ bgp.left }}, ip: {{ bgp.left_ip }}, asn: {{ bgp.left_asn }} }
 {##}{##}{% endif %}
 {##}{%- endfor %}
-{##}{% if asn != false %}
+{##}{% if asn > 0 %}
     asn: {{ asn }}
 {##}{% endif %}
     interfaces:
@@ -29,10 +29,12 @@ nodes:
 {##}{##}{% if pair.left == node.name or pair.right == node.name %}
 {##}{##}{##}{% if pair.left == node.name %}
       - name: {{ pair.left_port }}
+        description: To {{ pair.right }};{{ pair.right_port }}
         ip: {{ linknet.fabric_linknets[loop.index0]|ipaddr('1') }}
 {##}{##}{##}{##}{% set to_node = pair.right %}
 {##}{##}{##}{% else %}
       - name: {{ pair.right_port }}
+        description: To {{ pair.left }};{{ pair.left_port }}
         ip: {{ linknet.fabric_linknets[loop.index0]|ipaddr('2') }}
 {##}{##}{##}{##}{% set to_node = pair.left %}
 {##}{##}{##}{% endif %}
@@ -44,9 +46,10 @@ nodes:
 {##}{##}{##}{##}{##}{##}{% if node.name in isp_nodes and value == node.name and key == to_node %}
         ospf: {id: {{ vpn.ospfid }}, area: 0}
         vrf: {{ vpn.name }}
-{##}{##}{##}{##}{##}{##}{##}{% do vpns.append({'name': vpn.name, 'rd': vpn.rd}) %}
+{##}{##}{##}{##}{##}{##}{##}{% do vpns.append({'name': vpn.name, 'rd': vpn.rd, opsf: {id: {{ vpn.ospfid }}, area: 0}}) %}
 {##}{##}{##}{##}{##}{##}{% elif key == node.name %}
         ospf: {id: {{ vpn.ospfid }}, area: 0}
+{##}{##}{##}{##}{##}{##}{##}{% set lo_ospf_id = vpn.ospfid %}
 {##}{##}{##}{##}{##}{##}{% endif %}
 {##}{##}{##}{##}{##}{%- endfor %}
 {##}{##}{##}{##}{%- endfor %}
@@ -58,6 +61,9 @@ nodes:
 {##}{##}{% for vpn in vpns %}
       - name: {{ vpn['name'] }}
         rd: {{ vpn['rd'] }}
+        ospf: {{ vpn['ospf'] }}
 {##}{##}{% endfor %}
 {##}{% endif %}
+    loopback: { ip:{{ node.loopback }}, ospf: { id: {% if node.name in isp_nodes %}1{% else %}{{ lo_ospf_id }}{% endif %}, area: 0}}
+    provider: {% if node.name in isp_nodes %}True{% else %}False{% endif %}
 {% endfor %}

@@ -4,13 +4,24 @@
   vars:
     - template_path: templates
   vars_files: [fabric.yml, ip_addresses.yml, services.yml]
+
   tasks:
     - name: Remove old node datamodels
       file:
         path: nodes.yml
         state: absent
 
+    - name: Remove old hosts file
+      file:
+        path: hosts
+        state: absent
+
     - name: Generate nodes datamodel
       template:
         src: "{{ template_path }}/generate_nodes_datamodel.j2"
         dest: nodes.yml
+
+    - name: Generate hosts file
+      template:
+        src: "{{ template_path }}/generate_hosts_file.j2"
+        dest: hosts
