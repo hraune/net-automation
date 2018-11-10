@@ -60,7 +60,7 @@ nodes:
     vpn:
 {##}{##}{% for vpn in vpns %}
       - name: {{ vpn['name'] }}
-        rd: {{ vpn['rd'] }}
+        rd: "{{ vpn['rd'] }}"
         ospf: {{ vpn['ospf'] }}
 {##}{##}{% endfor %}
 {##}{% endif %}
