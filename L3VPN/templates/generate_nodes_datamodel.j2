@@ -9,7 +9,7 @@ nodes:
     mgmt: {{ node.mgmt }}
 {##}{% set asn = 0 %}
 {##}{% set vpns = [] %}
-{##}{% set lo_ospf_id = 0 %}
+{##}{% set lo_ospf_id = false %}
     bgp:
 {##}{% for bgp in mpbgp -%}
 {##}{##}{% if bgp.left == node.name %}
@@ -23,6 +23,7 @@ nodes:
 {##}{% if asn > 0 %}
     asn: {{ asn }}
 {##}{% endif %}
+    provider: {% if node.name in isp_nodes %}True{% else %}False{% endif %}
     interfaces:
 {##}{% set to_node = "" %}
 {##}{% for pair in fabric -%} 
@@ -56,8 +57,6 @@ nodes:
 {##}{##}{##}{%- endif %}
 {##}{##}{% endif %}
 {##}{%- endfor %}
-    loopback: { ip:{{ node.loopback }}, ospf: { id: {% if node.name in isp_nodes %}1{% else %}{{ lo_ospf_id }}{% endif %}, area: 0}}
-    provider: {% if node.name in isp_nodes %}True{% else %}False{% endif %}
 {##}{% if vpns|length > 0 %}
     vpn:
 {##}{##}{% for vpn in vpns %}
@@ -66,4 +65,5 @@ nodes:
         ospf: {{ vpn['ospf'] }}
 {##}{##}{% endfor %}
 {##}{% endif %}
+    loopback: { ip:{{ node.loopback }}, ospf: { id: {% if node.name in isp_nodes %}1{% else %}{{ lo_ospf_id }}{% endif %}, area: 0}}
 {% endfor %}
