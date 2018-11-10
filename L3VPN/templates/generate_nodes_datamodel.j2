@@ -13,10 +13,10 @@ nodes:
     bgp:
 {##}{% for bgp in mpbgp -%}
 {##}{##}{% if bgp.left == node.name %}
-{##}{##}{##}{% set asn[0] = bgp.left_asn %}
+{##}{##}{##}{% do asn.append(bgp.left_asn) %}
       - { neighbor: {{ bgp.right }}, ip: {{ bgp.right_ip }}, asn: {{ bgp.right_asn }} }
 {##}{##}{% elif bgp.right == node.name %}
-{##}{##}{##}{% set asn[0] = bgp.right_asn %}
+{##}{##}{##}{% do asn.append(bgp.right_asn) %}
       - { neighbor: {{ bgp.left }}, ip: {{ bgp.left_ip }}, asn: {{ bgp.left_asn }} }
 {##}{##}{% endif %}
 {##}{%- endfor %}
