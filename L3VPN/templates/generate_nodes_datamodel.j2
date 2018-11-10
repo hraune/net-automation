@@ -9,7 +9,7 @@ nodes:
     mgmt: {{ node.mgmt }}
 {##}{% set asn = 0 %}
 {##}{% set vpns = [] %}
-{##}{% set lo_ospf_id = false %}
+{##}{% set lo_ospf_id = [] %}
     bgp:
 {##}{% for bgp in mpbgp -%}
 {##}{##}{% if bgp.left == node.name %}
@@ -50,8 +50,7 @@ nodes:
 {##}{##}{##}{##}{##}{##}{##}{% do vpns.append({'name': vpn.name, 'rd': vpn.rd, 'ospf': {'id': vpn.ospfid, 'area': 0}}) %}
 {##}{##}{##}{##}{##}{##}{% elif key == node.name %}
         ospf: {id: {{ vpn.ospfid }}, area: 0}
-{##}{##}{##}{##}{##}{##}{##}{% set lo_ospf_id = vpn.ospfid %}
-------->{{ lo_ospf_id }}
+{##}{##}{##}{##}{##}{##}{##}{% do lo_ospf_id.append(vpn.ospfid) %}
 {##}{##}{##}{##}{##}{##}{% endif %}
 {##}{##}{##}{##}{##}{%- endfor %}
 {##}{##}{##}{##}{%- endfor %}
@@ -66,5 +65,5 @@ nodes:
         ospf: {{ vpn['ospf'] }}
 {##}{##}{% endfor %}
 {##}{% endif %}
-    loopback: { ip:{{ node.loopback }}, ospf: { id: {% if node.name in isp_nodes %}1{% else %}{{ lo_ospf_id }}{% endif %}, area: 0}}
+    loopback: { ip:{{ node.loopback }}, ospf: { id: {% if node.name in isp_nodes %}1{% else %}{{ lo_ospf_id[0] }}{% endif %}, area: 0}}
 {% endfor %}
