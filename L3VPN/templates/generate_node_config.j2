@@ -16,6 +16,7 @@ interface Loopback0
 !
 {% for interface in node.interfaces %}
 interface {{ interface.name }}
+ description {{ interface.description }}
 {##}{% if interface.vrf is defined %}
  ip vrf forwarding {{ interface.vrf }}
 {##}{% endif %}

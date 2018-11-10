@@ -29,7 +29,7 @@ nodes:
 {##}{##}{% if pair.left == node.name or pair.right == node.name %}
 {##}{##}{##}{% if pair.left == node.name %}
       - name: {{ pair.left_port }}
-        description: To {{ pair.right }};{{ pair.right_port }}
+        description: To {{ pair.right }};{{ pair.right_port[:2] }}{{ pair.right_port[-1:] }}
         ip: {{ linknet.fabric_linknets[loop.index0]|ipaddr('1') }}
 {##}{##}{##}{##}{% set to_node = pair.right %}
 {##}{##}{##}{% else %}
