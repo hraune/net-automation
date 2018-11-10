@@ -24,6 +24,7 @@ mpbgp:
 # Services we are offering
 services: [IPV4, VPNV4]
 
+# All provider nodes
 isp_nodes: [P1, PE1, PE2]
 
 # All the nodes
