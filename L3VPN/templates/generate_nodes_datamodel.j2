@@ -51,6 +51,7 @@ nodes:
 {##}{##}{##}{##}{##}{##}{% elif key == node.name %}
         ospf: {id: {{ vpn.ospfid }}, area: 0}
 {##}{##}{##}{##}{##}{##}{##}{% set lo_ospf_id = vpn.ospfid %}
+------->{{ lo_ospf_id }}
 {##}{##}{##}{##}{##}{##}{% endif %}
 {##}{##}{##}{##}{##}{%- endfor %}
 {##}{##}{##}{##}{%- endfor %}
