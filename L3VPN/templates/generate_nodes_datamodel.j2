@@ -66,4 +66,7 @@ nodes:
 {##}{##}{% endfor %}
 {##}{% endif %}
     loopback: { ip:{{ node.loopback }}, ospf: { id: {% if node.name in isp_nodes %}1{% else %}{{ lo_ospf_id[0] }}{% endif %}, area: 0}}
+~~
+{{ lo_ospf_id|length }}
+~~
 {% endfor %}
