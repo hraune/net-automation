@@ -5,7 +5,7 @@ nodes:
 
 {% for node in nodes %}
 
-  {{ node.name }}:
+  - name: {{ node.name }}:
     mgmt: {{ node.mgmt }}
 {##}{% set asn = 0 %}
 {##}{% set vpns = [] %}
