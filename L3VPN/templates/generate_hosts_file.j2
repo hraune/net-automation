@@ -1,10 +1,10 @@
 [isp]
-{% for node in nodes if node in isp_nodes %}
+{% for node in nodes if node.name in isp_nodes %}
 {{ node.mgmt }}
 {% endfor %}
 
 [cust]
-{% for node in nodes if node not in isp_nodes %}
+{% for node in nodes if node.name not in isp_nodes %}
 {{ node.mgmt }}
 {% endfor %}
 
