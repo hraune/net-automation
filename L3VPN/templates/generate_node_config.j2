@@ -10,7 +10,7 @@ interface Loopback0
  ip address{{ node.loopback.ip }} 255.255.255.255
  ip ospf {{ node.loopback.ospf.id }} area {{ node.loopback.ospf.area }}
 !
-{% for interface in node %}
+{% for interface in node.interfaces %}
 interface {{ interface.name }}
 {##}{% if interface.vrf is defined %}
  ip vrf forwarding {{ interface.vrf }}
