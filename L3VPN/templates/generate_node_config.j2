@@ -57,7 +57,7 @@ router bgp {{ node.asn }}
 {% endfor %}
 {% endif %}
 !
-{% if provider%}
+{% if node.provider%}
 ## VRF config
 {% for vpn in node.vpn %}
 ip vrf {{ vpn.name }}
