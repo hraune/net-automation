@@ -50,14 +50,19 @@ nodes:
 {##}{##}{##}{##}{##}{##}{% elif key == node.name %}
         ospf: {id: {{ vpn.ospfid }}, area: 0}
 {##}{##}{##}{##}{##}{##}{##}{% set lo_ospf_id = vpn.ospfid %}
---->>> {{ lo_ospf_id }}
+1-->>> {{ lo_ospf_id }}
 {##}{##}{##}{##}{##}{##}{% endif %}
+2-->>> {{ lo_ospf_id }}
 {##}{##}{##}{##}{##}{%- endfor %}
+3-->>> {{ lo_ospf_id }}
 {##}{##}{##}{##}{%- endfor %}
+4-->>> {{ lo_ospf_id }}
 {##}{##}{##}{%- endif %}
+5-->>> {{ lo_ospf_id }}
 {##}{##}{% endif %}
+6-->>> {{ lo_ospf_id }}
 {##}{%- endfor %}
---->>> {{ lo_ospf_id }}
+7-->>> {{ lo_ospf_id }}
 {##}{% if vpns|length > 0 %}
     vpn:
 {##}{##}{% for vpn in vpns %}
@@ -66,7 +71,6 @@ nodes:
         ospf: {{ vpn['ospf'] }}
 {##}{##}{% endfor %}
 {##}{% endif %}
---->>> {{ lo_ospf_id }}
     loopback: { ip:{{ node.loopback }}, ospf: { id: {% if node.name in isp_nodes %}1{% else %}{{ lo_ospf_id }}{% endif %}, area: 0}}
     provider: {% if node.name in isp_nodes %}True{% else %}False{% endif %}
 {% endfor %}
