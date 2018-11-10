@@ -7,21 +7,21 @@ nodes:
 
   - name: {{ node.name }}
     mgmt: {{ node.mgmt }}
-{##}{% with asn = 0 %}
+{##}{% set asn = [] %}
 {##}{% set vpns = [] %}
 {##}{% set lo_ospf_id = [] %}
     bgp:
 {##}{% for bgp in mpbgp -%}
 {##}{##}{% if bgp.left == node.name %}
-{##}{##}{##}{% set asn = bgp.left_asn %}
+{##}{##}{##}{% set asn[0] = bgp.left_asn %}
       - { neighbor: {{ bgp.right }}, ip: {{ bgp.right_ip }}, asn: {{ bgp.right_asn }} }
 {##}{##}{% elif bgp.right == node.name %}
-{##}{##}{##}{% set asn = bgp.right_asn %}
+{##}{##}{##}{% set asn[0] = bgp.right_asn %}
       - { neighbor: {{ bgp.left }}, ip: {{ bgp.left_ip }}, asn: {{ bgp.left_asn }} }
 {##}{##}{% endif %}
 {##}{%- endfor %}
-{##}{% if asn > 0 %}
-    asn: {{ asn }}
+{##}{% if asn|length > 0 %}
+    asn: {{ asn[0] }}
 {##}{% endif %}
     interfaces:
 {##}{% set to_node = "" %}
