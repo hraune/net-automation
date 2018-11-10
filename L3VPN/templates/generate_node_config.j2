@@ -2,14 +2,16 @@
 # Node specific config
 
 {% for node in nodes %}
+
 # {{ node.name }}
 
 hostname {{ node.name }}
 
+
 ## Interface config
 
 interface Loopback0
- ip address{{ node.loopback.ip }} 255.255.255.255
+ ip address {{ node.loopback.ip }} 255.255.255.255
  ip ospf {{ node.loopback.ospf.id }} area {{ node.loopback.ospf.area }}
 !
 {% for interface in node.interfaces %}
@@ -22,7 +24,9 @@ interface {{ interface.name }}
 !
 {% endfor %}
 
+
 ## Router config
+
 router ospf {{ node.loopback.ospf.id }}
 {% if node.provider %}
  mpls ldp autoconfig
@@ -60,7 +64,10 @@ router bgp {{ node.asn }}
 {% endif %}
 !
 {% if node.vpn is defined %}
+
+
 ## VRF config
+
 {% for vpn in node.vpn %}
 ip vrf {{ vpn.name }}
  rd: {{ vpn.rd }}
@@ -69,5 +76,5 @@ ip vrf {{ vpn.name }}
 {% endfor %}
 {% endif %}
 
-~~~
+!!!!
 {% endfor %}
