@@ -34,7 +34,7 @@ nodes:
 {##}{##}{##}{##}{% set to_node = pair.right %}
 {##}{##}{##}{% else %}
       - name: {{ pair.right_port }}
-        description: To {{ pair.left }};{{ pair.left_port }}
+        description: To {{ pair.left }};{{ pair.left_port[:2] }}{{ pair.left_port[-1:] }}
         ip: {{ linknet.fabric_linknets[loop.index0]|ipaddr('2') }}
 {##}{##}{##}{##}{% set to_node = pair.left %}
 {##}{##}{##}{% endif %}
