@@ -47,22 +47,15 @@ nodes:
         ospf: {id: {{ vpn.ospfid }}, area: 0}
         vrf: {{ vpn.name }}
 {##}{##}{##}{##}{##}{##}{##}{% do vpns.append({'name': vpn.name, 'rd': vpn.rd, 'ospf': {'id': vpn.ospfid, 'area': 0}}) %}
-{##}{##}{##}{##}{##}{##}{% elif key == node.name %}
+{##}{##}{##}{##}{##}{##}{% elif key == node.name and vpn.ospfid != 1 %}
         ospf: {id: {{ vpn.ospfid }}, area: 0}
 {##}{##}{##}{##}{##}{##}{##}{% set lo_ospf_id = vpn.ospfid %}
-1-->>> {{ lo_ospf_id }}
 {##}{##}{##}{##}{##}{##}{% endif %}
-2-->>> {{ lo_ospf_id }}
 {##}{##}{##}{##}{##}{%- endfor %}
-3-->>> {{ lo_ospf_id }}
 {##}{##}{##}{##}{%- endfor %}
-4-->>> {{ lo_ospf_id }}
 {##}{##}{##}{%- endif %}
-5-->>> {{ lo_ospf_id }}
 {##}{##}{% endif %}
-6-->>> {{ lo_ospf_id }}
 {##}{%- endfor %}
-7-->>> {{ lo_ospf_id }}
 {##}{% if vpns|length > 0 %}
     vpn:
 {##}{##}{% for vpn in vpns %}
