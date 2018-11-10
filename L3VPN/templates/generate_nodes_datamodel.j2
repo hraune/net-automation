@@ -9,7 +9,7 @@ nodes:
     mgmt: {{ node.mgmt }}
 {##}{% set asn = 0 %}
 {##}{% set vpns = [] %}
-{##}{% set lo_ospf_id = 1 %}
+{##}{% set lo_ospf_id = 0 %}
     bgp:
 {##}{% for bgp in mpbgp -%}
 {##}{##}{% if bgp.left == node.name %}
@@ -47,7 +47,7 @@ nodes:
         ospf: {id: {{ vpn.ospfid }}, area: 0}
         vrf: {{ vpn.name }}
 {##}{##}{##}{##}{##}{##}{##}{% do vpns.append({'name': vpn.name, 'rd': vpn.rd, 'ospf': {'id': vpn.ospfid, 'area': 0}}) %}
-{##}{##}{##}{##}{##}{##}{% elif key == node.name and vpn.ospfid != 1 %}
+{##}{##}{##}{##}{##}{##}{% elif key == node.name %}
         ospf: {id: {{ vpn.ospfid }}, area: 0}
 {##}{##}{##}{##}{##}{##}{##}{% set lo_ospf_id = vpn.ospfid %}
 {##}{##}{##}{##}{##}{##}{% endif %}
