@@ -56,6 +56,8 @@ nodes:
 {##}{##}{##}{%- endif %}
 {##}{##}{% endif %}
 {##}{%- endfor %}
+    loopback: { ip:{{ node.loopback }}, ospf: { id: {% if node.name in isp_nodes %}1{% else %}{{ lo_ospf_id }}{% endif %}, area: 0}}
+    provider: {% if node.name in isp_nodes %}True{% else %}False{% endif %}
 {##}{% if vpns|length > 0 %}
     vpn:
 {##}{##}{% for vpn in vpns %}
@@ -64,6 +66,4 @@ nodes:
         ospf: {{ vpn['ospf'] }}
 {##}{##}{% endfor %}
 {##}{% endif %}
-    loopback: { ip:{{ node.loopback }}, ospf: { id: {% if node.name in isp_nodes %}1{% else %}{{ lo_ospf_id }}{% endif %}, area: 0}}
-    provider: {% if node.name in isp_nodes %}True{% else %}False{% endif %}
 {% endfor %}
