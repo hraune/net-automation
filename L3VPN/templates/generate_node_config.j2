@@ -2,7 +2,9 @@
 # Node specific config
 
 {% for node in nodes %}
-# {{ node }}
+# {{ node.name }}
+
+hostname {{ node.name }}
 
 ## Interface config
 
