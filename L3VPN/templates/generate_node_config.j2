@@ -34,7 +34,7 @@ router ospf {{ vpn.ospf.id }} vrf {{ vpn.name }}
     {% endfor %}
 {% endif %}
 
-{% if node.provider %}
+{% if node.asn is defined %}
 router bgp {{ node.asn }}
  bgp log-neighbor-changes
 {% for bgp in node.bgp %}
