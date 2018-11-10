@@ -7,7 +7,7 @@ nodes:
 
   - name: {{ node.name }}
     mgmt: {{ node.mgmt }}
-{##}{% set asn = 0 %}
+{##}{% with asn = 0 %}
 {##}{% set vpns = [] %}
 {##}{% set lo_ospf_id = [] %}
     bgp:
