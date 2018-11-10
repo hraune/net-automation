@@ -12,7 +12,7 @@ The variable files and ansible playbooks used for provisioning of L3VPN:
 ### Playbooks
 * **assign_ip_addresses.yml** - generates *fabric_linknets* from the *available_subnets*. The number of linknets generated is based on the number of links from *fabric*. 
 If there is already some linknets in *fabric linknets*, it will add or subtract linknets to get the number of linknets correct. Unneeded linknets is put back into *available_subnets* (and merged if possible).
-* **generate_nodes_datamodel** - transform all the _**Vars**_ into node-specific data models in **nodes.yml**.
+* **generate_nodes_datamodel** - transform all the _**Vars**_ into node-specific data models in **nodes.yml**. Will also populate the **hosts** file for future playbooks; current playbooks is localhost only.
 * **generate_node_config** - generates all the node specific config into **output/nodes.cfg**.
 
 ## Details
