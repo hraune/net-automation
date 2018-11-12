@@ -22,7 +22,7 @@ nodes:
     {% endfor %}
     {% if asn|length > 0 %}
     asn: {{ asn[0] }}
-    {% endif %}
+    {%- endif %}
     interfaces:
 {##}{% set to_node = "" %}
 {##}{% for pair in fabric -%} 
