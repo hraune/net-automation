@@ -11,7 +11,7 @@ nodes:
     {% set vpns = [] %}
     {% set lo_ospf_id = [] %}
     bgp:
-    {%- for bgp in mpbgp -%}
+    {%- for bgp in mpbgp %}
         {%- if bgp.left == node.name %}
             {% do asn.append(bgp.left_asn) %}
       - { neighbor: {{ bgp.right }}, ip: {{ bgp.right_ip }}, asn: {{ bgp.right_asn }} }
