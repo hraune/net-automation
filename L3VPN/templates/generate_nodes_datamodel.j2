@@ -20,9 +20,9 @@ nodes:
       - { neighbor: {{ bgp.left }}, ip: {{ bgp.left_ip }}, asn: {{ bgp.left_asn }} }
         {% endif %}
     {% endfor %}
-{##}{% if asn|length > 0 %}
+{##}{% if asn|length > 0 -%}
     asn: {{ asn[0] }}
-{##}{% endif %}
+{##}{%- endif %}
     interfaces:
 {##}{% set to_node = "" %}
 {##}{% for pair in fabric -%} 
