@@ -12,10 +12,10 @@ nodes:
     {% set lo_ospf_id = [] %}
     bgp:
     {%- for bgp in mpbgp -%}
-        {%- if bgp.left == node.name -%}
+        {%- if bgp.left == node.name %}
             {% do asn.append(bgp.left_asn) %}
       - { neighbor: {{ bgp.right }}, ip: {{ bgp.right_ip }}, asn: {{ bgp.right_asn }} }
-        {%- elif bgp.right == node.name -%}
+        {%- elif bgp.right == node.name %}
             {% do asn.append(bgp.right_asn) %}
       - { neighbor: {{ bgp.left }}, ip: {{ bgp.left_ip }}, asn: {{ bgp.left_asn }} }
         {%- endif %}
