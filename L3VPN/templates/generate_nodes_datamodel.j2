@@ -7,9 +7,9 @@ nodes:
 
   - name: {{ node.name }}
     mgmt: {{ node.mgmt }}
-    {% set asn = [] %}
-    {%- set vpns = [] %}
-    {%- set lo_ospf_id = [] %}
+    {%- set asn = [] -%}
+    {%- set vpns = [] -%}
+    {%- set lo_ospf_id = [] -%}
     bgp:
     {% for bgp in mpbgp %}
         {%- if bgp.left == node.name %}
