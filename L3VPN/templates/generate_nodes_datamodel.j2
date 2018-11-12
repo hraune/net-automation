@@ -7,22 +7,22 @@ nodes:
 
   - name: {{ node.name }}
     mgmt: {{ node.mgmt }}
-    {% set asn = [] -%}
-    {%- set vpns = [] -%}
-    {%- set lo_ospf_id = [] -%}
+{##}{% set asn = [] %}
+{##}{% set vpns = [] %}
+{##}{% set lo_ospf_id = [] %}
     bgp:
-    {% for bgp in mpbgp %}
-        {% if bgp.left == node.name %}
-            {% do asn.append(bgp.left_asn) %}
+{##}{% for bgp in mpbgp -%}
+{##}{##}{% if bgp.left == node.name %}
+{##}{##}{##}{% do asn.append(bgp.left_asn) %}
       - { neighbor: {{ bgp.right }}, ip: {{ bgp.right_ip }}, asn: {{ bgp.right_asn }} }
-        {% elif bgp.right == node.name %}
-            {% do asn.append(bgp.right_asn) %}
+{##}{##}{% elif bgp.right == node.name %}
+{##}{##}{##}{% do asn.append(bgp.right_asn) %}
       - { neighbor: {{ bgp.left }}, ip: {{ bgp.left_ip }}, asn: {{ bgp.left_asn }} }
-        {% endif %}
-    {% endfor %}
-    {% if asn|length > 0 %}
+{##}{##}{% endif %}
+{##}{%- endfor %}
+{##}{% if asn|length > 0 %}
     asn: {{ asn[0] }}
-    {%- endif %}
+{##}{% endif %}
     interfaces:
 {##}{% set to_node = "" %}
 {##}{% for pair in fabric -%} 
