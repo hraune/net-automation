@@ -1,4 +1,4 @@
-# Generate config in preparation for deploy of L3VPN
+# L3VPN on Cisco IOS-XE
 These playbooks will generate relevant config (interface, routing and vrf) for running L3VPN over Cisco IOS-XE devices.
 
 ## Overview
