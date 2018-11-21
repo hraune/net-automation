@@ -1,11 +1,11 @@
 [isp]
 {% for node in nodes if node.name in isp_nodes %}
-{{ node.mgmt }}
+{{ node.name }} ansible_host={{ node.mgmt }}
 {% endfor %}
 
 [cust]
 {% for node in nodes if node.name not in isp_nodes %}
-{{ node.mgmt }}
+{{ node.name }} ansible_host={{ node.mgmt }}
 {% endfor %}
 
 [all:vars]

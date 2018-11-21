@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: all
   gather_facts: no
   vars:
     - template_path: templates
@@ -20,4 +20,4 @@
     - name: Generate node config
       template:
         src: "{{ template_path }}/generate_node_config.j2"
-        dest: "{{ output_path }}/node.cfg"
+        dest: "{{ output_path }}/{{ inventory_hostname }}.cfg"
