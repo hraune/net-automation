@@ -1,12 +1,15 @@
 ---
 # Fabric
 
-# How everything is hooked up, gi3 is reserved for mgmt on all devices.
-fabric:
+# How everything is hooked up, gi3 is reserved for mgmt on all devices. Split
+# into infrastructure (provider internal) and customer (provider <-> customer).
+fabric_infrastructure:
   - { left: PE1, left_port: GigabitEthernet1,
       right: P1, right_port: GigabitEthernet2 }
   - { left: P1, left_port: GigabitEthernet1,
       right: PE2, right_port: GigabitEthernet2 }
+
+fabric_customer:
   - { left: CE1, left_port: GigabitEthernet1,
       right: PE1, right_port: GigabitEthernet2 }
   - { left: PE2, left_port: GigabitEthernet1,
@@ -18,8 +21,9 @@ fabric:
 
 # No BGP in core, only MP-BGP between PE nodes to facilitate the VPNs
 mpbgp:
-  - { left: PE1, left_asn: 65001, left_ip: 10.1.1.1,
-      right: PE2, right_asn: 65001, right_ip: 10.3.3.3 }
+  asn: 65001
+  bgp_neighbors:
+    - { left: PE1, right: PE2 }
 
 # Services we are offering
 services: [IPV4, VPNV4]

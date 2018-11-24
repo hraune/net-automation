@@ -11,13 +11,16 @@ nodes:
 {##}{% set vpns = [] %}
 {##}{% set lo_ospf_id = [] %}
     bgp:
-{##}{% for bgp in mpbgp -%}
+{##}{% for bgp in mpbgp.bgp_neighbors -%}
+{##}{##}{% do asn.append(bgp.asn) %}
+{##}{##}{% set neigh_lo = [] %}
+{##}{##}{% for i in nodes if (i.name == bgp.right and bgp.left == node.name) or (i.name == bgp.left and bgp.right == node.name) %}
+{##}{##}{##}{% do neigh_lo.append(i.loopback) %}
+{##}{##}{% endfor %}
 {##}{##}{% if bgp.left == node.name %}
-{##}{##}{##}{% do asn.append(bgp.left_asn) %}
-      - { neighbor: {{ bgp.right }}, ip: {{ bgp.right_ip }}, asn: {{ bgp.right_asn }} }
+      - { neighbor: {{ bgp.right }}, ip: {{ neigh_lo[0] }}, asn: {{ bgp.asn }} }
 {##}{##}{% elif bgp.right == node.name %}
-{##}{##}{##}{% do asn.append(bgp.right_asn) %}
-      - { neighbor: {{ bgp.left }}, ip: {{ bgp.left_ip }}, asn: {{ bgp.left_asn }} }
+      - { neighbor: {{ bgp.left }}, ip: {{ bgp.left_ip }}, asn: {{ bgp.asn }} }
 {##}{##}{% endif %}
 {##}{%- endfor %}
 {##}{% if asn|length > 0 %}
@@ -25,7 +28,7 @@ nodes:
 {##}{% endif %}
     interfaces:
 {##}{% set to_node = "" %}
-{##}{% for pair in fabric -%} 
+{##}{% for pair in (fabric_infrastructure + fabric_customer) -%} 
 {##}{##}{% if pair.left == node.name or pair.right == node.name %}
 {##}{##}{##}{% if pair.left == node.name %}
       - name: {{ pair.left_port }}
