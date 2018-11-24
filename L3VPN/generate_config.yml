@@ -1,5 +1,6 @@
 ---
 - hosts: all
+  connection: local
   gather_facts: no
   vars:
     - template_path: templates
