@@ -1,7 +1,7 @@
 ---
 - hosts: all
   connection: local
-  gather_facts: no
+  gather_facts: false
   vars:
     - template_path: templates
     - output_path: output
