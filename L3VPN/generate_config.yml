@@ -1,7 +1,7 @@
 ---
 - hosts: all
   connection: local
-  gather_facts: false
+  gather_facts: no
   vars:
     - template_path: templates
     - output_path: output
@@ -9,13 +9,16 @@
   
   tasks:
     - name: Create output directory
-      file:
+      run_once: true
+      local_action:
+        module: file
         path: "{{ output_path }}"
         state: directory
     
     - name: Clean up node config
-      file:
-        path: "{{ output_path }}/node.cfg"
+      local_action:
+        module: file
+        path: "{{ output_path }}/{{ inventory_hostname }}.cfg"
         state: absent
 
     - name: Generate node config
