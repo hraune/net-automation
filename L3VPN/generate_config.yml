@@ -22,6 +22,7 @@
         state: absent
 
     - name: Generate node config
-      template:
+      local_action:
+        module: template
         src: "{{ template_path }}/generate_node_config.j2"
         dest: "{{ output_path }}/{{ inventory_hostname }}.cfg"
