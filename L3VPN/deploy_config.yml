@@ -21,6 +21,11 @@
     register: result
   #- debug: var=vars.result
 
+  # something something, set : ip scp server enable
+  #                      mkdir flash:/backups/
+  #                      set : archive
+  #                             path flash:/backups/
+
   - name: put config with napalm
     napalm_install_config:
       hostname: '{{ ansible_host }}'

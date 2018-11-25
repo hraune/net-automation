@@ -13,6 +13,11 @@ boot-end-marker
 !
 no aaa new-model
 !
+ip vrf MGMT
+ rd 64999:1
+ route-target export 64999:1
+ route-target import 64999:1
+!
 {% if node.vpn is defined %}
 !
 {% for vpn in node.vpn %}
@@ -28,6 +33,9 @@ no ip domain lookup
 subscriber templating
 !
 multilink bundle-name authenticated
+!
+diagnostic bootup level minimal
+spanning-tree extend system-id
 !
 username admin privilege 15 secret 5 $1$FdY9$OzuwknijN7xOGEe3NiP.y/
 username readonly privilege 7 secret 5 $1$T4.h$fEsyp/v4ib0SMh2O5Gl8t0
@@ -48,6 +56,16 @@ interface {{ interface.name }}
  ip ospf {{ interface.ospf.id }} area {{ interface.ospf.area }}
 !
 {% endfor %}
+!
+interface GigabitEthernet3
+ description CE-1_mgmt
+ ip vrf forwarding MGMT
+ ip address {{ node.mgmt }} 255.255.255.0
+ negotiation auto
+ no lldp transmit
+ no lldp receive
+ no mop enabled
+ no mop sysid
 !
 router ospf {{ node.loopback.ospf.id }}
 {% if node.provider %}
