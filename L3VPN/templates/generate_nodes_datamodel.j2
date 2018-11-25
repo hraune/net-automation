@@ -13,7 +13,7 @@ nodes:
     bgp:
 {##}{% for bgp in mpbgp -%}
 {##}{##}{% do asn.append(bgp.asn) %}
-{% for neighbor in bgp_neighbors %}
+{% for neighbor in bgp.neighbors %}
 {##}{##}{% set neigh_lo = [] %}
 {##}{##}{% for i in nodes if (i.name == neighbor.right and neighbor.left == node.name)
              or (i.name == neighbor.left and neighbor.right == node.name) %}

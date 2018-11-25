@@ -22,7 +22,7 @@ fabric_customer:
 # No BGP in core, only MP-BGP between PE nodes to facilitate the VPNs
 mpbgp:
   - asn: 65001
-    bgp_neighbors:
+    neighbors:
       - { left: PE1, right: PE2 }
 
 # Services we are offering
