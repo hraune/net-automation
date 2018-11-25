@@ -1,3 +1,4 @@
+{%- for node in nodes if node.name == inventory_hostname %}
 version 16.6
 service timestamps debug datetime msec
 service timestamps log datetime msec
@@ -5,7 +6,6 @@ platform qfp utilization monitor load 80
 no platform punt-keepalive disable-kernel-core
 platform console serial
 !
-{%- for node in nodes if node.name == inventory_hostname %}
 hostname {{ node.name }}
 !
 boot-start-marker
@@ -22,8 +22,6 @@ ip vrf {{ vpn.name }}
  route-target import {{ vpn.rd }}
 {% endfor %}
 {% endif %}
-!
-{% endfor %}
 !
 no ip domain lookup
 !
@@ -126,3 +124,4 @@ wsma agent notify
 !
 !
 end
+{% endfor %}
