@@ -12,7 +12,7 @@ nodes:
 {##}{% set lo_ospf_id = [] %}
     bgp:
 {##}{% for bgp in mpbgp.bgp_neighbors -%}
-{##}{##}{% do asn.append(bgp.asn) %}
+{##}{##}{% do asn.append(bgp['asn']) %}
 {##}{##}{% set neigh_lo = [] %}
 {##}{##}{% for i in nodes if (i.name == bgp.right and bgp.left == node.name) or (i.name == bgp.left and bgp.right == node.name) %}
 {##}{##}{##}{% do neigh_lo.append(i.loopback) %}
