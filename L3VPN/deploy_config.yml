@@ -19,3 +19,4 @@
         - 'interfaces_ip'
         - 'ntp_stats'
     register: result
+  - debug: var=vars.result
