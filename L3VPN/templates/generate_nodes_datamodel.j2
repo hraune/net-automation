@@ -14,13 +14,14 @@ nodes:
 {##}{% for bgp in mpbgp -%}
 {##}{##}{% do asn.append(bgp.asn) %}
 {##}{##}{% set neigh_lo = [] %}
-{##}{##}{% for i in nodes if (i.name == bgp.right and bgp.left == node.name) or (i.name == bgp.left and bgp.right == node.name) %}
+{##}{##}{% for i in nodes if (i.name == bgp.bgp_neighbors.right and bgp.bgp_neighbors.left == node.name)
+             or (i.name == bgp.bgp_neighbors.left and bgp.bgp_neighbors.right == node.name) %}
 {##}{##}{##}{% do neigh_lo.append(i.loopback) %}
 {##}{##}{% endfor %}
-{##}{##}{% if bgp.left == node.name %}
-      - { neighbor: {{ bgp.right }}, ip: {{ neigh_lo[0] }}, asn: {{ bgp.asn }} }
-{##}{##}{% elif bgp.right == node.name %}
-      - { neighbor: {{ bgp.left }}, ip: {{ bgp.left_ip }}, asn: {{ bgp.asn }} }
+{##}{##}{% if bgp.bgp_neighbors.left == node.name %}
+      - { neighbor: {{ bgp.bgp_neighbors.right }}, ip: {{ neigh_lo[0] }}, asn: {{ bgp.asn }} }
+{##}{##}{% elif bgp.bgp_neighbors.right == node.name %}
+      - { neighbor: {{ bgp.bgp_neighbors.left }}, ip: {{ neigh_lo[0] }}, asn: {{ bgp.asn }} }
 {##}{##}{% endif %}
 {##}{%- endfor %}
 {##}{% if asn|length > 0 %}
