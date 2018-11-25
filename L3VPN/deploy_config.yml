@@ -1,0 +1,21 @@
+---
+- name: Deploy config
+  hosts: all
+  connection: local
+  gather_facts: no
+  vars:
+  - config_path: output
+
+  tasks:
+  - name: Get facts with napalm
+    napalm_get_facts: 
+      hostname: "{{ ansible_host }}"
+      username: "{{ ansible_user }}"
+      dev_os: 'ios'   
+      password: "{{ ansible_ssh_pass }}"
+      filter: 
+        - 'facts'
+        - 'interfaces'
+        - 'interfaces_ip'
+        - 'ntp_stats'
+    register: result
