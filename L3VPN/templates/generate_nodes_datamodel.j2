@@ -2,7 +2,6 @@
 # All the nodes in the network
 
 nodes:
-
 {% for node in nodes %}
 
   - name: {{ node.name }}
@@ -12,19 +11,19 @@ nodes:
 {##}{% set lo_ospf_id = [] %}
     bgp:
 {##}{% for bgp in mpbgp -%}
-{##}{##}{% do asn.append(bgp.asn) %}
-{% for neighbor in bgp.neighbors %}
-{##}{##}{% set neigh_lo = [] %}
-{##}{##}{% for i in nodes if (i.name == neighbor.right and neighbor.left == node.name)
-             or (i.name == neighbor.left and neighbor.right == node.name) %}
-{##}{##}{##}{% do neigh_lo.append(i.loopback) %}
-{##}{##}{% endfor %}
-{##}{##}{% if neighbor.left == node.name %}
+{##}{##}{% for neighbor in bgp.neighbors %}
+{##}{##}{##}{% set neigh_lo = [] %}
+{##}{##}{##}{% for i in nodes if (i.name == neighbor.right and neighbor.left == node.name)
+                or (i.name == neighbor.left and neighbor.right == node.name) %}
+{##}{##}{##}{##}{% do neigh_lo.append(i.loopback) %}
+{##}{##}{##}{##}{% do asn.append(bgp.asn) %}
+{##}{##}{##}{% endfor %}
+{##}{##}{##}{% if neighbor.left == node.name %}
       - { neighbor: {{ neighbor.right }}, ip: {{ neigh_lo[0] }}, asn: {{ bgp.asn }} }
-{##}{##}{% elif neighbor.right == node.name %}
+{##}{##}{##}{% elif neighbor.right == node.name %}
       - { neighbor: {{ neighbor.left }}, ip: {{ neigh_lo[0] }}, asn: {{ bgp.asn }} }
-{##}{##}{% endif %}
-{% endfor %}
+{##}{##}{##}{% endif %}
+{##}{##}{% endfor %}
 {##}{%- endfor %}
 {##}{% if asn|length > 0 %}
     asn: {{ asn[0] }}
