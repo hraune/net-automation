@@ -4,7 +4,7 @@
   gather_facts: no
   vars:
     - template_path: templates
-    - output_path: output
+    - output_path: configs
   vars_files: [nodes.yml]
   
   tasks:
