@@ -36,6 +36,9 @@ multilink bundle-name authenticated
 !
 diagnostic bootup level minimal
 spanning-tree extend system-id
+archive
+ path flash:/backups/
+ write-memory
 !
 username admin privilege 15 secret 5 $1$FdY9$OzuwknijN7xOGEe3NiP.y/
 username readonly privilege 7 secret 5 $1$T4.h$fEsyp/v4ib0SMh2O5Gl8t0
@@ -110,6 +113,8 @@ ip http server
 ip http authentication local
 ip http secure-server
 ip route vrf MGMT 10.0.10.0 255.255.255.0 10.0.10.1
+!
+ip scp server enable
 !
 snmp-server community public RO
 snmp-server community private RW
