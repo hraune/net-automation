@@ -9,7 +9,7 @@
   tasks:
   - name: Get facts with napalm
     napalm_get_facts: 
-      provider: {{ provider }}
+      provider: '{{ provider }}'
       filter: 
         - 'facts'
         - 'interfaces'
