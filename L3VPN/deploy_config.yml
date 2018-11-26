@@ -18,14 +18,6 @@
     register: result
   #- debug: var=vars.result
 
-  # something something, set : ip scp server enable
-  #                      mkdir flash:/backups/
-  #                      set : archive
-  #                             path flash:/backups/
-  # nuke cert? : no crypto pki trustpoint TP-self-signed-xxxxx
-
-  #- 
-
   - name: put config with napalm
     napalm_install_config:
       hostname: '{{ ansible_host }}'
