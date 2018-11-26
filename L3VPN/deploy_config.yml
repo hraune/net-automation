@@ -9,10 +9,7 @@
   tasks:
   - name: Get facts with napalm
     napalm_get_facts: 
-      hostname: "{{ ansible_host }}"
-      username: "{{ ansible_user }}"
-      dev_os: 'ios'   
-      password: "{{ ansible_ssh_pass }}"
+      provider: {{ provider }}
       filter: 
         - 'facts'
         - 'interfaces'
@@ -26,6 +23,8 @@
   #                      set : archive
   #                             path flash:/backups/
   # nuke cert? : no crypto pki trustpoint TP-self-signed-xxxxx
+
+  - 
 
   - name: put config with napalm
     napalm_install_config:
