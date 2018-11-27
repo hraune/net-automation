@@ -11,8 +11,9 @@
     - name: Clean up node config
       local_action:
         module: file
-        path: "{{ output_path }}/{{ inventory_hostname }}"
+        path: "{{ output_path }}"
         state: absent
+      run_once: true
 
     - name: Create output directories
       local_action:
