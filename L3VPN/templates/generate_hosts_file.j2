@@ -8,6 +8,10 @@
 {{ node.name }} ansible_host={{ node.mgmt }}
 {% endfor %}
 
+[cisco:children]
+isp
+cust
+
 [all:vars]
 ansible_user=admin
 ansible_ssh_pass=paladin

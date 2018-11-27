@@ -8,21 +8,26 @@
   vars_files: [nodes.yml]
   
   tasks:
-    - name: Create output directory
-      run_once: true
-      local_action:
-        module: file
-        path: "{{ output_path }}"
-        state: directory
-    
     - name: Clean up node config
       local_action:
         module: file
-        path: "{{ output_path }}/{{ inventory_hostname }}.cfg"
+        path: "{{ output_path }}/{{ inventory_hostname }}"
         state: absent
+
+    - name: Create output directories
+      local_action:
+        module: file
+        path: "{{ output_path }}/{{ inventory_hostname }}"
+        state: directory
+
+    - name: Create config files for initialisation
+      local_action:
+        module: template
+        src: '{{ template_path }}/basic.j2'
+        dest: '{{ output_path }}/{{ inventory_hostname }}/basic.cfg'
 
     - name: Generate node config
       local_action:
         module: template
         src: "{{ template_path }}/generate_node_config.j2"
-        dest: "{{ output_path }}/{{ inventory_hostname }}.cfg"
+        dest: "{{ output_path }}/{{ inventory_hostname }}/running.cfg"
