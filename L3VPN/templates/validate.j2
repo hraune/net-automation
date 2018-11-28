@@ -1,0 +1,50 @@
+{%- for node in nodes if node.name == inventory_hostname %}
+---
+- get_facts:
+    interface_list:
+      _mode: strict
+      list:
+{% for interface in node.interfaces %}      
+        - {{ interface.name }}
+{% endfor %}
+        - Loopback0
+    hostname: {{ node.name }}
+
+{#
+- get_bgp_neighbors:
+    global:
+      router_id: 192.0.2.2
+      peers:
+        _mode: strict
+        192.0.2.2:
+          is_enabled: true
+          address_family:
+            ipv4:
+              sent_prefixes: 5
+              received_prefixes: '<10'
+            ipv6:
+              sent_prefixes: 2
+              received_prefixes: '<5'
+#}
+
+- get_interfaces_ip:
+{% for interface in node.interfaces %}
+    {{ interface.name }}:
+      ipv4:
+        {{ interface.ip|ipaddr('address') }}:
+          prefix_length: {{ interface.ip|ipaddr('prefix') }}
+{% endfor %}
+
+
+{% for n in nodes if n.loopback.ospf.id == node.loopback.ospf.id and node.name != n.name %}
+- ping:
+    _name: Ping devices with same OSPF id ({{ n.loopback.ospf.id }})
+    _kwargs:
+      destination: n.loopback.ip
+      source: node.loopback.ip
+    success:
+      packet_loss: 0
+    _mode: strict
+{% endfor %}
+
+{% endfor %}
