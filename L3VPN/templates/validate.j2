@@ -6,7 +6,7 @@
       list:
 {%- for interface in node.interfaces %}      
         - {{ interface.name }}
-{% endfor %}
+{%- endfor %}
         - Loopback0
     hostname: {{ node.name }}
 
@@ -26,7 +26,6 @@
               sent_prefixes: 2
               received_prefixes: '<5'
 #}
-
 - get_interfaces_ip:
 {% for interface in node.interfaces %}
     {{ interface.name }}:
@@ -48,6 +47,7 @@
     success:
       packet_loss: 0
     _mode: strict
+
 {% endfor %}
 
 {% endfor %}
