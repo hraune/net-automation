@@ -4,7 +4,7 @@
     interface_list:
       _mode: strict
       list:
-{% for interface in node.interfaces %}      
+{%- for interface in node.interfaces %}      
         - {{ interface.name }}
 {% endfor %}
         - Loopback0
@@ -34,14 +34,17 @@
         {{ interface.ip|ipaddr('address') }}:
           prefix_length: {{ interface.ip|ipaddr('prefix') }}
 {% endfor %}
-
+    Loopback0:
+      ipv4
+        {{ node.loopback.ip }}:
+          prefix_length: 32
 
 {% for n in nodes if n.loopback.ospf.id == node.loopback.ospf.id and node.name != n.name %}
 - ping:
     _name: Ping devices with same OSPF id ({{ n.loopback.ospf.id }})
     _kwargs:
-      destination: n.loopback.ip
-      source: node.loopback.ip
+      destination: {{ n.loopback.ip }}
+      source: {{ node.loopback.ip }}
     success:
       packet_loss: 0
     _mode: strict
