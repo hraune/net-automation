@@ -6,7 +6,7 @@
       list:
 {%- for interface in node.interfaces %}      
         - {{ interface.name }}
-{%- endfor %}
+{% endfor %}
         - Loopback0
     hostname: {{ node.name }}
 
