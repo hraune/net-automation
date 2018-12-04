@@ -34,7 +34,7 @@
           prefix_length: {{ interface.ip|ipaddr('prefix') }}
 {% endfor %}
     Loopback0:
-      ipv4
+      ipv4:
         {{ node.loopback.ip }}:
           prefix_length: 32
 
