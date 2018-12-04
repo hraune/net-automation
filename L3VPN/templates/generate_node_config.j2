@@ -41,7 +41,6 @@ archive
  write-memory
 !
 username admin privilege 15 secret 5 $1$FdY9$OzuwknijN7xOGEe3NiP.y/
-username readonly privilege 7 secret 5 $1$T4.h$fEsyp/v4ib0SMh2O5Gl8t0
 !
 redundancy
 !
@@ -122,8 +121,6 @@ snmp-server community private RW
 !
 control-plane
 !
-privilege exec all level 7 show running-config
-privilege exec level 7 show
 !
 line con 0
  exec-timeout 0 0
