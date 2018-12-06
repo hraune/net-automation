@@ -6,6 +6,7 @@
   vars:
   - config_path: configs
 
+  tasks:
   - name: Initialise device with basic config
     napalm_install_config:
       provider: '{{ ios_provider }}'
