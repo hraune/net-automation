@@ -7,33 +7,31 @@
   - config_path: configs
 
   tasks:
-  - name: Initialise device with basic config
-    napalm_install_config:
-      provider: '{{ ios_provider }}'
-      config_file: '{{ config_path }}/{{ inventory_hostname }}/basic.cfg'
-      commit_changes: True
-      replace_config: True
-      get_diffs: False
-    tags: init
-
-  - name: put config with napalm
-    napalm_install_config:
-      provider: '{{ ios_provider }}'
-      config_file: '{{ config_path }}/{{ inventory_hostname }}/running.cfg'
-      commit_changes: True
-      replace_config: True
-      get_diffs: True
-      diff_file: '{{ config_path}}/{{ inventory_hostname }}/running.diff'
-    tags: deploy_napalm
+  - name: Deploy init config
+    ios_config:
+      #provider: "{{ ios_provider }}"
+      src: "{{ config_path }}/{{ inventory_hostname }}/basic.cfg"
+    tags: deploy_init
+    register: changes
 
   - name: Deploy config
     ios_config:
       #provider: "{{ ios_provider }}"
       src: "{{ config_path }}/{{ inventory_hostname }}/running.cfg"
-    tags: deploy_ios_config
+    tags: deploy_network
     register: changes
   
   - debug: var=vars.changes
+
+  - name: Deploy service config with napalm
+    napalm_install_config:
+      provider: '{{ ios_provider }}'
+      config_file: '{{ config_path }}/{{ inventory_hostname }}/service.cfg'
+      commit_changes: True
+      replace_config: False
+      get_diffs: True
+      diff_file: '{{ config_path}}/{{ inventory_hostname }}/service.diff'
+    tags: deploy_service
 
   - name: get validate report
     napalm_validate:

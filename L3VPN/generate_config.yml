@@ -21,17 +21,24 @@
         path: "{{ output_path }}/{{ inventory_hostname }}"
         state: directory
 
-    - name: Create config files for initialisation
+    # Basic config with only mgmt and whats needed for napalm to work
+    - name: Create basic config
       local_action:
         module: template
         src: '{{ template_path }}/basic.j2'
         dest: '{{ output_path }}/{{ inventory_hostname }}/basic.cfg'
 
-    - name: Generate node config
+    - name: Generate network config
       local_action:
         module: template
-        src: "{{ template_path }}/generate_node_config.j2"
+        src: "{{ template_path }}/generate_network_config.j2"
         dest: "{{ output_path }}/{{ inventory_hostname }}/running.cfg"
+
+    - name: Generate service config
+      local_action:
+        module: template
+        src: "{{ template_path }}/generate_service_config.j2"
+        dest: "{{ output_path }}/{{ inventory_hostname }}/service.cfg"
 
     - name: Generate node validate file
       local_action:
