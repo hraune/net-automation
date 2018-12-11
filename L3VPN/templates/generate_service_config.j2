@@ -6,10 +6,11 @@
 {##}{##}{##}{% do absent.append(vpn.name) %}
 no ip vrf {{ vpn.name }}
 {##}{##}{% else %}
-ip vrf {{ vpn.name }}
+ip vrf {{ vpn.name }} ;;;{{ vpn.state }}
  rd: {{ vpn.rd }}
  route-target export {{ vpn.rd }}
  route-target import {{ vpn.rd }}
+!
 {##}{##}{% endif %}
 {##}{% endfor %}
 {% endif %}
