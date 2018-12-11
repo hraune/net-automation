@@ -5,7 +5,7 @@
   vars:
     - template_path: templates
     - output_path: configs
-  vars_files: [nodes.yml]
+  vars_files: [nodes.yml, fabric.yml]
   
   tasks:
     - name: Clean up node config
