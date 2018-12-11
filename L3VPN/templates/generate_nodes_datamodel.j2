@@ -68,10 +68,11 @@ nodes:
 {##}{##}{% for interface in type.interfaces if interface not in active_int %}
       - name: {{ interface }}
 {##}{##}{##}{% if interface == type.mgmt_int %}
-      - description: {{ node.name }} management
-      - state: active
+        description: {{ node.name }} management
+        ip: {{ node.mgmt }}/24
+        state: active
 {##}{##}{##}{% else %}
-      - state: shutdown
+        state: shutdown
 {##}{##}{##}{% endif %}
 {##}{##}{% endfor %}
 {##}{% endfor %}
