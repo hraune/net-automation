@@ -2,7 +2,7 @@
 {% set absent = [] %}
 {% if node.vpn is defined %}
 {##}{% for vpn in node.vpn %}
-{##}{##}{% if node.vpn.state == 'absent' %}
+{##}{##}{% if vpn.state == 'absent' %}
 {##}{##}{##}{% do absent.append(vpn.name) %}
 no ip vrf {{ vpn.name }}
 {##}{##}{% else %}
