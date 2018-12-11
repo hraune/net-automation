@@ -56,7 +56,8 @@ nodes:
 {##}{##}{##}{##}{##}{##}{% if node.name in isp_nodes and value == node.name and key == to_node %}
         ospf: {id: {{ vpn.ospfid }}, area: 0}
         vrf: {{ vpn.name }}
-{##}{##}{##}{##}{##}{##}{##}{% do vpns.append({'name': vpn.name, 'rd': vpn.rd, 'ospf': {'id': vpn.ospfid, 'area': 0 }}) %}
+{##}{##}{##}{##}{##}{##}{##}{% do vpns.append({'name': vpn.name, 'rd': vpn.rd, 
+                                'ospf': {'id': vpn.ospfid, 'area': 0 }, 'state': vpn.state}) %}
 {##}{##}{##}{##}{##}{##}{% elif key == node.name %}
         ospf: {id: {{ vpn.ospfid }}, area: 0}
 {##}{##}{##}{##}{##}{##}{##}{% do lo_ospf_id.append(vpn.ospfid) %}
