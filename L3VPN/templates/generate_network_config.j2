@@ -40,9 +40,14 @@ interface Loopback0
 !
 {% for interface in node.interfaces %}
 interface {{ interface.name }}
+{% if interface.state == 'active' %}
+ no shutdown
  description {{ interface.description }}
  ip address {{ interface.ip|ipaddr('address') }} {{ interface.ip|ipaddr('netmask') }}
  ip ospf {{ interface.ospf.id }} area {{ interface.ospf.area }}
+{% else %}
+ shutdown
+{% endif %}
 !
 {% endfor %}
 !
