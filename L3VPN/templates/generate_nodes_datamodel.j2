@@ -84,6 +84,7 @@ nodes:
       - name: {{ vpn['name'] }}
         rd: "{{ vpn['rd'] }}"
         ospf: {{ vpn['ospf'] }}
+        state: {{ vpn['state'] }}
 {##}{##}{% endfor %}
 {##}{% endif %}
     loopback: {ip: {{ node.loopback }}, ospf: { id: {% if node.name in isp_nodes %}1{% else %}{{ lo_ospf_id[0] }}{% endif %}, area: 0}}

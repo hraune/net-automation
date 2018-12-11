@@ -1,34 +1,35 @@
 {%- for node in nodes if node.name == inventory_hostname %}
-!
+{% set absent = [] %}
 {% if node.vpn is defined %}
-!
 {% for vpn in node.vpn %}
+{% if node.vpn.state == 'absent' %}
+{% do absent.append(vpn.name) %}
+no ip vrf {{ vpn.name }}
+{% else %}
 ip vrf {{ vpn.name }}
  rd: {{ vpn.rd }}
  route-target export {{ vpn.rd }}
  route-target import {{ vpn.rd }}
+{% endif %}
 {% endfor %}
 {% endif %}
-!
-{% for interface in node.interfaces if interface.vrf is defined  %}
+{% for interface in node.interfaces if interface.vrf is defined and interface.vrf not in absent %}
 interface {{ interface.name }}
  ip vrf forwarding {{ interface.vrf }}
  ip address {{ interface.ip|ipaddr('address') }} {{ interface.ip|ipaddr('netmask') }}
  ip ospf {{ interface.ospf.id }} area {{ interface.ospf.area }}
 !
 {% endfor %}
-!
 {% if node.vpn is defined %}
-{##}{% for vpn in node.vpn %}
+{##}{% for vpn in node.vpn if vpn.state != 'absent' %}
 router ospf {{ vpn.ospf.id }} vrf {{ vpn.name }}
  redistribute bgp {{ node.asn }} subnets
 !
 {##}{% endfor %}
 {% endif %}
-!
-{% if node.asn is defined %}
+{% if node.asn is defined and absent|length < node.vpn|length %}
 router bgp {{ node.asn }}
-{% for vpn in node.vpn %}
+{% for vpn in node.vpn if node.vpn.state != 'absent' %}
  address-family ipv4 vrf {{ vpn.name }}
   redistribute ospf {{ vpn.ospf.id }}
  exit-address-family
