@@ -38,7 +38,7 @@ interface Loopback0
  ip address {{ node.loopback.ip }} 255.255.255.255
  ip ospf {{ node.loopback.ospf.id }} area {{ node.loopback.ospf.area }}
 !
-{% for interface in node.interfaces|dictsort%}
+{% for interface in node.interfaces|sort(attribute='name')%}
 interface {{ interface.name }}
 {% if interface.state == 'active' %}
  no shutdown
