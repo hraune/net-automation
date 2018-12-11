@@ -38,20 +38,12 @@ interface Loopback0
  ip address {{ node.loopback.ip }} 255.255.255.255
  ip ospf {{ node.loopback.ospf.id }} area {{ node.loopback.ospf.area }}
 !
-{% for type in hardware if node.name in type.devices %}
-{% for int in type.interfaces %}
-interface {{ interface }}
 {% for interface in node.interfaces %}
-{% if interface.name == int %}
+interface {{ interface.name }}
  description {{ interface.description }}
  ip address {{ interface.ip|ipaddr('address') }} {{ interface.ip|ipaddr('netmask') }}
  ip ospf {{ interface.ospf.id }} area {{ interface.ospf.area }}
-{% else %}
- shutdown
 !
-{% endif %}
-{% endfor %}
-{% endfor %}
 {% endfor %}
 !
 interface GigabitEthernet3

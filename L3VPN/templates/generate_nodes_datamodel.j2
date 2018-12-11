@@ -30,17 +30,20 @@ nodes:
 {##}{% endif %}
     interfaces:
 {##}{% set to_node = "" %}
+{##}{% set active_int = [] %}
 {##}{% for pair in (fabric_infrastructure + fabric_customer) -%} 
 {##}{##}{% if pair.left == node.name or pair.right == node.name %}
 {##}{##}{##}{% if pair.left == node.name %}
-      - name: {{ pair.left_port }}
+      - name: {{ pair.left_port }}{% do active_int.append(pair.left_port) %}
         description: To {{ pair.right }};{{ pair.right_port[:2] }}{{ pair.right_port[-1:] }}
         ip: {{ linknet.fabric_linknets[loop.index0]|ipaddr('1') }}
+        state: active
 {##}{##}{##}{##}{% set to_node = pair.right %}
 {##}{##}{##}{% else %}
-      - name: {{ pair.right_port }}
+      - name: {{ pair.right_port }}{% do active_int.append(pair.right_port) %}
         description: To {{ pair.left }};{{ pair.left_port[:2] }}{{ pair.left_port[-1:] }}
         ip: {{ linknet.fabric_linknets[loop.index0]|ipaddr('2') }}
+        state: active
 {##}{##}{##}{##}{% set to_node = pair.left %}
 {##}{##}{##}{% endif %}
 {##}{##}{##}{% if pair.left in isp_nodes and pair.right in isp_nodes %}
@@ -61,6 +64,17 @@ nodes:
 {##}{##}{##}{%- endif %}
 {##}{##}{% endif %}
 {##}{%- endfor %}
+{##}{% for type in hardware if node.name in type.devices %}
+{##}{##}{% for interface in type.interfaces if interface not in active_int %}
+      - name: {{ interface }}
+{##}{##}{##}{% if interface == type.mgmt_int %}
+      - description: {{ node.name }} management
+      - state: active
+{##}{##}{##}{% else %}
+      - state: shutdown
+{##}{##}{##}{% endif %}
+{##}{##}{% endfor %}
+{##}{% endfor %}
 {##}{% if vpns|length > 0 %}
     vpn:
 {##}{##}{% for vpn in vpns %}
