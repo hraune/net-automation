@@ -1,6 +1,6 @@
 ---
 - name: Deploy config
-  hosts: cust
+  hosts: all
   connection: local
   gather_facts: no
   vars:
