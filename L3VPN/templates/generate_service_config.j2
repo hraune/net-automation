@@ -8,7 +8,7 @@ no ip vrf {{ vpn.name }}
 !
 {##}{##}{% else %}
 ip vrf {{ vpn.name }}
- rd: {{ vpn.rd }}
+ rd {{ vpn.rd }}
  route-target export {{ vpn.rd }}
  route-target import {{ vpn.rd }}
 !

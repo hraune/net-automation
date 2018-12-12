@@ -50,6 +50,7 @@ interface {{ interface.name }}
 {% if interface.ospf is defined %}
  ip ospf {{ interface.ospf.id }} area {{ interface.ospf.area }}
 {% endif %}
+ negotiation auto
 {% else %}
  shutdown
 {% endif %}
