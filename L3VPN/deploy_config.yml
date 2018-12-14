@@ -43,6 +43,11 @@
       diff_file: '{{ config_path}}/{{ inventory_hostname }}/running.diff'
     tags: deploy_network_napalm
 
+  - name: Find service config file size
+    stat:
+      path: '{{ config_path }}/{{ inventory_hostname }}/service.cfg'
+    register: result
+
   - name: Deploy service config with napalm
     napalm_install_config:
       provider: '{{ ios_provider }}'
@@ -51,6 +56,7 @@
       replace_config: False
       get_diffs: True
       diff_file: '{{ config_path}}/{{ inventory_hostname }}/service.diff'
+      when: result.stat.size > 0
     tags: deploy_service
 
   - name: get validate report
