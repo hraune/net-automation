@@ -30,8 +30,6 @@
       src: "{{ config_path }}/{{ inventory_hostname }}/running.cfg"
     tags: deploy_network
     register: changes
-  
-  - debug: var=vars.changes
 
   - name: Deploy network config with napalm
     napalm_install_config:
@@ -67,3 +65,4 @@
     tags: validate
 
   - debug: var=vars.report
+    tags: validate
