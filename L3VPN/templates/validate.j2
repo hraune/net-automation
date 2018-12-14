@@ -19,10 +19,10 @@
 {% for neigh in node.bgp %}
         {{ neigh.ip }}:
           is_enabled: true
-          address_family:
-            ipv4:
-              sent_prefixes: {{ node.bgp|length }}
-              received_prefixes: {{ node.bgp|length }}
+          is_up: true
+          remote_id: {{ neigh.ip }}
+          remote_as: {{ neigh.asn }}
+          local_as: {{ node.asn }}
 {% endfor %}
 {% endif %}
 

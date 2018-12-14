@@ -57,18 +57,6 @@
       when: result.stat.size > 0
     tags: deploy_service
 
-  - name: Get facts with napalm
-    napalm_get_facts: 
-      provider: "{{ ios_provider }}"
-      filter: 
-        - 'bgp_neighbors'
-        - 'bgp_neighbors_detail'
-    register: bgp_result
-    tags: validate
-
-  - debug: var=vars.bgp_result
-    tags: validate
-
   - name: get validate report
     napalm_validate:
       provider: "{{ ios_provider }}"
