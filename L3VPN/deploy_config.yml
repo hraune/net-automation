@@ -59,7 +59,7 @@
 
   - name: Get facts with napalm
     napalm_get_facts: 
-    provider: "{{ ios_provider }}"
+      provider: "{{ ios_provider }}"
       filter: 
         - 'bgp_neighbors'
         - 'bgp_neighbors_detail'
