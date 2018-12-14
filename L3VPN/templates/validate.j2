@@ -27,13 +27,12 @@
               received_prefixes: '<5'
 #}
 - get_interfaces_ip:
-{% for interface in node.interfaces %}
-    {{ interface.name }}{% if interface.state == 'active' %}:
+{% for interface in node.interfaces if interface.state == 'active' %}
+    {{ interface.name }}:
       ipv4:
         {{ interface.ip|ipaddr('address') }}:
           prefix_length: {{ interface.ip|ipaddr('prefix') }}
-{% else %}
-{% endif %}{% endfor %}
+{% endfor %}
     Loopback0:
       ipv4:
         {{ node.loopback.ip }}:
