@@ -39,7 +39,7 @@
     register: vrf
     tags: vrf_report
 
-  - debug: var=vars.vrf.stdout_lines[0][0]
+  - debug: var=vars.vrf.stdout[0]
     tags: vrf_report
 
   - name: Extract ospf neighbor data with textfsm
