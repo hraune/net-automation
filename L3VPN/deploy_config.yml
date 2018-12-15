@@ -44,6 +44,9 @@
       active_vrf: "{{ vrf.stdout[0] | parse_cli_textfsm(textfsm_show_vrf) }}"
     tags: vrf_report
 
+  - debug: var=vars.active_vrf
+    tags: vrf_report
+
   - name: Create output directory
     file:
       path: "{{ output_path }}"
@@ -51,7 +54,7 @@
     run_once: true
     tags: vrf_report
     
-  - name: Clean up old graph files
+  - name: Clean up vrf reports
     file:
       path: "{{ output_path }}/vrf_report.txt"
       state: absent
