@@ -1,5 +1,5 @@
 {% for host in ansible_play_hosts %}
-{##}{% for vrf in hostvars.host['active_vrf'] %}
+{##}{% for vrf in hostvars[host]['active_vrf'] %}
 {{ vrf }}
 {##}{% endfor %}
 {% endfor %}
