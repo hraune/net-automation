@@ -44,6 +44,20 @@
       active_vrf: "{{ vrf.stdout[0] | parse_cli_textfsm(textfsm_show_vrf) }}"
     tags: vrf_report
 
+  - name: Create output directory
+    file:
+      path: "{{ output_path }}"
+      state: directory
+    run_once: true
+    tags: vrf_report
+    
+  - name: Clean up old graph files
+    file:
+      path: "{{ output_path }}/vrf_report.txt"
+      state: absent
+    run_once: true
+    tags: vrf_report
+
   - name: Create VRF report
     template:
       src: "{{ template_path }}/generate_vrf_report.j2"
