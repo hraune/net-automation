@@ -44,7 +44,7 @@
 
   - name: Extract ospf neighbor data with textfsm
     set_fact: 
-      active_vrf: "{{ vrf.stdout[0] | parse_cli_textfsm(textfsm_show_vrf) }}"
+      active_vrf: "{{ vrf.stdout_lines[0][0] | parse_cli_textfsm(textfsm_show_vrf) }}"
     tags: vrf_report
 
   - debug: var=vars.active_vrf
