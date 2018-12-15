@@ -39,12 +39,15 @@
     register: vrf
     tags: vrf_report
 
-  - name: Extract ospf neighbor data with textfsm
-    set_fact: 
-      active_vrf: "{{ vrf.stdout[0] | parse_cli_textfsm(textfsm_show_vrf) }}"
+  - debug: var=vars.vrf
     tags: vrf_report
 
-  - debug: var=vars.vrf
+  - name: Extract ospf neighbor data with textfsm
+    set_fact: 
+      active_vrf: "{{ vrf.stdout_lines[0] | parse_cli_textfsm(textfsm_show_vrf) }}"
+    tags: vrf_report
+
+  - debug: var=vars.active_vrf
     tags: vrf_report
 
   - name: Create output directory
