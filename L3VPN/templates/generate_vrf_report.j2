@@ -1,5 +1,9 @@
+active_vrfs:
 {% for host in ansible_play_hosts %}
-{##}{% for vrf in hostvars[host]['active_vrf'] %}
-{{ vrf }}
+  - {{ hostvars[host].inventory_hostname }}
+{##}{% for vrf in hostvars[host]['active_vrf'] if vrf.name != 'MGMT' %}
+    name: {{ vrf.name }}
+    def_rd: {{ vrf.def_rd }}
+    interfaces: {{ vrf.interfaces }}
 {##}{% endfor %}
 {% endfor %}

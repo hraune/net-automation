@@ -8,6 +8,7 @@
   - output_path: reports
   - template_path: templates
   - textfsm_show_vrf: 'templates/cisco_ios_xe_show_vrf.template'
+  vars_files: [nodes.yml]
 
   tasks:
   - name: Deploy init config
@@ -22,16 +23,6 @@
     tags: deploy_network
     register: changes
 
-  - name: Deploy network config with napalm
-    napalm_install_config:
-      provider: '{{ ios_provider }}'
-      config_file: '{{ config_path }}/{{ inventory_hostname }}/running.cfg'
-      commit_changes: True
-      replace_config: True
-      get_diffs: True
-      diff_file: '{{ config_path}}/{{ inventory_hostname }}/running.diff'
-    tags: deploy_network_napalm
-
   - name: Get existing VRF
     ios_command:
       commands:
@@ -39,15 +30,9 @@
     register: vrf
     tags: vrf_report
 
-#  - debug: var=vars.vrf.stdout[0]
-#    tags: vrf_report
-
-  - name: Extract ospf neighbor data with textfsm
+  - name: Extract existing VRFs with textfsm
     set_fact: 
       active_vrf: "{{ vrf.stdout[0] | parse_cli_textfsm(textfsm_show_vrf) }}"
-    tags: vrf_report
-
-  - debug: var=vars.active_vrf
     tags: vrf_report
 
   - name: Create output directory
