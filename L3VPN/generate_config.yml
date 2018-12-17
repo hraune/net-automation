@@ -5,43 +5,76 @@
   vars:
     - template_path: templates
     - output_path: configs
-  vars_files: [nodes.yml]
+  vars_files: [nodes.yml, output/existing_vrf.yml]
   
   tasks:
-    - name: Clean up node config
-      local_action:
-        module: file
-        path: "{{ output_path }}"
-        state: absent
-      run_once: true
+  - name: Clean up node config
+    local_action:
+      module: file
+      path: "{{ output_path }}"
+      state: absent
+    run_once: true
 
-    - name: Create output directories
-      local_action:
-        module: file
-        path: "{{ output_path }}/{{ inventory_hostname }}"
-        state: directory
+  - name: Create output directories
+    local_action:
+      module: file
+      path: "{{ output_path }}/{{ inventory_hostname }}"
+      state: directory
 
-    # Basic config with only mgmt and whats needed for napalm to work
-    - name: Create basic config
-      local_action:
-        module: template
-        src: '{{ template_path }}/basic.j2'
-        dest: '{{ output_path }}/{{ inventory_hostname }}/basic.cfg'
+  # Basic config with only mgmt and whats needed for napalm to work
+  - name: Create basic config
+    local_action:
+      module: template
+      src: '{{ template_path }}/basic.j2'
+      dest: '{{ output_path }}/{{ inventory_hostname }}/basic.cfg'
 
-    - name: Generate network config
-      local_action:
-        module: template
-        src: "{{ template_path }}/generate_network_config.j2"
-        dest: "{{ output_path }}/{{ inventory_hostname }}/running.cfg"
+  - name: Generate network config
+    local_action:
+      module: template
+      src: "{{ template_path }}/generate_network_config.j2"
+      dest: "{{ output_path }}/{{ inventory_hostname }}/running.cfg"
 
-    - name: Generate service config
-      local_action:
-        module: template
-        src: "{{ template_path }}/generate_service_config.j2"
-        dest: "{{ output_path }}/{{ inventory_hostname }}/service.cfg"
+  - name: Get existing VRF
+    ios_command:
+      commands:
+        - show vrf
+    register: vrf
+    tags: vrf_report
 
-    - name: Generate node validate file
-      local_action:
-        module: template
-        src: "{{ template_path }}/validate.j2"
-        dest: "{{ output_path }}/{{ inventory_hostname }}/validate.yml"
+  - name: Extract existing VRFs with textfsm
+    set_fact: 
+      active_vrf: "{{ vrf.stdout[0] | parse_cli_textfsm(textfsm_show_vrf) }}"
+    tags: vrf_report
+
+  - name: Create output directory
+    file:
+      path: "{{ output_path }}"
+      state: directory
+    run_once: true
+    tags: vrf_report
+    
+  - name: Clean up vrf reports
+    file:
+      path: "{{ output_path }}/existing_vrf.yml"
+      state: absent
+    run_once: true
+    tags: vrf_report
+
+  - name: Create existing VRF report
+    template:
+      src: "{{ template_path }}/generate_existing_vrf.j2"
+      dest: "{{ output_path }}/existing_vrf.yml"
+    run_once: true
+    tags: vrf_report
+
+  - name: Generate service config
+    local_action:
+      module: template
+      src: "{{ template_path }}/generate_service_config.j2"
+      dest: "{{ output_path }}/{{ inventory_hostname }}/service.cfg"
+
+  - name: Generate node validate file
+    local_action:
+      module: template
+      src: "{{ template_path }}/validate.j2"
+      dest: "{{ output_path }}/{{ inventory_hostname }}/validate.yml"
