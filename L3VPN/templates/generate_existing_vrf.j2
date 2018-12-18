@@ -7,6 +7,10 @@ active_vrfs:
     name: {{ vrf.name }}
     def_rd: {{ vrf.def_rd }}
     interfaces: {{ vrf.interfaces }}
-
+{##}{##}{% for node in nodes if node.name == hostvars[host].inventory_hostname %}
+{##}{##}{##}{% for vpn in node %}
+~~~{{ vpn.name }}
+{##}{##}{##}{% endfor %}
+{##}{##}{% endfor %}
 {##}{% endfor %}
 {% endfor %}
