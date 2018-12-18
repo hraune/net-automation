@@ -13,8 +13,8 @@ active_vrfs:
 {##}{##}{##}{##}{% if vpn.name != vrf.name %}
 {% set vpn_match = true %}
 {##}{##}{##}{##}{% endif %}
-    surprise: {{ vpn_match }}
 {##}{##}{##}{% endfor %}
+    surprise: {{ vpn_match }}
 {##}{##}{% endfor %}
 {##}{% endfor %}
 {% endfor %}
