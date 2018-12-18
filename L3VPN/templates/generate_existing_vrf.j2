@@ -8,9 +8,7 @@ active_vrfs:
     def_rd: {{ vrf.def_rd }}
     interfaces: {{ vrf.interfaces }}
 {##}{##}{% for node in nodes if node.name == hostvars[host].inventory_hostname %}
-~~{{ node.name }}
 {##}{##}{##}{% for vpn in node.vpn %}
-{{ vpn.name }} // {{ vrf.name }}
 {##}{##}{##}{##}{% if vpn.name == vrf.name %}
     surprise: false
 {##}{##}{##}{##}{% else %}

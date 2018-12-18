@@ -4,7 +4,6 @@
   gather_facts: no
   vars:
     - template_path: templates
-    - output_path: configs
     - textfsm_show_vrf: 'templates/cisco_ios_xe_show_vrf.template'
   vars_files: [nodes.yml]
 
@@ -20,17 +19,10 @@
     set_fact: 
       active_vrf: "{{ vrf.stdout[0] | parse_cli_textfsm(textfsm_show_vrf) }}"
     tags: vrf_report
-
-  - name: Create output directory
-    file:
-      path: "{{ output_path }}"
-      state: directory
-    run_once: true
-    tags: vrf_report
     
   - name: Clean up vrf reports
     file:
-      path: "{{ output_path }}/existing_vrf.yml"
+      path: "existing_vrf.yml"
       state: absent
     run_once: true
     tags: vrf_report
@@ -38,6 +30,6 @@
   - name: Create existing VRF report
     template:
       src: "{{ template_path }}/generate_existing_vrf.j2"
-      dest: "{{ output_path }}/existing_vrf.yml"
+      dest: "existing_vrf.yml"
     run_once: true
     tags: vrf_report
