@@ -8,12 +8,12 @@ active_vrfs:
     def_rd: {{ vrf.def_rd }}
     interfaces: {{ vrf.interfaces }}
 {##}{##}{% for node in nodes if node.name == hostvars[host].inventory_hostname %}
+{##}{##}{% set vpn_match = false %}
 {##}{##}{##}{% for vpn in node.vpn %}
-{##}{##}{##}{##}{% if vpn.name == vrf.name %}
-    surprise: false
-{##}{##}{##}{##}{% else %}
-    surprise: true       
+{##}{##}{##}{##}{% if vpn.name != vrf.name %}
+{% set vpn_match = true %}
 {##}{##}{##}{##}{% endif %}
+    surprise: {{ vpn_match }}
 {##}{##}{##}{% endfor %}
 {##}{##}{% endfor %}
 {##}{% endfor %}
