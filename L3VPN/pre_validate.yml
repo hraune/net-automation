@@ -1,0 +1,41 @@
+---
+- hosts: all
+  connection: local
+  gather_facts: no
+  vars:
+    - template_path: templates
+    - output_path: configs
+
+  tasks:
+  - name: Get existing VRF
+    ios_command:
+      commands:
+        - show vrf
+    register: vrf
+    tags: vrf_report
+
+  - name: Extract existing VRFs with textfsm
+    set_fact: 
+      active_vrf: "{{ vrf.stdout[0] | parse_cli_textfsm(textfsm_show_vrf) }}"
+    tags: vrf_report
+
+  - name: Create output directory
+    file:
+      path: "{{ output_path }}"
+      state: directory
+    run_once: true
+    tags: vrf_report
+    
+  - name: Clean up vrf reports
+    file:
+      path: "{{ output_path }}/existing_vrf.yml"
+      state: absent
+    run_once: true
+    tags: vrf_report
+
+  - name: Create existing VRF report
+    template:
+      src: "{{ template_path }}/generate_existing_vrf.j2"
+      dest: "{{ output_path }}/existing_vrf.yml"
+    run_once: true
+    tags: vrf_report
