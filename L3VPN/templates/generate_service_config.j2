@@ -43,8 +43,6 @@ router bgp {{ node.asn }}
 {##}{% endfor %}
 {% endif %}
 {% endfor %}
-{% if inventory_hostname in active_vrfs %}
-$!
 {% for vrf in active_vrfs.inventory_hostname if vrf.surprise == True %}
 !$
 no ip vrf {{ vrf.name }}
