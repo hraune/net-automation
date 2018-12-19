@@ -10,18 +10,15 @@ active_vrfs:
 {##}{##}{% for node in nodes if node.name == hostvars[host].inventory_hostname %}
 {##}{##}{% set vpn_match = {} %}
 {##}{##}{##}{% for vpn in node.vpn %}
-{{ vpn.name }} {{ vrf.name }}
 {##}{##}{##}{##}{% if vpn.name == vrf.name %}
 {# {% do vpn_match[vrf.name|string] = true %} #}
-!=
 {% set x=vpn_match.__setitem__(vrf.name, false) %}
 {% break %}
 {##}{##}{##}{##}{% else  %}
 {#{% do vpn_match[vrf.name|sting] = false %} #}
-==
  {% set x=vpn_match.__setitem__(vrf.name, true) %} 
 {##}{##}{##}{##}{% endif %}
-{##}{##}{##}{% endfor %}
+{##}{##}{##}{% endfor -%}
     surprise: {{ vpn_match[vrf.name|string] }}
 {##}{##}{% endfor %}
 {##}{% endfor %}
