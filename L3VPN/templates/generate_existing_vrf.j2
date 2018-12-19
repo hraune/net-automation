@@ -10,7 +10,7 @@ active_vrfs:
 {##}{##}{% for node in nodes if node.name == hostvars[host].inventory_hostname %}
 {##}{##}{% set vpn_match = [] %}
 {##}{##}{##}{% for vpn in node.vpn if %}
-{{ vpn.name }} %% {{ vrf.name }}
+{{ vpn.name }} XX {{ vrf.name }}
 {##}{##}{##}{##}{% if vpn.name != vrf.name %}
 {% do vpn_match.append(true) %}
 {##}{##}{##}{##}{% endif %}
