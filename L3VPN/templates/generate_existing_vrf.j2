@@ -11,7 +11,7 @@ active_vrfs:
 {##}{##}{% set vpn_match = [] %}
 {##}{##}{##}{% for vpn in node.vpn %}
 {##}{##}{##}{##}{% if vpn.name != vrf.name %}
-{% do vpn_match.append(true)) %}
+{% do vpn_match.append(true) %}
 {##}{##}{##}{##}{% endif %}
 {##}{##}{##}{% endfor %}
     surprise: {% if vpn_match|length > 0 %}true{% else %}false{% endif %}
