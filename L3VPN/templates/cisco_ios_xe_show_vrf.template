@@ -1,7 +1,8 @@
 Value name (\w+)
 Value def_rd (\d+:\d+)
 Value protocols (\w+)
-Value interfaces (\w*)
+Value interfaces (\w+)
 
 Start
   ^\s+${name}\s+${def_rd}\s+${protocols}\s+${interfaces} -> Record
+  ^\s+${name}\s+${def_rd}\s+${protocols} -> Record
