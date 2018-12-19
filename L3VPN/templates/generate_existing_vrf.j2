@@ -2,11 +2,11 @@ active_vrfs:
 {% for host in ansible_play_hosts %}
 {##}{% for vrf in hostvars[host]['active_vrf'] if vrf.name != 'MGMT' %}
 {##}{##}{% if loop.index == 1 %}
-  - {{ hostvars[host].inventory_hostname }}:
+  {{ hostvars[host].inventory_hostname }}:
 {##}{##}{% endif %}
-      - name: {{ vrf.name }}
-        def_rd: {{ vrf.def_rd }}
-        interfaces: {{ vrf.interfaces }}
+    - name: {{ vrf.name }}
+      def_rd: {{ vrf.def_rd }}
+      interfaces: {{ vrf.interfaces }}
 {##}{##}{% for node in nodes if node.name == hostvars[host].inventory_hostname %}
 {##}{##}{% set vpn_match = {} %}
 {##}{##}{##}{% for vpn in node.vpn %}
@@ -17,7 +17,7 @@ active_vrfs:
 {##}{##}{##}{##}{##}{% set x=vpn_match.__setitem__(vrf.name, true) %}
 {##}{##}{##}{##}{% endif %}
 {##}{##}{##}{% endfor %}
-        surprise: {{ vpn_match[vrf.name|string] }}
+      surprise: {{ vpn_match[vrf.name|string] }}
 {##}{##}{% endfor %}
 {##}{% endfor %}
 {% endfor %}
