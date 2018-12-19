@@ -5,7 +5,7 @@
   vars:
     - template_path: templates
     - output_path: configs
-  vars_files: [nodes.yml, output/existing_vrf.yml]
+  vars_files: [nodes.yml, existing_vrf.yml]
   
   tasks:
   - name: Clean up node config
