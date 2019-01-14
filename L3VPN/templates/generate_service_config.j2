@@ -4,8 +4,9 @@
 {##}{% for vrf in active_vrfs[inventory_hostname|string] %}
 {##}{##}{% do existing.append(vrf.name) %}
 {##}{##}{% if vrf.surprise == True %}
-!
+!! {{ vrf.name }} is unknown and should be removed
 no ip vrf {{ vrf.name }}
+!
 {##}{##}{% endif %}
 {##}{% endfor %}
 {% endif %}
@@ -28,7 +29,9 @@ ip vrf {{ vpn.name }}
 {##}{% endfor %}
 {% endif %}
 {% for interface in node.interfaces if interface.vrf is defined %}
+{% if interface.vrf not in existing %}
 interface {{ interface.name }}
+{% endif %}
 {% if interface.vrf in absent %}
  ip address {{ interface.ip|ipaddr('address') }} {{ interface.ip|ipaddr('netmask') }}
 {% elif interface.vrf not in existing %}
@@ -45,7 +48,7 @@ router ospf {{ vpn.ospf.id }} vrf {{ vpn.name }}
 !
 {##}{% endfor %}
 {% endif %}
-{% if node.asn is defined and absent|length < node.vpn|length %}
+{% if node.asn is defined and absent|length < node.vpn|length and existing|length < node.vpn|length %}
 router bgp {{ node.asn }}
 {##}{% for vpn in node.vpn if vpn.state != 'absent' and vpn.name not in existing %}
  address-family ipv4 vrf {{ vpn.name }}
