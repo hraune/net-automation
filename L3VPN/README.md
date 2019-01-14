@@ -12,10 +12,10 @@ The variable files and ansible playbooks used for provisioning of L3VPN:
 ### Playbooks
 * **assign_ip_addresses.yml** - generates *fabric_linknets* from the *available_subnets*. The number of linknets generated is based on the number of links from *fabric*. 
 Depending on the number of linknets in *fabric linknets*, it will add or subtract linknets to get the correct number of linknets. Unneeded linknets is put back into *available_subnets* (and merged into the existing subnets if possible).
-* **generate_nodes_datamodel** - transform all the _**Vars**_ into node-specific data models in **nodes.yml**. Will also populate the **hosts** file for future playbooks; current playbooks is localhost only.
-* **pre_validate** - checks all devices for any existing VPN configurations, outputs results into **existing_vrf.yml**.
-* **generate_config** - generates network and service config into **configs/<hostname>/**. Validation file for napalm_validate is also created for each node.
-* **deploy_config** - deploys network and service config and validates deployment.
+* **generate_nodes_datamodel.yml** - transform all the _**Vars**_ into node-specific data models in **nodes.yml**. Will also populate the **hosts** file for future playbooks; current playbooks is localhost only.
+* **pre_validate.yml** - checks all devices for any existing VPN configurations, outputs results into **existing_vrf.yml**.
+* **generate_config.yml** - generates network and service config into **configs/<hostname>/**. Validation file for napalm_validate is also created for each node.
+* **deploy_config.yml** - deploys network and service config and validates deployment.
 
 ## Details
 
@@ -32,6 +32,7 @@ Depending on the number of linknets in *fabric linknets*, it will add or subtrac
     * **rd** - route distinguisher.
     * **ospfid** - OSPF router id used for devices within this VPN
     * **nodes** - all the nodes in the VPN. A dictionary, where the key is always the customer node, the values is always the provider node it is connected to.
+    * **state** - If set to 'absent', VPN will be removed on next run.
 
 ### Node specific
 To simplify config generation, the *fabric* datamodel is transformed into *node*-specific datamodel.
@@ -39,11 +40,17 @@ To simplify config generation, the *fabric* datamodel is transformed into *node*
 * ASN and BGP information is only populated if you need it, ie PE nodes only.
 * Will use route distinguisher for route target export/import.
 
+### Pre-validation
+Before any config is generated, the network is checked for any current VPNs already configured. Any unknown VPNs is tagged as such.
+
 ### Config generation
 Each node gets a directory under **output** which config is generated into. In all there is up to three configs generated (dependent on role of device):
   * basic.cfg - barebone config with only management
   * running.cfg - network config (linknets, routing etc).
   * service.cfg - service specific config.
+
+If the **ignore_surprise** option is set to false, any unknown VPNs will be removed. 
+If there is any existing VPNs configured that are similar to those in services.yml, the **overwrite_existing** will if set to true generate config that overwrites, or if set to false skip that VPN.
 
 ### Config deployment
 The network config is deployed with the **ios_config** module in Ansible, service config is deployed with **napalm_install_config**.
