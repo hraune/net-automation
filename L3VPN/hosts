@@ -15,3 +15,5 @@ ansible_ssh_pass=paladin
 ansible_connection=network_cli
 ansible_network_os=ios
 dev_os=ios
+ignore_surprise=false
+overwrite_existing=false
