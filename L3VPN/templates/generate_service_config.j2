@@ -15,7 +15,7 @@ ip vrf {{ vpn.name }}
 {##}{##}{% endif %}
 {##}{% endfor %}
 {% endif %}
-{% for interface in node.interfaces if interface.vrf is defined %}
+{% for interface in node.interfaces if interface.vrf is defined and active_vrfs[inventory_hostname|string] is not defined %}
 interface {{ interface.name }}
 {% if interface.vrf in absent %}
  ip address {{ interface.ip|ipaddr('address') }} {{ interface.ip|ipaddr('netmask') }}
