@@ -13,7 +13,9 @@ The variable files and ansible playbooks used for provisioning of L3VPN:
 * **assign_ip_addresses.yml** - generates *fabric_linknets* from the *available_subnets*. The number of linknets generated is based on the number of links from *fabric*. 
 Depending on the number of linknets in *fabric linknets*, it will add or subtract linknets to get the correct number of linknets. Unneeded linknets is put back into *available_subnets* (and merged into the existing subnets if possible).
 * **generate_nodes_datamodel** - transform all the _**Vars**_ into node-specific data models in **nodes.yml**. Will also populate the **hosts** file for future playbooks; current playbooks is localhost only.
-* **generate_node_config** - generates all the node specific config into **output/nodes.cfg**.
+* **pre_validate** - checks all devices for any existing VPN configurations, outputs results into **existing_vrf.yml**.
+* **generate_config** - generates network and service config into **configs/<hostname>/**. Validation file for napalm_validate is also created for each node.
+* **deploy_config** - deploys network and service config and validates deployment.
 
 ## Details
 
@@ -38,4 +40,13 @@ To simplify config generation, the *fabric* datamodel is transformed into *node*
 * Will use route distinguisher for route target export/import.
 
 ### Config generation
-All the node specific config snippets is written to one file, next step is to switch this out with creation of individual node config files in preparation for node provisioning.
+Each node gets a directory under **output** which config is generated into. In all there is up to three configs generated (dependent on role of device):
+  * basic.cfg - barebone config with only management
+  * running.cfg - network config (linknets, routing etc).
+  * service.cfg - service specific config.
+
+### Config deployment
+The network config is deployed with the **ios_config** module in Ansible, service config is deployed with **napalm_install_config**.
+
+### Config validation
+During config generation, a validation file for **napalm_validate** is also generated. It checks that all interfaces is configured with the correct IP, that BGP is running correctly, and that all devices in a VPN can ping each other.
