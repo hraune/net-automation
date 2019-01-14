@@ -3,7 +3,7 @@
 {% if active_vrfs[inventory_hostname|string] is defined %}
 {##}{% for vrf in active_vrfs[inventory_hostname|string] %}
 {##}{##}{% do existing.append(vrf.name) %}
-{##}{##}{% if vrf.surprise == True and ignore_surprise == 'false' %}
+{##}{##}{% if vrf.surprise == True and not ignore_surprise|bool %}
 !! {{ vrf.name }} is an unknown VPN and should be removed
 no ip vrf {{ vrf.name }}
 !
@@ -17,7 +17,7 @@ no ip vrf {{ vrf.name }}
 {##}{##}{##}{% do absent.append(vpn.name) %}
 no ip vrf {{ vpn.name }}
 !
-{##}{##}{% elif vpn.name in existing and overwrite_existing == 'false' %}
+{##}{##}{% elif vpn.name in existing and not overwrite_existing|bool %}
 !! A VPN by name of {{ vpn.name }} is already configured, skipping
 {##}{##}{% else %}
 ip vrf {{ vpn.name }}
@@ -29,12 +29,12 @@ ip vrf {{ vpn.name }}
 {##}{% endfor %}
 {% endif %}
 {% for interface in node.interfaces if interface.vrf is defined %}
-{% if interface.vrf not in existing and overwrite_existing == 'false' %}
+{% if interface.vrf not in existing and not overwrite_existing|bool %}
 interface {{ interface.name }}
 {% endif %}
 {% if interface.vrf in absent %}
  ip address {{ interface.ip|ipaddr('address') }} {{ interface.ip|ipaddr('netmask') }}
-{% elif interface.vrf not in existing and overwrite_existing == 'false' %}
+{% elif interface.vrf not in existing and not overwrite_existing|bool %}
  ip vrf forwarding {{ interface.vrf }}
  ip address {{ interface.ip|ipaddr('address') }} {{ interface.ip|ipaddr('netmask') }}
  ip ospf {{ interface.ospf.id }} area {{ interface.ospf.area }}
