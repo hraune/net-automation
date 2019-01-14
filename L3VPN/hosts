@@ -1,19 +1,22 @@
 [isp]
-10.0.10.203
-10.0.10.202
-10.0.10.204
+P1 ansible_host=10.0.10.203
+PE1 ansible_host=10.0.10.202
+PE2 ansible_host=10.0.10.204
 
 [cust]
-10.0.10.201
-10.0.10.205
-10.0.10.206
-10.0.10.207
+CE1 ansible_host=10.0.10.201
+CE2 ansible_host=10.0.10.205
+CE3 ansible_host=10.0.10.206
+CE4 ansible_host=10.0.10.207
+
+[cisco:children]
+isp
+cust
 
 [all:vars]
 ansible_user=admin
 ansible_ssh_pass=paladin
 ansible_connection=network_cli
 ansible_network_os=ios
-dev_os=ios
 ignore_surprise=false
 overwrite_existing=false
