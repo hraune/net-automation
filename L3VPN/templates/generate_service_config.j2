@@ -1,4 +1,14 @@
 {%- for node in nodes if node.name == inventory_hostname %}
+{% set existing = [] %}
+{% if active_vrfs[inventory_hostname|string] is defined %}
+{##}{% for vrf in active_vrfs[inventory_hostname|string] %}
+{##}{##}{% do existing.append(vrf.name) %}
+{##}{##}{% if vrf.surprise == True %}
+!
+no ip vrf {{ vrf.name }}
+{##}{##}{% endif %}
+{##}{% endfor %}
+{% endif %}
 {% set absent = [] %}
 {% if node.vpn is defined %}
 {##}{% for vpn in node.vpn %}
@@ -6,6 +16,8 @@
 {##}{##}{##}{% do absent.append(vpn.name) %}
 no ip vrf {{ vpn.name }}
 !
+{##}{##}{% elif vpn.name in existing%}
+!! A VPN by name of {{ vpn.name }} is already configured, skipping
 {##}{##}{% else %}
 ip vrf {{ vpn.name }}
  rd {{ vpn.rd }}
@@ -15,11 +27,11 @@ ip vrf {{ vpn.name }}
 {##}{##}{% endif %}
 {##}{% endfor %}
 {% endif %}
-{% for interface in node.interfaces if interface.vrf is defined and active_vrfs[inventory_hostname|string] is not defined %}
+{% for interface in node.interfaces if interface.vrf is defined %}
 interface {{ interface.name }}
 {% if interface.vrf in absent %}
  ip address {{ interface.ip|ipaddr('address') }} {{ interface.ip|ipaddr('netmask') }}
-{% else %}
+{% elif interface.vrf not in existing %}
  ip vrf forwarding {{ interface.vrf }}
  ip address {{ interface.ip|ipaddr('address') }} {{ interface.ip|ipaddr('netmask') }}
  ip ospf {{ interface.ospf.id }} area {{ interface.ospf.area }}
@@ -27,7 +39,7 @@ interface {{ interface.name }}
 !
 {% endfor %}
 {% if node.vpn is defined %}
-{##}{% for vpn in node.vpn if vpn.state != 'absent' %}
+{##}{% for vpn in node.vpn if vpn.state != 'absent' and vpn.name not in existing %}
 router ospf {{ vpn.ospf.id }} vrf {{ vpn.name }}
  redistribute bgp {{ node.asn }} subnets
 !
@@ -35,7 +47,7 @@ router ospf {{ vpn.ospf.id }} vrf {{ vpn.name }}
 {% endif %}
 {% if node.asn is defined and absent|length < node.vpn|length %}
 router bgp {{ node.asn }}
-{##}{% for vpn in node.vpn if vpn.state != 'absent' %}
+{##}{% for vpn in node.vpn if vpn.state != 'absent' and vpn.name not in existing %}
  address-family ipv4 vrf {{ vpn.name }}
   redistribute ospf {{ vpn.ospf.id }}
  exit-address-family
@@ -43,9 +55,3 @@ router bgp {{ node.asn }}
 {##}{% endfor %}
 {% endif %}
 {% endfor %}
-{% if active_vrfs[inventory_hostname|string] is defined %}
-{% for vrf in active_vrfs[inventory_hostname|string] if vrf.surprise == True %}
-!
-no ip vrf {{ vrf.name }}
-{% endfor %}
-{% endif %}
