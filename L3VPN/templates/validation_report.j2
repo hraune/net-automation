@@ -1,29 +1,20 @@
 <html>
-<head>
-<style>
-table {
-    border: 1px solid black;
-}
-th, td {
-    padding: 5px;
-    border: 1px solid black;
-}
-</style>
-</head>
 <body>
 <h2>Validation Report for {{ inventory_hostname }}</h2>
 
 The following tests are run: 
 
 <h3>get_facts</h3>
-Checks that all the interfaces are present and that the correct hostname is configured.
+<p>Checks that all the interfaces are present and that the correct hostname is configured.</p>
 
-Result: <span style="color: {{ 'green' if report.compliance_report.get_facts.complies|bool 
-else 'red' }}" >{{ report.compliance_report.get_facts.complies }}</span>
+<p><b>Result</b>: <span style="color: {{ 'green' if report.compliance_report.get_facts.complies|bool 
+else 'red' }}" >{{ report.compliance_report.get_facts.complies }}</span></p>
 
-Details: 
-Interface list: {{ report.compliance_report.get_facts.present.interface_list.complies }}
-Hostname: {{ report.compliance_report.get_facts.present.hostname.complies }}
+<h4>Details</h4>: 
+<p>Interface list: <span style="color: {{ 'green' if report.compliance_report.get_facts.present.interface_list.complies|bool 
+else 'red' }}" >{{ report.compliance_report.get_facts.present.interface_list.complies }}</span></p>
+<p>Hostname: <span style="color: {{ 'green' if report.compliance_report.get_facts.present.hostname.complies|bool 
+else 'red' }}" >{{ report.compliance_report.get_facts.present.hostname.complies }}</span></p>
 
 
 
