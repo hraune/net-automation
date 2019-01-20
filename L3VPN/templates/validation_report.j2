@@ -24,7 +24,7 @@ else 'red' }}" >{{ report.compliance_report.get_interfaces_ip.complies }}</span>
 
 <h4>Details</h4>: 
 {% for item in report.compliance_report.get_interfaces_ip.present %}
-{{ item }}: {{ item.complies }}
+{{ item }}: {{ report.compliance_report.get_interfaces_ip.present[item].complies }}
 {% endfor %}
 
 
