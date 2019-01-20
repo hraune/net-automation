@@ -39,12 +39,27 @@
       when: service.stat.size > 0
     tags: deploy_service
 
-  - name: get validate report
+  - name: Validate device config
     napalm_validate:
       provider: "{{ ios_provider }}"
       validation_file: "{{ config_path }}/{{ inventory_hostname }}/validate.yml"
     register: report
     tags: validate
 
-  - debug: var=vars.report
+  - name: Create output directory
+    file:
+      path: "{{ config_path }}/{{ inventory_hostname }}"
+      state: directory
+    tags: validate
+  
+  - name: Clean up old report
+    file:
+      path: "{{ config_path }}/{{ inventory_hostname }}/validation_report.html"
+      state: absent
+    tags: validate
+  
+  - name: Create validation report
+    template:
+      src: "{{ template_path }}/validation_report.j2"
+      dest: "{{ config_path }}/{{ inventory_hostname }}/validation_report.html"
     tags: validate
