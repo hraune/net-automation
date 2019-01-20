@@ -20,7 +20,7 @@ Checks that all the interfaces are present and that the correct hostname is conf
 
 Result: 
 {%- for item in report.compliance_report if item == "get_facts" %}
-{{ item }}
+<span style="color: {% {{ 'green' if item.complies == 'true' else 'red' }} %}">{{ item.complies }}</span>
 {% endfor %}
 
 
