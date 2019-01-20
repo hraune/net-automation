@@ -18,7 +18,7 @@ The following tests are run:
 <h3>get_facts</h3>
 Checks that all the interfaces are present and that the correct hostname is configured.
 
-Result: <span style="color: {{ 'green' if report.compliance_report.get_facts.complies == 'true' 
+Result: <span style="color: {{ 'green' if report.compliance_report.get_facts.complies|bool 
 else 'red' }}" >{{ report.compliance_report.get_facts.complies }}</span>
 
 Details: 
