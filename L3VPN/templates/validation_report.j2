@@ -18,12 +18,15 @@ The following tests are run:
 <h3>get_facts</h3>
 Checks that all the interfaces are present and that the correct hostname is configured.
 
-Result: 
-{%- for item in report.compliance_report if item == "get_facts" %}
-<span style="color: ">{{ item }}</span>
-{% endfor %}
+Result: <span style="color: {{ 'green' if report.compliance_report.get_facts.complies == 'True' else 'red' }}" >{{ report.compliance_report.get_facts.complies }}</span>
 
-<span style="color: {{ 'green' if report.compliance_report.get_facts.complies == 'True' else 'red' }}" >{{ report.compliance_report.get_facts.complies }}</span>
+Details: 
+{{ report.compliance_report.get_facts.present.interface_list.complies }}
+{{ report.compliance_report.get_facts.present.hostname.complies }}
+
+
+
+
 
 get_interfaces_ip
 get_facts
