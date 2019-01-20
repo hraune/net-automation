@@ -23,7 +23,7 @@ else 'red' }}" >{{ report.compliance_report.get_facts.present.hostname.complies 
 else 'red' }}" >{{ report.compliance_report.get_interfaces_ip.complies }}</span></p>
 
 <h4>Details</h4>: 
-{% for item in report.compliance_report.get_interfaces_ip.present|dictsort %}
+{% for item in report.compliance_report.get_interfaces_ip.present %}
 {{ item }}: {{ report.compliance_report.get_interfaces_ip.present[item].complies }}
 {% endfor %}
 
