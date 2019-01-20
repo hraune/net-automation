@@ -40,7 +40,7 @@
 
 {% for n in nodes if n.loopback.ospf.id == node.loopback.ospf.id and node.name != n.name %}
 - ping:
-    _name: Ping devices with same OSPF id ({{ n.loopback.ospf.id }} - {{ n.name }})
+    _name: ping_{{ n.name }}
     _kwargs:
       destination: {{ n.loopback.ip }}
       source: {{ node.loopback.ip }}

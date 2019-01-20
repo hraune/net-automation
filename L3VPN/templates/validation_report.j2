@@ -13,8 +13,26 @@ th, td {
 <body>
 <h2>Validation Report for {{ inventory_hostname }}</h2>
 
-{% for item in report.compliance_report %}
+The following tests are run: 
+
+<h3>get_facts</h3>
+Checks that all the interfaces are present and that the correct hostname is configured.
+
+Result: 
+{%- for item in report.compliance_report if item == "get_facts" %}
 {{ item }}
 {% endfor %}
+
+
+get_interfaces_ip
+get_facts
+
+Ping devices with same OSPF id (1 - PE2)
+Ping devices with same OSPF id (1 - P1)
+get_bgp_neighbors
+
 </body>
 </html>
+
+
+
