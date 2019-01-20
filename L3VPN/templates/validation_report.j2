@@ -16,12 +16,17 @@ else 'red' }}" >{{ report.compliance_report.get_facts.present.interface_list.com
 <p>Hostname: <span style="color: {{ 'green' if report.compliance_report.get_facts.present.hostname.complies|bool 
 else 'red' }}" >{{ report.compliance_report.get_facts.present.hostname.complies }}</span></p>
 
+<h3>get_interfaces_ip</h3>
+<p>Checks that all interfaces have been configured with correct IP addresses.</p>
 
+<p><b>Result</b>: <span style="color: {{ 'green' if report.compliance_report.get_interfaces_ip.complies|bool 
+else 'red' }}" >{{ report.compliance_report.get_interfaces_ip.complies }}</span></p>
 
+<h4>Details</h4>: 
+{% for item in report.compliance_report.get_interfaces_ip.present %}
+{{ item }}: {{ item.complies }}
+{% endfor %}
 
-
-get_interfaces_ip
-get_facts
 
 Ping devices with same OSPF id (1 - PE2)
 Ping devices with same OSPF id (1 - P1)
