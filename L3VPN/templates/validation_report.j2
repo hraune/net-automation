@@ -23,7 +23,7 @@ Result:
 <span style="color: ">{{ item }}</span>
 {% endfor %}
 
-{{ report.compliance_report.get_facts.complies }}
+<span style="color: {{ 'green' if report.compliance_report.get_facts.complies == 'True' else 'red' }}" >{{ report.compliance_report.get_facts.complies }}</span>
 
 get_interfaces_ip
 get_facts
