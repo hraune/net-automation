@@ -24,13 +24,24 @@ else 'red' }}" >{{ report.compliance_report.get_interfaces_ip.complies }}</span>
 
 <h4>Details</h4>: 
 {% for item in report.compliance_report.get_interfaces_ip.present %}
-{{ item }}: {{ report.compliance_report.get_interfaces_ip.present[item].complies }}
+<p>{{ item }}: <span style="color: {{ 'green' if report.compliance_report.get_interfaces_ip.present[item].complies|bool 
+else 'red' }}" >{{ report.compliance_report.get_interfaces_ip.present[item].complies }}</span></p>
 {% endfor %}
 
+{% if report.compliance_report.get_bgp_neighbors is defined %}
+<h3>get_bgp_neighbors</h3>
+<p>Checks that all BGP neighbors are present.</p>
 
-Ping devices with same OSPF id (1 - PE2)
-Ping devices with same OSPF id (1 - P1)
-get_bgp_neighbors
+<p><b>Result</b>: <span style="color: {{ 'green' if report.compliance_report.get_bgp_neighbors.complies|bool 
+else 'red' }}" >{{ report.compliance_report.get_bgp_neighbors.complies }}</span></p>
+{% endif %}
+
+<h3>Ping devices with same OSPF id</h3>
+{% for ping in report.compliance_report if "ping" in ping %}
+
+<p><b>{{ ping }}</b>: <span style="color: {{ 'green' if report.compliance_report[ping].complies|bool 
+else 'red' }}" >{{ report.compliance_report[ping].complies }}</span></p>
+{% endfor %}
 
 </body>
 </html>
