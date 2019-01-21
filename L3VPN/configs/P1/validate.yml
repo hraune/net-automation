@@ -1,0 +1,52 @@
+---
+- get_facts:
+    interface_list:
+      _mode: strict
+      list:      
+        - GigabitEthernet2
+      
+        - GigabitEthernet1
+      
+        - GigabitEthernet3
+      
+        - GigabitEthernet4
+        - Loopback0
+    hostname: P1
+
+
+- get_interfaces_ip:
+    GigabitEthernet2:
+      ipv4:
+        10.203.55.2:
+          prefix_length: 30
+    GigabitEthernet1:
+      ipv4:
+        10.203.55.5:
+          prefix_length: 30
+    GigabitEthernet3:
+      ipv4:
+        10.0.10.203:
+          prefix_length: 24
+    Loopback0:
+      ipv4:
+        10.2.2.2:
+          prefix_length: 32
+
+- ping:
+    _name: ping_PE1
+    _kwargs:
+      destination: 10.1.1.1
+      source: 10.2.2.2
+    success:
+      packet_loss: 0
+    _mode: strict
+
+- ping:
+    _name: ping_PE2
+    _kwargs:
+      destination: 10.3.3.3
+      source: 10.2.2.2
+    success:
+      packet_loss: 0
+    _mode: strict
+

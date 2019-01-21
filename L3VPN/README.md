@@ -59,4 +59,4 @@ There is two options (in the hosts file) to control how to react to existing VRF
 The network config is deployed with the **ios_config** module in Ansible, service config is deployed with **napalm_install_config**.
 
 ### Config validation
-During config generation, a validation file for **napalm_validate** is also generated. It checks that all interfaces is configured with the correct IP, that BGP is running correctly, and that all devices in a VPN can ping each other. A report is finally generated.
+During config generation, a validation file for **napalm_validate** is also generated. It checks that all interfaces is configured with the correct IP, that BGP is running correctly, and that all devices in a VPN can ping each other. A report is finally generated in the configs device specific directory.

@@ -1,0 +1,36 @@
+<html>
+<body>
+<h1>Validation Report for CE2</h1>
+
+The following tests are run: 
+
+<h2>get_facts</h2>
+<p>Checks that all the interfaces are present and that the correct hostname is configured.</p>
+
+<p><b>Result</b>: <span style="color: green" >True</span></p>
+
+<h3>Details:</h3> 
+<p>Interface list: <span style="color: green" >True</span></p>
+<p>Hostname: <span style="color: green" >True</span></p>
+
+<h2>get_interfaces_ip</h2>
+<p>Checks that all interfaces have been configured with correct IP addresses.</p>
+
+<p><b>Result</b>: <span style="color: green" >True</span></p>
+
+<h3>Details:</h3>
+<p>Loopback0: <span style="color: green" >True</span></p>
+<p>GigabitEthernet2: <span style="color: green" >True</span></p>
+<p>GigabitEthernet3: <span style="color: green" >True</span></p>
+
+
+<h2>Ping devices with same OSPF id</h2>
+Pings all the other devices in the same OSPF area (ie all other devices in the same VPN, or ISP devices.)
+
+<p><b>ping_CE1</b>: <span style="color: green" >True</span></p>
+
+</body>
+</html>
+
+
+

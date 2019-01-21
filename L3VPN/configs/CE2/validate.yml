@@ -1,0 +1,39 @@
+---
+- get_facts:
+    interface_list:
+      _mode: strict
+      list:      
+        - GigabitEthernet2
+      
+        - GigabitEthernet1
+      
+        - GigabitEthernet3
+      
+        - GigabitEthernet4
+        - Loopback0
+    hostname: CE2
+
+
+- get_interfaces_ip:
+    GigabitEthernet2:
+      ipv4:
+        10.203.55.14:
+          prefix_length: 30
+    GigabitEthernet3:
+      ipv4:
+        10.0.10.205:
+          prefix_length: 24
+    Loopback0:
+      ipv4:
+        172.16.2.2:
+          prefix_length: 32
+
+- ping:
+    _name: ping_CE1
+    _kwargs:
+      destination: 172.16.1.1
+      source: 172.16.2.2
+    success:
+      packet_loss: 0
+    _mode: strict
+
