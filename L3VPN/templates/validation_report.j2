@@ -29,7 +29,7 @@ else 'red' }}" >{{ report.compliance_report.get_interfaces_ip.present[item].comp
 {% endfor %}
 
 {% if report.compliance_report.get_bgp_neighbors is defined %}
-<h3>get_bgp_neighbors</h3>
+<h2>get_bgp_neighbors</h2>
 <p>Checks that all BGP neighbors are present.</p>
 
 <p><b>Result</b>: <span style="color: {{ 'green' if report.compliance_report.get_bgp_neighbors.complies|bool 
