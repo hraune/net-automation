@@ -39,8 +39,7 @@ else 'red' }}" >{{ report.compliance_report.get_bgp_neighbors.complies }}</span>
 <h3>Ping devices with same OSPF id</h3>
 {% for ping in report.compliance_report %}
 
-<p><b>{{ ping }}</b>: <span style="color: {{ 'green' if report.compliance_report[ping].complies|bool 
-else 'red' }}" >{{ report.compliance_report[ping].complies }}</span></p>
+<p><b>{{ ping }}</b></p>
 {% endfor %}
 
 </body>
