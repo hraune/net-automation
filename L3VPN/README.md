@@ -37,8 +37,8 @@ Depending on the number of linknets in *fabric linknets*, it will add or subtrac
 
 ### Node specific
 To simplify config generation, the *fabric* datamodel is transformed into *node*-specific datamodel.
-* All linknets are dynamically assigned. The *left* port gets the first available IP address in the assigned linknet subnet, the *right* the second.
-* Interface description is generated on the format "To <hostname on the other end>;<interface on the other end>".
+* All linknets are dynamically assigned. The *left* port gets the first available IP address in the assigned linknet subnet, the *right* port the second.
+* Interface description is generated on the format "To < hostname on the other end >;< interface on the other end >".
 * ASN and BGP information is only populated if you need it, ie PE nodes only.
 * Will use route distinguisher for route target export/import.
 
@@ -47,9 +47,9 @@ Checks nodes in the network for any current VPNs already configured. Unknown VPN
 
 ### Config generation
 Each node gets a directory under **output** which config is generated into. In all there is up to three configs generated (dependent on role of device):
-  * basic.cfg - barebone config with only management
-  * running.cfg - contains all infrastructure config (linknets, routing etc).
-  * service.cfg - service specific config.
+  * *basic.cfg* - barebone config with only management
+  * *running.cfg* - contains all infrastructure config (linknets, routing etc).
+  * *service.cfg* - service specific config.
 
 There is two options (in the hosts file) to control how to react to existing VRFs:
 * **ignore_surprise** - if this option is set to *false*, any unknown VPNs will be removed; service.cfg will contain config to remove VPNs.
