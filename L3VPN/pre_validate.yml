@@ -5,7 +5,8 @@
   vars:
     - template_path: templates
     - textfsm_show_vrf: 'templates/cisco_ios_xe_show_vrf.template'
-  vars_files: [nodes.yml]
+    - log_path: logging
+  vars_files: [ nodes.yml ]
 
   tasks:
   - name: Get existing VRF
@@ -15,14 +16,15 @@
     register: vrf
     tags: vrf_report
   
-  - debug: var=vars.vrf
+  - local_action: >
+      copy content = "{{ vrf|to_nice_json }}"
+        dest = {{ log_path }}/{{ inventory_hostname }}_existing_vrf_{{ '%Y-%m-%d %H:%M:%S' | strftime }}.json
+    when: logging|bool
 
   - name: Extract existing VRFs with textfsm
     set_fact: 
       active_vrf: "{{ vrf.stdout[0] | parse_cli_textfsm(textfsm_show_vrf) }}"
     tags: vrf_report
-  
-  - debug: var=vars.active_vrf
 
   - name: Clean up vrf reports
     file:
