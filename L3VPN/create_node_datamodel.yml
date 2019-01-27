@@ -16,6 +16,10 @@
         path: hosts
         state: absent
 
+  - local_action: >
+      copy content="{{ vars|to_nice_json }}" 
+           dest="testing/datamodel_generation_vars.json"
+
     - name: Generate nodes datamodel
       template:
         src: "{{ template_path }}/generate_nodes_datamodel.j2"
