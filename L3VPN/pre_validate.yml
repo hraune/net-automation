@@ -8,6 +8,7 @@
     - log_path: logging
   vars_files: [ nodes.yml ]
 
+  tasks:
   - name: Create output directory
     file:
       path: "{{ log_path }}"
@@ -15,7 +16,6 @@
     run_once: true
     when: logging
 
-  tasks:
   - name: Get existing VRF
     ios_command:
       commands:
