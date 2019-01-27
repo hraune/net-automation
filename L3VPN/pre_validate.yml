@@ -18,8 +18,8 @@
   
   - local_action: >
       copy content = "{{ vrf|to_nice_json }}"
-        dest = {{ log_path }}/{{ inventory_hostname }}_existing_vrf_{{ '%Y-%m-%d %H:%M:%S' | strftime }}.json
-    when: logging|bool
+        dest = "{{ log_path }}/{{ inventory_hostname }}_existing_vrf_{{ '%Y-%m-%d %H:%M:%S' | strftime }}.json"
+    when: "{{ logging|bool }}"
 
   - name: Extract existing VRFs with textfsm
     set_fact: 
