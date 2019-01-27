@@ -20,3 +20,4 @@ ansible_connection=network_cli
 ansible_network_os=ios
 ignore_surprise=false
 overwrite_existing=false
+logging=true
