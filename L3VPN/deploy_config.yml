@@ -7,6 +7,7 @@
   - config_path: configs
   - output_path: reports
   - template_path: templates
+  - log_path: logging
   vars_files: [nodes.yml]
 
   tasks:
@@ -14,13 +15,23 @@
     ios_config:
       src: "{{ config_path }}/{{ inventory_hostname }}/basic.cfg"
     tags: deploy_init
-    register: changes
+    register: basic
+
+  - local_action: >
+      copy content="{{ basic|to_nice_json }}" 
+           dest="{{ log_path }}/{{ inventory_hostname }}_ios_config_basic_{{ '%Y%m%d%H%M%S' | strftime }}.json"
+    when: logging
 
   - name: Deploy network config
     ios_config:
       src: "{{ config_path }}/{{ inventory_hostname }}/running.cfg"
     tags: deploy_network
-    register: changes
+    register: network
+    
+  - local_action: >
+      copy content="{{ network|to_nice_json }}" 
+           dest="{{ log_path }}/{{ inventory_hostname }}_ios_config_network_{{ '%Y%m%d%H%M%S' | strftime }}.json"
+    when: logging
 
   - name: Find service config file size
     stat:
@@ -45,6 +56,11 @@
       validation_file: "{{ config_path }}/{{ inventory_hostname }}/validate.yml"
     register: report
     tags: validate
+
+  - local_action: >
+      copy content="{{ report|to_nice_json }}" 
+           dest="{{ log_path }}/{{ inventory_hostname }}_napalm_validate_report_{{ '%Y%m%d%H%M%S' | strftime }}.json"
+    when: logging
 
   - name: Create output directory
     file:
