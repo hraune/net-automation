@@ -16,8 +16,9 @@
     register: vrf
     tags: vrf_report
   
-  - local_action: >
-      copy content = "{{ vrf|to_nice_json }}"
+  - local_action:
+      copy:
+        content = "{{ vrf|to_nice_json }}"
         dest = "{{ log_path }}/{{ inventory_hostname }}_existing_vrf_{{ '%Y-%m-%d %H:%M:%S' | strftime }}.json"
     when: logging
 
