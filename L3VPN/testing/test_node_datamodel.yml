@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+    - template_path: ../templates
+    - scenario: current_lab
+    - output_path: output
+  vars_files:
+    - scenario/{{ scenario }}/fabric.yml
+    - scenario/{{ scenario }}/ip_addresses.yml
+    - scenario/{{ scenario }}/services.yml
+
+  tasks:
+  - name: Remove old node datamodels
+    file:
+      path: {{ output_path }}/{{ scenario }}_nodes.yml
+      state: absent
+
+  - name: Generate nodes datamodel
+    template:
+      src: "{{ template_path }}/generate_nodes_datamodel.j2"
+      dest: {{ output_path }}/{{ scenario }}_nodes.yml

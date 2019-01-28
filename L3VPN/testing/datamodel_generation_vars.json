@@ -1,0 +1,1278 @@
+{
+    "VPNV4": [
+        {
+            "name": "RED",
+            "nodes": {
+                "CE1": "PE1",
+                "CE2": "PE2"
+            },
+            "ospfid": 10,
+            "rd": "65001:1",
+            "state": "active"
+        },
+        {
+            "name": "BLUE",
+            "nodes": {
+                "CE3": "PE1",
+                "CE4": "PE2"
+            },
+            "ospfid": 20,
+            "rd": "65001:2",
+            "state": "active"
+        }
+    ],
+    "ansible_check_mode": false,
+    "ansible_connection": "local",
+    "ansible_delegated_vars": {
+        "localhost": {
+            "VPNV4": [
+                {
+                    "name": "RED",
+                    "nodes": {
+                        "CE1": "PE1",
+                        "CE2": "PE2"
+                    },
+                    "ospfid": 10,
+                    "rd": "65001:1",
+                    "state": "active"
+                },
+                {
+                    "name": "BLUE",
+                    "nodes": {
+                        "CE3": "PE1",
+                        "CE4": "PE2"
+                    },
+                    "ospfid": 20,
+                    "rd": "65001:2",
+                    "state": "active"
+                }
+            ],
+            "ansible_check_mode": false,
+            "ansible_connection": "local",
+            "ansible_diff_mode": false,
+            "ansible_facts": {},
+            "ansible_forks": 5,
+            "ansible_host": "localhost",
+            "ansible_inventory_sources": [
+                "/home/hraune/net-automation/L3VPN/hosts"
+            ],
+            "ansible_network_os": "ios",
+            "ansible_play_batch": [],
+            "ansible_play_hosts": [
+                "localhost"
+            ],
+            "ansible_play_hosts_all": [
+                "localhost"
+            ],
+            "ansible_playbook_python": "/usr/bin/python",
+            "ansible_port": null,
+            "ansible_python_interpreter": "/usr/bin/python",
+            "ansible_run_tags": [
+                "all"
+            ],
+            "ansible_skip_tags": [],
+            "ansible_ssh_pass": "paladin",
+            "ansible_user": "admin",
+            "ansible_verbosity": 0,
+            "ansible_version": {
+                "full": "2.7.0",
+                "major": 2,
+                "minor": 7,
+                "revision": 0,
+                "string": "2.7.0"
+            },
+            "environment": [],
+            "fabric_customer": [
+                {
+                    "left": "CE1",
+                    "left_port": "GigabitEthernet1",
+                    "right": "PE1",
+                    "right_port": "GigabitEthernet2"
+                },
+                {
+                    "left": "PE2",
+                    "left_port": "GigabitEthernet1",
+                    "right": "CE2",
+                    "right_port": "GigabitEthernet2"
+                },
+                {
+                    "left": "CE3",
+                    "left_port": "GigabitEthernet1",
+                    "right": "PE1",
+                    "right_port": "GigabitEthernet4"
+                },
+                {
+                    "left": "PE2",
+                    "left_port": "GigabitEthernet4",
+                    "right": "CE4",
+                    "right_port": "GigabitEthernet2"
+                }
+            ],
+            "fabric_infrastructure": [
+                {
+                    "left": "PE1",
+                    "left_port": "GigabitEthernet1",
+                    "right": "P1",
+                    "right_port": "GigabitEthernet2"
+                },
+                {
+                    "left": "P1",
+                    "left_port": "GigabitEthernet1",
+                    "right": "PE2",
+                    "right_port": "GigabitEthernet2"
+                }
+            ],
+            "group_names": [],
+            "groups": {
+                "all": [
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4",
+                    "P1",
+                    "PE1",
+                    "PE2"
+                ],
+                "cisco": [
+                    "P1",
+                    "PE1",
+                    "PE2",
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4"
+                ],
+                "cust": [
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4"
+                ],
+                "isp": [
+                    "P1",
+                    "PE1",
+                    "PE2"
+                ],
+                "ungrouped": []
+            },
+            "hardware": [
+                {
+                    "devices": [
+                        "P1",
+                        "PE1",
+                        "PE2",
+                        "CE1",
+                        "CE2",
+                        "CE3",
+                        "CE4"
+                    ],
+                    "interfaces": [
+                        "GigabitEthernet1",
+                        "GigabitEthernet2",
+                        "GigabitEthernet3",
+                        "GigabitEthernet4"
+                    ],
+                    "mgmt_int": "GigabitEthernet3",
+                    "name": "CSR1000V"
+                }
+            ],
+            "ignore_surprise": "false",
+            "inventory_hostname": "localhost",
+            "inventory_hostname_short": "localhost",
+            "ios_provider": {
+                "dev_os": "ios",
+                "hostname": "{{ ansible_host }}",
+                "password": "{{ ansible_ssh_pass }}",
+                "username": "{{ ansible_user }}"
+            },
+            "isp_nodes": [
+                "P1",
+                "PE1",
+                "PE2"
+            ],
+            "linknet": {
+                "available_subnets": [
+                    "10.203.55.132/30",
+                    "10.203.55.136/29",
+                    "10.203.55.144/28",
+                    "10.203.55.160/27",
+                    "10.203.55.192/26"
+                ],
+                "fabric_linknets": [
+                    "10.203.55.0/30",
+                    "10.203.55.4/30",
+                    "10.203.55.8/30",
+                    "10.203.55.12/30",
+                    "10.203.55.16/30",
+                    "10.203.55.128/30"
+                ],
+                "size": 30
+            },
+            "logging": "true",
+            "mpbgp": [
+                {
+                    "asn": 65001,
+                    "neighbors": [
+                        {
+                            "left": "PE1",
+                            "right": "PE2"
+                        }
+                    ]
+                }
+            ],
+            "nodes": [
+                {
+                    "loopback": "10.2.2.2",
+                    "mgmt": "10.0.10.203",
+                    "name": "P1"
+                },
+                {
+                    "loopback": "10.1.1.1",
+                    "mgmt": "10.0.10.202",
+                    "name": "PE1"
+                },
+                {
+                    "loopback": "10.3.3.3",
+                    "mgmt": "10.0.10.204",
+                    "name": "PE2"
+                },
+                {
+                    "loopback": "172.16.1.1",
+                    "mgmt": "10.0.10.201",
+                    "name": "CE1"
+                },
+                {
+                    "loopback": "172.16.2.2",
+                    "mgmt": "10.0.10.205",
+                    "name": "CE2"
+                },
+                {
+                    "loopback": "172.16.3.3",
+                    "mgmt": "10.0.10.206",
+                    "name": "CE3"
+                },
+                {
+                    "loopback": "172.16.4.4",
+                    "mgmt": "10.0.10.207",
+                    "name": "CE4"
+                }
+            ],
+            "omit": "__omit_place_holder__a3c0bc5ec8c75ff00e0519d2af6271bd1513f5c2",
+            "overwrite_existing": "false",
+            "play_hosts": [],
+            "playbook_dir": "/home/hraune/net-automation/L3VPN",
+            "role_names": [],
+            "services": [
+                "IPV4",
+                "VPNV4"
+            ],
+            "template_path": "templates",
+            "vars": {
+                "VPNV4": [
+                    {
+                        "name": "RED",
+                        "nodes": {
+                            "CE1": "PE1",
+                            "CE2": "PE2"
+                        },
+                        "ospfid": 10,
+                        "rd": "65001:1",
+                        "state": "active"
+                    },
+                    {
+                        "name": "BLUE",
+                        "nodes": {
+                            "CE3": "PE1",
+                            "CE4": "PE2"
+                        },
+                        "ospfid": 20,
+                        "rd": "65001:2",
+                        "state": "active"
+                    }
+                ],
+                "ansible_check_mode": false,
+                "ansible_connection": "local",
+                "ansible_diff_mode": false,
+                "ansible_facts": {},
+                "ansible_forks": 5,
+                "ansible_inventory_sources": [
+                    "/home/hraune/net-automation/L3VPN/hosts"
+                ],
+                "ansible_network_os": "ios",
+                "ansible_play_batch": [],
+                "ansible_play_hosts": [
+                    "localhost"
+                ],
+                "ansible_play_hosts_all": [
+                    "localhost"
+                ],
+                "ansible_playbook_python": "/usr/bin/python",
+                "ansible_python_interpreter": "/usr/bin/python",
+                "ansible_run_tags": [
+                    "all"
+                ],
+                "ansible_skip_tags": [],
+                "ansible_ssh_pass": "paladin",
+                "ansible_user": "admin",
+                "ansible_verbosity": 0,
+                "ansible_version": {
+                    "full": "2.7.0",
+                    "major": 2,
+                    "minor": 7,
+                    "revision": 0,
+                    "string": "2.7.0"
+                },
+                "environment": [],
+                "fabric_customer": [
+                    {
+                        "left": "CE1",
+                        "left_port": "GigabitEthernet1",
+                        "right": "PE1",
+                        "right_port": "GigabitEthernet2"
+                    },
+                    {
+                        "left": "PE2",
+                        "left_port": "GigabitEthernet1",
+                        "right": "CE2",
+                        "right_port": "GigabitEthernet2"
+                    },
+                    {
+                        "left": "CE3",
+                        "left_port": "GigabitEthernet1",
+                        "right": "PE1",
+                        "right_port": "GigabitEthernet4"
+                    },
+                    {
+                        "left": "PE2",
+                        "left_port": "GigabitEthernet4",
+                        "right": "CE4",
+                        "right_port": "GigabitEthernet2"
+                    }
+                ],
+                "fabric_infrastructure": [
+                    {
+                        "left": "PE1",
+                        "left_port": "GigabitEthernet1",
+                        "right": "P1",
+                        "right_port": "GigabitEthernet2"
+                    },
+                    {
+                        "left": "P1",
+                        "left_port": "GigabitEthernet1",
+                        "right": "PE2",
+                        "right_port": "GigabitEthernet2"
+                    }
+                ],
+                "group_names": [],
+                "groups": {
+                    "all": [
+                        "CE1",
+                        "CE2",
+                        "CE3",
+                        "CE4",
+                        "P1",
+                        "PE1",
+                        "PE2"
+                    ],
+                    "cisco": [
+                        "P1",
+                        "PE1",
+                        "PE2",
+                        "CE1",
+                        "CE2",
+                        "CE3",
+                        "CE4"
+                    ],
+                    "cust": [
+                        "CE1",
+                        "CE2",
+                        "CE3",
+                        "CE4"
+                    ],
+                    "isp": [
+                        "P1",
+                        "PE1",
+                        "PE2"
+                    ],
+                    "ungrouped": []
+                },
+                "hardware": [
+                    {
+                        "devices": [
+                            "P1",
+                            "PE1",
+                            "PE2",
+                            "CE1",
+                            "CE2",
+                            "CE3",
+                            "CE4"
+                        ],
+                        "interfaces": [
+                            "GigabitEthernet1",
+                            "GigabitEthernet2",
+                            "GigabitEthernet3",
+                            "GigabitEthernet4"
+                        ],
+                        "mgmt_int": "GigabitEthernet3",
+                        "name": "CSR1000V"
+                    }
+                ],
+                "ignore_surprise": "false",
+                "inventory_hostname": "localhost",
+                "inventory_hostname_short": "localhost",
+                "ios_provider": {
+                    "dev_os": "ios",
+                    "hostname": "{{ ansible_host }}",
+                    "password": "{{ ansible_ssh_pass }}",
+                    "username": "{{ ansible_user }}"
+                },
+                "isp_nodes": [
+                    "P1",
+                    "PE1",
+                    "PE2"
+                ],
+                "linknet": {
+                    "available_subnets": [
+                        "10.203.55.132/30",
+                        "10.203.55.136/29",
+                        "10.203.55.144/28",
+                        "10.203.55.160/27",
+                        "10.203.55.192/26"
+                    ],
+                    "fabric_linknets": [
+                        "10.203.55.0/30",
+                        "10.203.55.4/30",
+                        "10.203.55.8/30",
+                        "10.203.55.12/30",
+                        "10.203.55.16/30",
+                        "10.203.55.128/30"
+                    ],
+                    "size": 30
+                },
+                "logging": "true",
+                "mpbgp": [
+                    {
+                        "asn": 65001,
+                        "neighbors": [
+                            {
+                                "left": "PE1",
+                                "right": "PE2"
+                            }
+                        ]
+                    }
+                ],
+                "nodes": [
+                    {
+                        "loopback": "10.2.2.2",
+                        "mgmt": "10.0.10.203",
+                        "name": "P1"
+                    },
+                    {
+                        "loopback": "10.1.1.1",
+                        "mgmt": "10.0.10.202",
+                        "name": "PE1"
+                    },
+                    {
+                        "loopback": "10.3.3.3",
+                        "mgmt": "10.0.10.204",
+                        "name": "PE2"
+                    },
+                    {
+                        "loopback": "172.16.1.1",
+                        "mgmt": "10.0.10.201",
+                        "name": "CE1"
+                    },
+                    {
+                        "loopback": "172.16.2.2",
+                        "mgmt": "10.0.10.205",
+                        "name": "CE2"
+                    },
+                    {
+                        "loopback": "172.16.3.3",
+                        "mgmt": "10.0.10.206",
+                        "name": "CE3"
+                    },
+                    {
+                        "loopback": "172.16.4.4",
+                        "mgmt": "10.0.10.207",
+                        "name": "CE4"
+                    }
+                ],
+                "omit": "__omit_place_holder__a3c0bc5ec8c75ff00e0519d2af6271bd1513f5c2",
+                "overwrite_existing": "false",
+                "play_hosts": [],
+                "playbook_dir": "/home/hraune/net-automation/L3VPN",
+                "role_names": [],
+                "services": [
+                    "IPV4",
+                    "VPNV4"
+                ],
+                "template_path": "templates"
+            }
+        }
+    },
+    "ansible_diff_mode": false,
+    "ansible_facts": {},
+    "ansible_forks": 5,
+    "ansible_inventory_sources": [
+        "/home/hraune/net-automation/L3VPN/hosts"
+    ],
+    "ansible_network_os": "ios",
+    "ansible_play_batch": [],
+    "ansible_play_hosts": [
+        "localhost"
+    ],
+    "ansible_play_hosts_all": [
+        "localhost"
+    ],
+    "ansible_playbook_python": "/usr/bin/python",
+    "ansible_python_interpreter": "/usr/bin/python",
+    "ansible_run_tags": [
+        "all"
+    ],
+    "ansible_skip_tags": [],
+    "ansible_ssh_pass": "paladin",
+    "ansible_user": "admin",
+    "ansible_verbosity": 0,
+    "ansible_version": {
+        "full": "2.7.0",
+        "major": 2,
+        "minor": 7,
+        "revision": 0,
+        "string": "2.7.0"
+    },
+    "environment": [],
+    "fabric_customer": [
+        {
+            "left": "CE1",
+            "left_port": "GigabitEthernet1",
+            "right": "PE1",
+            "right_port": "GigabitEthernet2"
+        },
+        {
+            "left": "PE2",
+            "left_port": "GigabitEthernet1",
+            "right": "CE2",
+            "right_port": "GigabitEthernet2"
+        },
+        {
+            "left": "CE3",
+            "left_port": "GigabitEthernet1",
+            "right": "PE1",
+            "right_port": "GigabitEthernet4"
+        },
+        {
+            "left": "PE2",
+            "left_port": "GigabitEthernet4",
+            "right": "CE4",
+            "right_port": "GigabitEthernet2"
+        }
+    ],
+    "fabric_infrastructure": [
+        {
+            "left": "PE1",
+            "left_port": "GigabitEthernet1",
+            "right": "P1",
+            "right_port": "GigabitEthernet2"
+        },
+        {
+            "left": "P1",
+            "left_port": "GigabitEthernet1",
+            "right": "PE2",
+            "right_port": "GigabitEthernet2"
+        }
+    ],
+    "group_names": [],
+    "groups": {
+        "all": [
+            "CE1",
+            "CE2",
+            "CE3",
+            "CE4",
+            "P1",
+            "PE1",
+            "PE2"
+        ],
+        "cisco": [
+            "P1",
+            "PE1",
+            "PE2",
+            "CE1",
+            "CE2",
+            "CE3",
+            "CE4"
+        ],
+        "cust": [
+            "CE1",
+            "CE2",
+            "CE3",
+            "CE4"
+        ],
+        "isp": [
+            "P1",
+            "PE1",
+            "PE2"
+        ],
+        "ungrouped": []
+    },
+    "hardware": [
+        {
+            "devices": [
+                "P1",
+                "PE1",
+                "PE2",
+                "CE1",
+                "CE2",
+                "CE3",
+                "CE4"
+            ],
+            "interfaces": [
+                "GigabitEthernet1",
+                "GigabitEthernet2",
+                "GigabitEthernet3",
+                "GigabitEthernet4"
+            ],
+            "mgmt_int": "GigabitEthernet3",
+            "name": "CSR1000V"
+        }
+    ],
+    "hostvars": {
+        "CE1": {
+            "ansible_check_mode": false,
+            "ansible_connection": "network_cli",
+            "ansible_diff_mode": false,
+            "ansible_facts": {},
+            "ansible_forks": 5,
+            "ansible_host": "10.0.10.201",
+            "ansible_inventory_sources": [
+                "/home/hraune/net-automation/L3VPN/hosts"
+            ],
+            "ansible_network_os": "ios",
+            "ansible_playbook_python": "/usr/bin/python",
+            "ansible_run_tags": [
+                "all"
+            ],
+            "ansible_skip_tags": [],
+            "ansible_ssh_pass": "paladin",
+            "ansible_user": "admin",
+            "ansible_verbosity": 0,
+            "ansible_version": {
+                "full": "2.7.0",
+                "major": 2,
+                "minor": 7,
+                "revision": 0,
+                "string": "2.7.0"
+            },
+            "group_names": [
+                "cisco",
+                "cust"
+            ],
+            "groups": {
+                "all": [
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4",
+                    "P1",
+                    "PE1",
+                    "PE2"
+                ],
+                "cisco": [
+                    "P1",
+                    "PE1",
+                    "PE2",
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4"
+                ],
+                "cust": [
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4"
+                ],
+                "isp": [
+                    "P1",
+                    "PE1",
+                    "PE2"
+                ],
+                "ungrouped": []
+            },
+            "ignore_surprise": "false",
+            "inventory_dir": "/home/hraune/net-automation/L3VPN",
+            "inventory_file": "/home/hraune/net-automation/L3VPN/hosts",
+            "inventory_hostname": "CE1",
+            "inventory_hostname_short": "CE1",
+            "ios_provider": {
+                "dev_os": "ios",
+                "hostname": "10.0.10.201",
+                "password": "paladin",
+                "username": "admin"
+            },
+            "logging": "true",
+            "omit": "__omit_place_holder__a3c0bc5ec8c75ff00e0519d2af6271bd1513f5c2",
+            "overwrite_existing": "false",
+            "playbook_dir": "/home/hraune/net-automation/L3VPN"
+        },
+        "CE2": {
+            "ansible_check_mode": false,
+            "ansible_connection": "network_cli",
+            "ansible_diff_mode": false,
+            "ansible_facts": {},
+            "ansible_forks": 5,
+            "ansible_host": "10.0.10.205",
+            "ansible_inventory_sources": [
+                "/home/hraune/net-automation/L3VPN/hosts"
+            ],
+            "ansible_network_os": "ios",
+            "ansible_playbook_python": "/usr/bin/python",
+            "ansible_run_tags": [
+                "all"
+            ],
+            "ansible_skip_tags": [],
+            "ansible_ssh_pass": "paladin",
+            "ansible_user": "admin",
+            "ansible_verbosity": 0,
+            "ansible_version": {
+                "full": "2.7.0",
+                "major": 2,
+                "minor": 7,
+                "revision": 0,
+                "string": "2.7.0"
+            },
+            "group_names": [
+                "cisco",
+                "cust"
+            ],
+            "groups": {
+                "all": [
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4",
+                    "P1",
+                    "PE1",
+                    "PE2"
+                ],
+                "cisco": [
+                    "P1",
+                    "PE1",
+                    "PE2",
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4"
+                ],
+                "cust": [
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4"
+                ],
+                "isp": [
+                    "P1",
+                    "PE1",
+                    "PE2"
+                ],
+                "ungrouped": []
+            },
+            "ignore_surprise": "false",
+            "inventory_dir": "/home/hraune/net-automation/L3VPN",
+            "inventory_file": "/home/hraune/net-automation/L3VPN/hosts",
+            "inventory_hostname": "CE2",
+            "inventory_hostname_short": "CE2",
+            "ios_provider": {
+                "dev_os": "ios",
+                "hostname": "10.0.10.205",
+                "password": "paladin",
+                "username": "admin"
+            },
+            "logging": "true",
+            "omit": "__omit_place_holder__a3c0bc5ec8c75ff00e0519d2af6271bd1513f5c2",
+            "overwrite_existing": "false",
+            "playbook_dir": "/home/hraune/net-automation/L3VPN"
+        },
+        "CE3": {
+            "ansible_check_mode": false,
+            "ansible_connection": "network_cli",
+            "ansible_diff_mode": false,
+            "ansible_facts": {},
+            "ansible_forks": 5,
+            "ansible_host": "10.0.10.206",
+            "ansible_inventory_sources": [
+                "/home/hraune/net-automation/L3VPN/hosts"
+            ],
+            "ansible_network_os": "ios",
+            "ansible_playbook_python": "/usr/bin/python",
+            "ansible_run_tags": [
+                "all"
+            ],
+            "ansible_skip_tags": [],
+            "ansible_ssh_pass": "paladin",
+            "ansible_user": "admin",
+            "ansible_verbosity": 0,
+            "ansible_version": {
+                "full": "2.7.0",
+                "major": 2,
+                "minor": 7,
+                "revision": 0,
+                "string": "2.7.0"
+            },
+            "group_names": [
+                "cisco",
+                "cust"
+            ],
+            "groups": {
+                "all": [
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4",
+                    "P1",
+                    "PE1",
+                    "PE2"
+                ],
+                "cisco": [
+                    "P1",
+                    "PE1",
+                    "PE2",
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4"
+                ],
+                "cust": [
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4"
+                ],
+                "isp": [
+                    "P1",
+                    "PE1",
+                    "PE2"
+                ],
+                "ungrouped": []
+            },
+            "ignore_surprise": "false",
+            "inventory_dir": "/home/hraune/net-automation/L3VPN",
+            "inventory_file": "/home/hraune/net-automation/L3VPN/hosts",
+            "inventory_hostname": "CE3",
+            "inventory_hostname_short": "CE3",
+            "ios_provider": {
+                "dev_os": "ios",
+                "hostname": "10.0.10.206",
+                "password": "paladin",
+                "username": "admin"
+            },
+            "logging": "true",
+            "omit": "__omit_place_holder__a3c0bc5ec8c75ff00e0519d2af6271bd1513f5c2",
+            "overwrite_existing": "false",
+            "playbook_dir": "/home/hraune/net-automation/L3VPN"
+        },
+        "CE4": {
+            "ansible_check_mode": false,
+            "ansible_connection": "network_cli",
+            "ansible_diff_mode": false,
+            "ansible_facts": {},
+            "ansible_forks": 5,
+            "ansible_host": "10.0.10.207",
+            "ansible_inventory_sources": [
+                "/home/hraune/net-automation/L3VPN/hosts"
+            ],
+            "ansible_network_os": "ios",
+            "ansible_playbook_python": "/usr/bin/python",
+            "ansible_run_tags": [
+                "all"
+            ],
+            "ansible_skip_tags": [],
+            "ansible_ssh_pass": "paladin",
+            "ansible_user": "admin",
+            "ansible_verbosity": 0,
+            "ansible_version": {
+                "full": "2.7.0",
+                "major": 2,
+                "minor": 7,
+                "revision": 0,
+                "string": "2.7.0"
+            },
+            "group_names": [
+                "cisco",
+                "cust"
+            ],
+            "groups": {
+                "all": [
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4",
+                    "P1",
+                    "PE1",
+                    "PE2"
+                ],
+                "cisco": [
+                    "P1",
+                    "PE1",
+                    "PE2",
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4"
+                ],
+                "cust": [
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4"
+                ],
+                "isp": [
+                    "P1",
+                    "PE1",
+                    "PE2"
+                ],
+                "ungrouped": []
+            },
+            "ignore_surprise": "false",
+            "inventory_dir": "/home/hraune/net-automation/L3VPN",
+            "inventory_file": "/home/hraune/net-automation/L3VPN/hosts",
+            "inventory_hostname": "CE4",
+            "inventory_hostname_short": "CE4",
+            "ios_provider": {
+                "dev_os": "ios",
+                "hostname": "10.0.10.207",
+                "password": "paladin",
+                "username": "admin"
+            },
+            "logging": "true",
+            "omit": "__omit_place_holder__a3c0bc5ec8c75ff00e0519d2af6271bd1513f5c2",
+            "overwrite_existing": "false",
+            "playbook_dir": "/home/hraune/net-automation/L3VPN"
+        },
+        "P1": {
+            "ansible_check_mode": false,
+            "ansible_connection": "network_cli",
+            "ansible_diff_mode": false,
+            "ansible_facts": {},
+            "ansible_forks": 5,
+            "ansible_host": "10.0.10.203",
+            "ansible_inventory_sources": [
+                "/home/hraune/net-automation/L3VPN/hosts"
+            ],
+            "ansible_network_os": "ios",
+            "ansible_playbook_python": "/usr/bin/python",
+            "ansible_run_tags": [
+                "all"
+            ],
+            "ansible_skip_tags": [],
+            "ansible_ssh_pass": "paladin",
+            "ansible_user": "admin",
+            "ansible_verbosity": 0,
+            "ansible_version": {
+                "full": "2.7.0",
+                "major": 2,
+                "minor": 7,
+                "revision": 0,
+                "string": "2.7.0"
+            },
+            "group_names": [
+                "cisco",
+                "isp"
+            ],
+            "groups": {
+                "all": [
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4",
+                    "P1",
+                    "PE1",
+                    "PE2"
+                ],
+                "cisco": [
+                    "P1",
+                    "PE1",
+                    "PE2",
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4"
+                ],
+                "cust": [
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4"
+                ],
+                "isp": [
+                    "P1",
+                    "PE1",
+                    "PE2"
+                ],
+                "ungrouped": []
+            },
+            "ignore_surprise": "false",
+            "inventory_dir": "/home/hraune/net-automation/L3VPN",
+            "inventory_file": "/home/hraune/net-automation/L3VPN/hosts",
+            "inventory_hostname": "P1",
+            "inventory_hostname_short": "P1",
+            "ios_provider": {
+                "dev_os": "ios",
+                "hostname": "10.0.10.203",
+                "password": "paladin",
+                "username": "admin"
+            },
+            "logging": "true",
+            "omit": "__omit_place_holder__a3c0bc5ec8c75ff00e0519d2af6271bd1513f5c2",
+            "overwrite_existing": "false",
+            "playbook_dir": "/home/hraune/net-automation/L3VPN"
+        },
+        "PE1": {
+            "ansible_check_mode": false,
+            "ansible_connection": "network_cli",
+            "ansible_diff_mode": false,
+            "ansible_facts": {},
+            "ansible_forks": 5,
+            "ansible_host": "10.0.10.202",
+            "ansible_inventory_sources": [
+                "/home/hraune/net-automation/L3VPN/hosts"
+            ],
+            "ansible_network_os": "ios",
+            "ansible_playbook_python": "/usr/bin/python",
+            "ansible_run_tags": [
+                "all"
+            ],
+            "ansible_skip_tags": [],
+            "ansible_ssh_pass": "paladin",
+            "ansible_user": "admin",
+            "ansible_verbosity": 0,
+            "ansible_version": {
+                "full": "2.7.0",
+                "major": 2,
+                "minor": 7,
+                "revision": 0,
+                "string": "2.7.0"
+            },
+            "group_names": [
+                "cisco",
+                "isp"
+            ],
+            "groups": {
+                "all": [
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4",
+                    "P1",
+                    "PE1",
+                    "PE2"
+                ],
+                "cisco": [
+                    "P1",
+                    "PE1",
+                    "PE2",
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4"
+                ],
+                "cust": [
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4"
+                ],
+                "isp": [
+                    "P1",
+                    "PE1",
+                    "PE2"
+                ],
+                "ungrouped": []
+            },
+            "ignore_surprise": "false",
+            "inventory_dir": "/home/hraune/net-automation/L3VPN",
+            "inventory_file": "/home/hraune/net-automation/L3VPN/hosts",
+            "inventory_hostname": "PE1",
+            "inventory_hostname_short": "PE1",
+            "ios_provider": {
+                "dev_os": "ios",
+                "hostname": "10.0.10.202",
+                "password": "paladin",
+                "username": "admin"
+            },
+            "logging": "true",
+            "omit": "__omit_place_holder__a3c0bc5ec8c75ff00e0519d2af6271bd1513f5c2",
+            "overwrite_existing": "false",
+            "playbook_dir": "/home/hraune/net-automation/L3VPN"
+        },
+        "PE2": {
+            "ansible_check_mode": false,
+            "ansible_connection": "network_cli",
+            "ansible_diff_mode": false,
+            "ansible_facts": {},
+            "ansible_forks": 5,
+            "ansible_host": "10.0.10.204",
+            "ansible_inventory_sources": [
+                "/home/hraune/net-automation/L3VPN/hosts"
+            ],
+            "ansible_network_os": "ios",
+            "ansible_playbook_python": "/usr/bin/python",
+            "ansible_run_tags": [
+                "all"
+            ],
+            "ansible_skip_tags": [],
+            "ansible_ssh_pass": "paladin",
+            "ansible_user": "admin",
+            "ansible_verbosity": 0,
+            "ansible_version": {
+                "full": "2.7.0",
+                "major": 2,
+                "minor": 7,
+                "revision": 0,
+                "string": "2.7.0"
+            },
+            "group_names": [
+                "cisco",
+                "isp"
+            ],
+            "groups": {
+                "all": [
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4",
+                    "P1",
+                    "PE1",
+                    "PE2"
+                ],
+                "cisco": [
+                    "P1",
+                    "PE1",
+                    "PE2",
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4"
+                ],
+                "cust": [
+                    "CE1",
+                    "CE2",
+                    "CE3",
+                    "CE4"
+                ],
+                "isp": [
+                    "P1",
+                    "PE1",
+                    "PE2"
+                ],
+                "ungrouped": []
+            },
+            "ignore_surprise": "false",
+            "inventory_dir": "/home/hraune/net-automation/L3VPN",
+            "inventory_file": "/home/hraune/net-automation/L3VPN/hosts",
+            "inventory_hostname": "PE2",
+            "inventory_hostname_short": "PE2",
+            "ios_provider": {
+                "dev_os": "ios",
+                "hostname": "10.0.10.204",
+                "password": "paladin",
+                "username": "admin"
+            },
+            "logging": "true",
+            "omit": "__omit_place_holder__a3c0bc5ec8c75ff00e0519d2af6271bd1513f5c2",
+            "overwrite_existing": "false",
+            "playbook_dir": "/home/hraune/net-automation/L3VPN"
+        }
+    },
+    "ignore_surprise": "false",
+    "inventory_hostname": "localhost",
+    "inventory_hostname_short": "localhost",
+    "ios_provider": {
+        "dev_os": "ios",
+        "hostname": "{{ ansible_host }}",
+        "password": "{{ ansible_ssh_pass }}",
+        "username": "{{ ansible_user }}"
+    },
+    "isp_nodes": [
+        "P1",
+        "PE1",
+        "PE2"
+    ],
+    "linknet": {
+        "available_subnets": [
+            "10.203.55.132/30",
+            "10.203.55.136/29",
+            "10.203.55.144/28",
+            "10.203.55.160/27",
+            "10.203.55.192/26"
+        ],
+        "fabric_linknets": [
+            "10.203.55.0/30",
+            "10.203.55.4/30",
+            "10.203.55.8/30",
+            "10.203.55.12/30",
+            "10.203.55.16/30",
+            "10.203.55.128/30"
+        ],
+        "size": 30
+    },
+    "logging": "true",
+    "mpbgp": [
+        {
+            "asn": 65001,
+            "neighbors": [
+                {
+                    "left": "PE1",
+                    "right": "PE2"
+                }
+            ]
+        }
+    ],
+    "nodes": [
+        {
+            "loopback": "10.2.2.2",
+            "mgmt": "10.0.10.203",
+            "name": "P1"
+        },
+        {
+            "loopback": "10.1.1.1",
+            "mgmt": "10.0.10.202",
+            "name": "PE1"
+        },
+        {
+            "loopback": "10.3.3.3",
+            "mgmt": "10.0.10.204",
+            "name": "PE2"
+        },
+        {
+            "loopback": "172.16.1.1",
+            "mgmt": "10.0.10.201",
+            "name": "CE1"
+        },
+        {
+            "loopback": "172.16.2.2",
+            "mgmt": "10.0.10.205",
+            "name": "CE2"
+        },
+        {
+            "loopback": "172.16.3.3",
+            "mgmt": "10.0.10.206",
+            "name": "CE3"
+        },
+        {
+            "loopback": "172.16.4.4",
+            "mgmt": "10.0.10.207",
+            "name": "CE4"
+        }
+    ],
+    "omit": "__omit_place_holder__a3c0bc5ec8c75ff00e0519d2af6271bd1513f5c2",
+    "overwrite_existing": "false",
+    "play_hosts": [],
+    "playbook_dir": "/home/hraune/net-automation/L3VPN",
+    "role_names": [],
+    "services": [
+        "IPV4",
+        "VPNV4"
+    ],
+    "template_path": "templates"
+}
