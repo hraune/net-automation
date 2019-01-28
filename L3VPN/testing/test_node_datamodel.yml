@@ -13,10 +13,10 @@
   tasks:
   - name: Remove old node datamodels
     file:
-      path: {{ output_path }}/{{ scenario }}_nodes.yml
+      path: "{{ output_path }}/{{ scenario }}_nodes.yml"
       state: absent
 
   - name: Generate nodes datamodel
     template:
       src: "{{ template_path }}/generate_nodes_datamodel.j2"
-      dest: {{ output_path }}/{{ scenario }}_nodes.yml
+      dest: "{{ output_path }}/{{ scenario }}_nodes.yml"
