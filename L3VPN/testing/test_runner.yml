@@ -14,10 +14,9 @@
         file_type: directory
       register: scenario_list
 
-    - debug: msg="{{ item.path.split('/')[-1] }}"
+    #- debug: msg="{{ item.path.split('/')[-1] }}"
+     # with_items: "{{ scenario_list.files }}"
+
+    - name: Loop over tests
+      include: test_node_datamodel.yml scenario="{{ item.path.split('/')[-1] }}"
       with_items: "{{ scenario_list.files }}"
-
-
-    #- name: Loop over tests
-    #  include: test_node_datamodel.yml scenario="{{ item.path|dirname }}"
-    #  with_items: scenario_list
