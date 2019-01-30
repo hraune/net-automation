@@ -14,7 +14,7 @@
         file_type: directory
       register: scenario_list
 
-    - debug: msg={{ item }}
+    - debug: msg="{{ item }}"
       with_items: scenario_list
 
 
