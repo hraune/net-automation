@@ -15,7 +15,7 @@
       register: scenario_list
 
     - debug: msg="{{ item }}"
-      with_items: scenario_list
+      with_items: "{{scenario_list}}"
 
 
     #- name: Loop over tests
