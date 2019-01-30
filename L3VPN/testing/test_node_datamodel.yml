@@ -18,7 +18,7 @@
         file_type: directory
       register: scenario_list
 
-    - debug: "{{ scenario_list }}"
+    - debug: var=vars.scenario_list
   #- name: Remove old node datamodels
   #  file:
   #    path: "{{ output_path }}/{{ scenario }}_nodes.yml"
