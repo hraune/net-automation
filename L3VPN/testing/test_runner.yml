@@ -14,8 +14,8 @@
         file_type: directory
       register: scenario_list
 
-    - debug: msg="{{ item }}"
-      with_items: "{{scenario_list}}"
+    - debug: msg="{{ item.path }}"
+      with_items: "{{ scenario_list.files }}"
 
 
     #- name: Loop over tests
