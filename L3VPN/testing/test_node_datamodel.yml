@@ -13,7 +13,7 @@
   tasks:
     - name: Find all test directories
       find:
-        paths: "{{ playbook_dir }}/scenarios"
+        paths: "{{ playbook_dir }}/scenario"
         recurse: no
         file_type: directory
       register: scenario_list
