@@ -1,30 +1,15 @@
 ---
-- hosts: localhost
-  gather_facts: no
-  vars:
-    - template_path: ../templates
-    #- scenario: current_lab
-    - output_path: output
-  #vars_files:
-    #- scenario/{{ scenario }}/fabric.yml
-    #- scenario/{{ scenario }}/ip_addresses.yml
-    #- scenario/{{ scenario }}/services.yml
+  - name: Remove old node datamodels
+    file:
+      path: "{{ output_path }}/{{ scenario }}_nodes.yml"
+      state: absent
+  
+  - name: Including variables for scenario
+    include_vars: 
+      dir: {{ scenario }}/all
+      extensions: yml
 
-  tasks:
-    - name: Find all test directories
-      find:
-        paths: "{{ playbook_dir }}/scenario"
-        recurse: no
-        file_type: directory
-      register: scenario_list
-
-    - debug: var=vars.scenario_list
-  #- name: Remove old node datamodels
-  #  file:
-  #    path: "{{ output_path }}/{{ scenario }}_nodes.yml"
- #     state: absent
-
- # - name: Generate nodes datamodel
-  #  template:
-   #   src: "{{ template_path }}/generate_nodes_datamodel.j2"
-#      dest: "{{ output_path }}/{{ scenario }}_nodes.yml"
+  - name: Generate nodes datamodel
+    template:
+      src: "{{ template_path }}/generate_nodes_datamodel.j2"
+      dest: "{{ output_path }}/{{ scenario }}_nodes.yml"
