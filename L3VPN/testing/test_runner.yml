@@ -14,7 +14,7 @@
         file_type: directory
       register: scenario_list
 
-    - debug: msg="{{ item.path|dirname }}"
+    - debug: msg="{{ item.path.split('/')[-1] }}"
       with_items: "{{ scenario_list.files }}"
 
 
