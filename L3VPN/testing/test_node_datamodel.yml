@@ -6,7 +6,7 @@
   
   - name: Including variables for scenario
     include_vars: 
-      dir: scenario/{{ scenario }}/all
+      dir: scenario/{{ scenario }}
       extensions: yml
 
   - name: Generate nodes datamodel
