@@ -1,16 +1,16 @@
 ---
-  - name: Remove old node datamodels
+  - name: "Remove old node datamodels for {{ scenario }}"
     file:
       path: "{{ output_path }}/{{ scenario }}_nodes.yml"
       state: absent
   
-  - name: Including variables for scenario
+  - name: "Including variables for {{ scenario }}"
     include_vars: 
       dir: scenario/{{ scenario }}
       extensions: 
         - yml
 
-  - name: Generate nodes datamodel
+  - name: "Generate nodes datamodel for {{ scenario }}"
     template:
       src: "{{ template_path }}/generate_nodes_datamodel.j2"
       dest: "{{ output_path }}/{{ scenario }}_nodes.yml"
