@@ -1,0 +1,14 @@
+---
+# Service definitions
+
+VPNV4:
+  - name: RED
+    rd: "65001:1"
+    ospfid: 10
+    nodes: { CE1: PE1, CE2: PE2 }
+    state: active
+  - name: RED
+    rd: "65001:1"
+    ospfid: 10
+    nodes: { CE1: PE1, CE2: PE2 }
+    state: active
