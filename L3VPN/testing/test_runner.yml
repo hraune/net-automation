@@ -14,8 +14,10 @@
         file_type: directory
       register: scenario_list
 
-    #- debug: var=vars.scenario_list
-
-    - name: Loop over tests
-      include: test_node_datamodel.yml scenario="{{ item.path|dirname }}"
+    - debug: msg={{ item }}
       with_items: scenario_list
+
+
+    #- name: Loop over tests
+    #  include: test_node_datamodel.yml scenario="{{ item.path|dirname }}"
+    #  with_items: scenario_list
