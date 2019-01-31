@@ -3,7 +3,6 @@
 
 # How everything is hooked up, gi3 is reserved for mgmt on all devices. Split
 # into infrastructure (provider internal) and customer (provider <-> customer).
-hardware:
 
 fabric_infrastructure:
   - { left: PE1, left_port: GigabitEthernet1,
