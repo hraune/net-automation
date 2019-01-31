@@ -51,7 +51,7 @@ nodes:
 {##}{##}{##}{% if pair.left in isp_nodes and pair.right in isp_nodes %}
         ospf: {id: 1, area: 0}
 {##}{##}{##}{% else  %}
-{##}{##}{##}{##}{% for vpn in VPNV4 if VPNV4 is defined -%}
+{##}{##}{##}{##}{% for vpn in VPNV4 if VPNV4|length > 0 -%}
 {##}{##}{##}{##}{##}{% for key,value in vpn.nodes.items() -%}
 {##}{##}{##}{##}{##}{##}{% if node.name in isp_nodes and value == node.name and key == to_node %}
         ospf: {id: {{ vpn.ospfid }}, area: 0}
