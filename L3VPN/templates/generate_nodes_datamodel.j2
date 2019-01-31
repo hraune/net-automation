@@ -67,7 +67,7 @@ nodes:
 {##}{##}{##}{%- endif %}
 {##}{##}{% endif %}
 {##}{%- endfor %}
-{##}{% for type in hardware if node.name in type.devices %}
+{##}{% for type in hardware if node.name in type.devices and hardware is defined %}
 {##}{##}{% for interface in type.interfaces if interface not in active_int %}
       - name: {{ interface }}
 {##}{##}{##}{% if interface == type.mgmt_int %}
