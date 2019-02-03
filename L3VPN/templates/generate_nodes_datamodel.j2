@@ -31,7 +31,7 @@ nodes:
     interfaces:
 {##}{% set to_node = "" %}
 {##}{% set active_int = [] %}
-{##}{% for pair in (fabric_infrastructure + fabric_customer) if node.name in pair.left or node.name in pair.right -%} 
+{##}{% for pair in (fabric_infrastructure + fabric_customer) -%} 
 {##}{##}{% if pair.left == node.name or pair.right == node.name %}
 {##}{##}{##}{% if pair.left == node.name %}
 {##}{##}{##}{##}{% do active_int.append(pair.left_port) %}
@@ -40,7 +40,7 @@ nodes:
         ip: {{ linknet.fabric_linknets[loop.index0]|ipaddr('1') }}
         state: active
 {##}{##}{##}{##}{% set to_node = pair.right %}
-{##}{##}{##}{% else %}
+{##}{##}{##}{% elif pair.right == node.name %}
 {##}{##}{##}{##}{% do active_int.append(pair.right_port) %}
       - name: {{ pair.right_port }}
         description: To {{ pair.left }};{{ pair.left_port[:2] }}{{ pair.left_port[-1:] }}
