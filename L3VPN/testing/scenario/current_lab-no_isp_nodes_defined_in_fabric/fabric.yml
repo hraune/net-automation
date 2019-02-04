@@ -30,7 +30,7 @@ mpbgp:
 services: [IPV4, VPNV4]
 
 # All provider nodes
-isp_nodes: [,]
+isp_nodes: [P1]
 
 # All the nodes
 nodes:
