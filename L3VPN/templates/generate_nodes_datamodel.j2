@@ -31,9 +31,10 @@ nodes:
     interfaces:
 {##}{% set to_node = "" %}
 {##}{% set active_int = [] %}
-{##}{% for pair in (fabric_infrastructure + fabric_customer) -%} 
-{##}{##}{% if pair.left == node.name or pair.right == node.name and linknet.fabric_linknets != None and
-            (linknet.fabric_linknets|length == (fabric_infrastructure|length + fabric_customer|length)) %}
+{##}{% set fabric = fabric_infrastructure + fabric_customer %}
+{##}{% for pair in fabric -%} 
+{##}{##}{% if pair.left == node.name or pair.right == node.name and linknet.fabric_linknets != [] and
+            linknet.fabric_linknets|length == fabric|length %}
 {##}{##}{##}{% if pair.left == node.name %}
 {##}{##}{##}{##}{% do active_int.append(pair.left_port) %}
       - name: {{ pair.left_port }}
