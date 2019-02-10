@@ -1,32 +1,32 @@
 {%- for node in nodes if node.name == inventory_hostname %}
 {% set existing = [] %}
 {% if active_vrfs[inventory_hostname|string] is defined %}
-{##}{% for vrf in active_vrfs[inventory_hostname|string] %}
-{##}{##}{% do existing.append(vrf.name) %}
-{##}{##}{% if vrf.surprise == True and not ignore_surprise|bool %}
+{%   for vrf in active_vrfs[inventory_hostname|string] %}
+{%     do existing.append(vrf.name) %}
+{%     if vrf.surprise == True and not ignore_surprise|bool %}
 !! {{ vrf.name }} is an unknown VPN and should be removed
 no ip vrf {{ vrf.name }}
 !
-{##}{##}{% endif %}
-{##}{% endfor %}
+{%     endif %}
+{%   endfor %}
 {% endif %}
 {% set absent = [] %}
 {% if node.vpn is defined %}
-{##}{% for vpn in node.vpn %}
-{##}{##}{% if vpn.state == 'absent' %}
-{##}{##}{##}{% do absent.append(vpn.name) %}
+{%   for vpn in node.vpn %}
+{%     if vpn.state == 'absent' %}
+{%       do absent.append(vpn.name) %}
 no ip vrf {{ vpn.name }}
 !
-{##}{##}{% elif vpn.name in existing and not overwrite_existing|bool %}
+{%     elif vpn.name in existing and not overwrite_existing|bool %}
 !! A VPN by name of {{ vpn.name }} is already configured, skipping
-{##}{##}{% else %}
+{%     else %}
 ip vrf {{ vpn.name }}
  rd {{ vpn.rd }}
  route-target export {{ vpn.rd }}
  route-target import {{ vpn.rd }}
 !
-{##}{##}{% endif %}
-{##}{% endfor %}
+{%     endif %}
+{%   endfor %}
 {% endif %}
 {% for interface in node.interfaces if interface.vrf is defined %}
 {% if interface.vrf not in existing and not overwrite_existing|bool %}
@@ -42,19 +42,19 @@ interface {{ interface.name }}
 !
 {% endfor %}
 {% if node.vpn is defined %}
-{##}{% for vpn in node.vpn if vpn.state != 'absent' and vpn.name not in existing %}
+{%   for vpn in node.vpn if vpn.state != 'absent' and vpn.name not in existing %}
 router ospf {{ vpn.ospf.id }} vrf {{ vpn.name }}
  redistribute bgp {{ node.asn }} subnets
 !
-{##}{% endfor %}
+{%   endfor %}
 {% endif %}
 {% if node.asn is defined and absent|length < node.vpn|length and existing|length < node.vpn|length %}
 router bgp {{ node.asn }}
-{##}{% for vpn in node.vpn if vpn.state != 'absent' and vpn.name not in existing %}
+{%   for vpn in node.vpn if vpn.state != 'absent' and vpn.name not in existing %}
  address-family ipv4 vrf {{ vpn.name }}
   redistribute ospf {{ vpn.ospf.id }}
  exit-address-family
  !
-{##}{% endfor %}
+{%   endfor %}
 {% endif %}
 {% endfor %}

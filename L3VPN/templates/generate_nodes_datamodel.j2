@@ -6,90 +6,90 @@ nodes:
 
   - name: {{ node.name }}
     mgmt: {{ node.mgmt }}
-{##}{% set asn = [] %}
-{##}{% set vpns = [] %}
-{##}{% set lo_ospf_id = [] %}
+{%   set asn = [] %}
+{%   set vpns = [] %}
+{%   set lo_ospf_id = [] %}
     bgp:
-{##}{% for bgp in mpbgp -%}
-{##}{##}{% for neighbor in bgp.neighbors %}
-{##}{##}{##}{% set neigh_lo = [] %}
-{##}{##}{##}{% for i in nodes if (i.name == neighbor.right and neighbor.left == node.name)
-                or (i.name == neighbor.left and neighbor.right == node.name) %}
-{##}{##}{##}{##}{% do neigh_lo.append(i.loopback) %}
-{##}{##}{##}{##}{% do asn.append(bgp.asn) %}
-{##}{##}{##}{% endfor %}
-{##}{##}{##}{% if neighbor.left == node.name %}
+{%   for bgp in mpbgp -%}
+{%     for neighbor in bgp.neighbors %}
+{%       set neigh_lo = [] %}
+{%       for i in nodes if (i.name == neighbor.right and neighbor.left == node.name)
+                        or (i.name == neighbor.left and neighbor.right == node.name) %}
+{%         do neigh_lo.append(i.loopback) %}
+{%         do asn.append(bgp.asn) %}
+{%       endfor %}
+{%       if neighbor.left == node.name %}
       - { neighbor: {{ neighbor.right }}, ip: {{ neigh_lo[0] }}, asn: {{ bgp.asn }} }
-{##}{##}{##}{% elif neighbor.right == node.name %}
+{%       elif neighbor.right == node.name %}
       - { neighbor: {{ neighbor.left }}, ip: {{ neigh_lo[0] }}, asn: {{ bgp.asn }} }
-{##}{##}{##}{% endif %}
-{##}{##}{% endfor %}
-{##}{%- endfor %}
-{##}{% if asn|length > 0 %}
+{%       endif %}
+{%     endfor %}
+{%-   endfor %}
+{%   if asn|length > 0 %}
     asn: {{ asn[0] }}
-{##}{% endif %}
+{%   endif %}
     interfaces:
-{##}{% set to_node = "" %}
-{##}{% set active_int = [] %}
-{##}{% set fabric = fabric_infrastructure + fabric_customer %}
-{##}{% for pair in fabric -%} 
-{##}{##}{% if pair.left == node.name or pair.right == node.name and 
-                linknet.fabric_linknets|length == fabric|length %}
-{##}{##}{##}{% if pair.left == node.name %}
-{##}{##}{##}{##}{% do active_int.append(pair.left_port) %}
-      - name: {{ pair.left_port }}
-        description: To {{ pair.right }};{{ pair.right_port[:2] }}{{ pair.right_port[-1:] }}
-        ip: {{ linknet.fabric_linknets[loop.index0]|ipaddr('1') }}
-        state: active
-{##}{##}{##}{##}{% set to_node = pair.right %}
-{##}{##}{##}{% elif pair.right == node.name %}
-{##}{##}{##}{##}{% do active_int.append(pair.right_port) %}
-      - name: {{ pair.right_port }}
-        description: To {{ pair.left }};{{ pair.left_port[:2] }}{{ pair.left_port[-1:] }}
-        ip: {{ linknet.fabric_linknets[loop.index0]|ipaddr('2') }}
-        state: active
-{##}{##}{##}{##}{% set to_node = pair.left %}
-{##}{##}{##}{% endif %}
-{##}{##}{##}{% if pair.left in isp_nodes and pair.right in isp_nodes %}
-        ospf: {id: 1, area: 0}
-{##}{##}{##}{% else  %}
-{##}{##}{##}{##}{% for vpn in VPNV4 if VPNV4|length > 0 and VPNV4 is defined -%}
-{##}{##}{##}{##}{##}{% for key,value in vpn.nodes.items() -%}
-{##}{##}{##}{##}{##}{##}{% if node.name in isp_nodes and value == node.name and key == to_node %}
-        ospf: {id: {{ vpn.ospfid }}, area: 0}
-        vrf: {{ vpn.name }}
-{##}{##}{##}{##}{##}{##}{##}{% do vpns.append({'name': vpn.name, 'rd': vpn.rd, 
-                                'ospf': {'id': vpn.ospfid, 'area': 0 }, 'state': vpn.state}) %}
-{##}{##}{##}{##}{##}{##}{% elif key == node.name %}
-        ospf: {id: {{ vpn.ospfid }}, area: 0}
-{##}{##}{##}{##}{##}{##}{##}{% do lo_ospf_id.append(vpn.ospfid) %}
-{##}{##}{##}{##}{##}{##}{% endif %}
-{##}{##}{##}{##}{##}{%- endfor %}
-{##}{##}{##}{##}{%- endfor %}
-{##}{##}{##}{%- endif %}
-{##}{##}{% endif %}
-{##}{%- endfor %}
-{##}{% for type in hardware if node.name in type.devices and hardware is defined %}
-{##}{##}{% for interface in type.interfaces if interface not in active_int %}
-      - name: {{ interface }}
-{##}{##}{##}{% if interface == type.mgmt_int %}
-        description: {{ node.name }} management
-        ip: {{ node.mgmt }}/24
-        state: active
-{##}{##}{##}{% else %}
-        state: shutdown
-{##}{##}{##}{% endif %}
-{##}{##}{% endfor %}
-{##}{% endfor %}
-{##}{% if vpns|length > 0 %}
+{%   set to_node = "" %}
+{%   set active_int = [] %}
+{%   set fabric = fabric_infrastructure + fabric_customer %}
+{%   for pair in fabric -%} 
+{%     if pair.left == node.name or pair.right == node.name and 
+        linknet.fabric_linknets|length == fabric|length %}
+{%       if pair.left == node.name %}
+{%         do active_int.append(pair.left_port) %}
+    - name: {{ pair.left_port }}
+      description: To {{ pair.right }};{{ pair.right_port[:2] }}{{ pair.right_port[-1:] }}
+      ip: {{ linknet.fabric_linknets[loop.index0]|ipaddr('1') }}
+      state: active
+{%         set to_node = pair.right %}
+{%       elif pair.right == node.name %}
+{%         do active_int.append(pair.right_port) %}
+    - name: {{ pair.right_port }}
+      description: To {{ pair.left }};{{ pair.left_port[:2] }}{{ pair.left_port[-1:] }}
+      ip: {{ linknet.fabric_linknets[loop.index0]|ipaddr('2') }}
+      state: active
+{%         set to_node = pair.left %}
+{%       endif %}
+{%       if pair.left in isp_nodes and pair.right in isp_nodes %}
+      ospf: {id: 1, area: 0}
+{%       else  %}
+{%         for vpn in VPNV4 if VPNV4|length > 0 and VPNV4 is defined -%}
+{%           for key,value in vpn.nodes.items() -%}
+{%             if node.name in isp_nodes and value == node.name and key == to_node %}
+      ospf: {id: {{ vpn.ospfid }}, area: 0}
+      vrf: {{ vpn.name }}
+{%               do vpns.append({'name': vpn.name, 'rd': vpn.rd, 
+                'ospf': {'id': vpn.ospfid, 'area': 0 }, 'state': vpn.state}) %}
+{%             elif key == node.name %}
+      ospf: {id: {{ vpn.ospfid }}, area: 0}
+{%               do lo_ospf_id.append(vpn.ospfid) %}
+{%             endif %}
+{%-           endfor %}
+{%-         endfor %}
+{%-       endif %}
+{%     endif %}
+{%-   endfor %}
+{%   for type in hardware if node.name in type.devices and hardware is defined %}
+{%     for interface in type.interfaces if interface not in active_int %}
+    - name: {{ interface }}
+{%       if interface == type.mgmt_int %}
+      description: {{ node.name }} management
+      ip: {{ node.mgmt }}/24
+      state: active
+{%       else %}
+      state: shutdown
+{%       endif %}
+{%     endfor %}
+{%   endfor %}
+{%   if vpns|length > 0 %}
     vpn:
-{##}{##}{% for vpn in vpns %}
+{%     for vpn in vpns %}
       - name: {{ vpn['name'] }}
-        rd: "{{ vpn['rd'] }}"
-        ospf: {{ vpn['ospf'] }}
-        state: {{ vpn['state'] }}
-{##}{##}{% endfor %}
-{##}{% endif %}
+      rd: "{{ vpn['rd'] }}"
+      ospf: {{ vpn['ospf'] }}
+      state: {{ vpn['state'] }}
+{%     endfor %}
+{%   endif %}
     loopback: {ip: {{ node.loopback }}, ospf: { id: {% if node.name in isp_nodes %}1{% elif lo_ospf_id|length > 0 %}{{ lo_ospf_id[0] }}{% endif %}, area: 0}}
     provider: {% if node.name in isp_nodes %}True{% else %}False{% endif %}
 

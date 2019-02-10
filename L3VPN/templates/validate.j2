@@ -4,41 +4,41 @@
     interface_list:
       _mode: strict
       list:
-{%- for interface in node.interfaces %}      
+{%-  for interface in node.interfaces %}      
         - {{ interface.name }}
-{% endfor %}
+{%   endfor %}
         - Loopback0
     hostname: {{ node.name }}
 
-{% if 'PE' in node.name %}
+{%   if 'PE' in node.name %}
 - get_bgp_neighbors:
     global:
       router_id: {{ node.loopback.ip}}
       peers:
         _mode: strict
-{% for neigh in node.bgp %}
+{%     for neigh in node.bgp %}
         {{ neigh.ip }}:
           is_enabled: true
           is_up: true
           remote_id: {{ neigh.ip }}
           remote_as: {{ neigh.asn }}
           local_as: {{ node.asn }}
-{% endfor %}
-{% endif %}
+{%     endfor %}
+{%   endif %}
 
 - get_interfaces_ip:
-{% for interface in node.interfaces if interface.state == 'active' %}
+{%   for interface in node.interfaces if interface.state == 'active' %}
     {{ interface.name }}:
       ipv4:
         {{ interface.ip|ipaddr('address') }}:
           prefix_length: {{ interface.ip|ipaddr('prefix') }}
-{% endfor %}
+{%   endfor %}
     Loopback0:
       ipv4:
         {{ node.loopback.ip }}:
           prefix_length: 32
 
-{% for n in nodes if n.loopback.ospf.id == node.loopback.ospf.id and node.name != n.name %}
+{%   for n in nodes if n.loopback.ospf.id == node.loopback.ospf.id and node.name != n.name %}
 - ping:
     _name: ping_{{ n.name }}
     _kwargs:
@@ -48,5 +48,5 @@
       packet_loss: 0
     _mode: strict
 
-{% endfor %}
+{%   endfor %}
 {% endfor %}

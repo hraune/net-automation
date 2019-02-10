@@ -14,18 +14,18 @@ linknet:
     - {{ existing }}
 {% endfor %}
 {% for subnet in subnets %}
-{##}{% for i in range(subnet|ipsubnet(linknet.size)|int) %}
-{##}{##}{% if linknets|length < fabric|length %}
-{##}{##}{##}{% do linknets.append(subnet|ipsubnet(linknet.size,i)) %}
+{%   for i in range(subnet|ipsubnet(linknet.size)|int) %}
+{%     if linknets|length < fabric|length %}
+{%       do linknets.append(subnet|ipsubnet(linknet.size,i)) %}
     - {{ subnet|ipsubnet(linknet.size,i) }}
-{##}{##}{% endif %}
-{##}{% endfor %}
+{%     endif %}
+{%   endfor %}
 {% endfor %}
   # List of available subnets to pull linknets from
   available_subnets:
 {% for subnet in (subnets|list + leftover|list)|cidr_merge if subnets|length > 0 %}
-{##}{% set new_subnets = subnet|subtract_subnet(linknets) %}
-{##}{% for new_subnet in new_subnets %}
+{%   set new_subnets = subnet|subtract_subnet(linknets) %}
+{%   for new_subnet in new_subnets %}
     - {{ new_subnet }}
-{##}{% endfor %}
+{%   endfor %}
 {% endfor %}

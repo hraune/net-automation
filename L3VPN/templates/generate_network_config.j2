@@ -38,47 +38,47 @@ interface Loopback0
  ip address {{ node.loopback.ip }} 255.255.255.255
  ip ospf {{ node.loopback.ospf.id }} area {{ node.loopback.ospf.area }}
 !
-{% for interface in node.interfaces|sort(attribute='name')%}
+{%   for interface in node.interfaces|sort(attribute='name') %}
 interface {{ interface.name }}
-{% if interface.state == 'active' %}
+{%     if interface.state == 'active' %}
  no shutdown
  description {{ interface.description }}
-{%if 'management' in interface.description %}
+{%       if 'management' in interface.description %}
  ip vrf forwarding MGMT
-{% endif %}
+{%       endif %}
  ip address {{ interface.ip|ipaddr('address') }} {{ interface.ip|ipaddr('netmask') }}
-{% if interface.ospf is defined %}
+{%       if interface.ospf is defined %}
  ip ospf {{ interface.ospf.id }} area {{ interface.ospf.area }}
-{% endif %}
+{%       endif %}
  negotiation auto
-{% else %}
+{%     else %}
  shutdown
-{% endif %}
+{%     endif %}
 !
-{% endfor %}
+{%   endfor %}
 !
 router ospf {{ node.loopback.ospf.id }}
-{% if node.provider %}
+{%   if node.provider %}
  mpls ldp autoconfig
-{% endif %}
+{%   endif %}
 !
 !
-{% if node.asn is defined %}
+{%   if node.asn is defined %}
 router bgp {{ node.asn }}
  bgp log-neighbor-changes
-{% for bgp in node.bgp %}
+{%     for bgp in node.bgp %}
  neighbor {{ bgp.ip }} remote-as {{ bgp.asn }}
  neighbor {{ bgp.ip }} update-source Loopback0
-{% endfor %}
+{%     endfor %}
  !
  address-family vpnv4
-{% for bgp in node.bgp %}
+{%     for bgp in node.bgp %}
  neighbor {{ bgp.ip }} activate
  neighbor {{ bgp.ip }} send-community extended
-{% endfor %}
+{%     endfor %}
  exit-address-family
  !
-{% endif %}
+{%   endif %}
 !
 virtual-service csr_mgmt
 !
