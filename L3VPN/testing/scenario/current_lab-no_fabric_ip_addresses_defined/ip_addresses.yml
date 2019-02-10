@@ -6,7 +6,7 @@ linknet:
   # Size of linknets
   size: 30
   # List of linknets generated, will add/remove addresses if fabric is updated
-  fabric_linknets:
+  fabric_linknets: []
   # List of available subnets to pull linknets from
   available_subnets:
     - 10.203.55.132/30

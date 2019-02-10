@@ -56,8 +56,8 @@ One VPN is defined in **service.yml**, two CE nodes is defined in **fabric.yml**
 ### Expected result
 blah
 
-## No ISP nodes defined in fabric
-One VPN is defined in **service.yml**, two  CE nodes is defined in **fabric.yml**. ISP nodes is not defined in **fabric.yml**
+## Not all provider nodes defined in fabric
+One VPN is defined in **service.yml**, two  CE nodes is defined in **fabric.yml**. Not all ISP nodes is not defined in **fabric.yml**
 
 ### Expected result
 blah
