@@ -6,16 +6,20 @@ nodes:
 
   - name: {{ node.name }}
     mgmt: {{ node.mgmt }}
+{# Prepare some lists to store variables in; lists lets you work around jinja2s scoping behaviour. #}
 {%   set asn = [] %}
 {%   set vpns = [] %}
 {%   set lo_ospf_id = [] %}
     bgp:
+{#   Populating all the bgp neighbors of a node; provider nodes only #}
 {%   for bgp in mpbgp -%}
 {%     for neighbor in bgp.neighbors %}
+{#       For keeping loopback0 of each neighbor #}
 {%       set neigh_lo = [] %}
-{%       for i in nodes if (i.name == neighbor.right and neighbor.left == node.name)
-                        or (i.name == neighbor.left and neighbor.right == node.name) %}
-{%         do neigh_lo.append(i.loopback) %}
+{#       Iterate all the nodes and pick out the one(s) that neighbor this node #}
+{%       for n in nodes if (n.name == neighbor.right and neighbor.left == node.name)
+                        or (n.name == neighbor.left and neighbor.right == node.name) %}
+{%         do neigh_lo.append(n.loopback) %}
 {%         do asn.append(bgp.asn) %}
 {%       endfor %}
 {%       if neighbor.left == node.name %}
@@ -29,16 +33,21 @@ nodes:
     asn: {{ asn[0] }}
 {%   endif %}
     interfaces:
+{#   To store node this interface is connected to #}
 {%   set to_node = "" %}
+{#   List to store all interfaces that is in use on this node #}
 {%   set active_int = [] %}
 {%   set fabric = fabric_infrastructure + fabric_customer %}
-{%   for pair in fabric -%} 
+{%   for pair in fabric -%}
+{#   Iterate over all pairs in fabric and match where this node is left or right interface #}
 {%     if (pair.left == node.name or pair.right == node.name) and 
-                                    linknet.fabric_linknets|length == fabric|length %}
+                                     linknet.fabric_linknets|length == fabric|length %}
 {%       if pair.left == node.name %}
 {%         do active_int.append(pair.left_port) %}
     - name: {{ pair.left_port }}
       description: To {{ pair.right }};{{ pair.right_port[:2] }}{{ pair.right_port[-1:] }}
+{#    Pick IP address from fabric_linknets based on fabric pairs number/place in the fabric 
+      list. Left addresses gets the first address from the subnet, right gets second. #}
       ip: {{ linknet.fabric_linknets[loop.index0]|ipaddr('1') }}
       state: active
 {%         set to_node = pair.right %}
@@ -50,9 +59,12 @@ nodes:
       state: active
 {%         set to_node = pair.left %}
 {%       endif %}
+{#       If both interfaces belongs to provider nodes, set up OSPF id 1 and area 0 #}
 {%       if pair.left in isp_nodes and pair.right in isp_nodes %}
       ospf: {id: 1, area: 0}
-{%       else  %}
+{%       else %}
+{#         If there is any VPNs defined, and the current node is a member and this interface
+           is connected to the correct node; add ospf and vrf info. #}
 {%         for vpn in VPNV4 if VPNV4|length > 0 and VPNV4 is defined -%}
 {%           for key,value in vpn.nodes.items() -%}
 {%             if node.name in isp_nodes and value == node.name and key == to_node %}
@@ -69,6 +81,7 @@ nodes:
 {%-       endif %}
 {%     endif %}
 {%-   endfor %}
+{#   Add information about interfaces that are either not in use or in use by management #}
 {%   for type in hardware if node.name in type.devices and hardware is defined %}
 {%     for interface in type.interfaces if interface not in active_int %}
     - name: {{ interface }}
