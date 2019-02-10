@@ -33,8 +33,8 @@ nodes:
 {%   set active_int = [] %}
 {%   set fabric = fabric_infrastructure + fabric_customer %}
 {%   for pair in fabric -%} 
-{%     if pair.left == node.name or pair.right == node.name and 
-        linknet.fabric_linknets|length == fabric|length %}
+{%     if (pair.left == node.name or pair.right == node.name) and 
+                                    linknet.fabric_linknets|length == fabric|length %}
 {%       if pair.left == node.name %}
 {%         do active_int.append(pair.left_port) %}
     - name: {{ pair.left_port }}
