@@ -1,0 +1,185 @@
+---
+# All the nodes in the network
+
+nodes:
+
+  - name: P1
+    mgmt: 10.0.10.203
+    bgp:
+    interfaces:
+    - name: GigabitEthernet2
+      description: To PE1;Gi1
+      ip: 10.203.55.2/30
+      state: active
+      ospf: {id: 1, area: 0}
+    - name: GigabitEthernet1
+      description: To PE2;Gi2
+      ip: 10.203.55.5/30
+      state: active
+      ospf: {id: 1, area: 0}
+    - name: GigabitEthernet3
+      description: P1 management
+      ip: 10.0.10.203/24
+      state: active
+    - name: GigabitEthernet4
+      state: shutdown
+    loopback: {ip: 10.2.2.2, ospf: { id: 1, area: 0}}
+    provider: True
+
+  - name: PE1
+    mgmt: 10.0.10.202
+    bgp:
+      - { neighbor: PE2, ip: 10.3.3.3, asn: 65001 }
+    asn: 65001
+    interfaces:
+    - name: GigabitEthernet1
+      description: To P1;Gi2
+      ip: 10.203.55.1/30
+      state: active
+      ospf: {id: 1, area: 0}
+    - name: GigabitEthernet2
+      description: To CE1;Gi1
+      ip: 10.203.55.10/30
+      state: active
+      ospf: {id: 10, area: 0}
+      vrf: RED
+    - name: GigabitEthernet4
+      description: To CE3;Gi1
+      ip: 10.203.55.18/30
+      state: active
+      ospf: {id: 20, area: 0}
+      vrf: BLUE
+    - name: GigabitEthernet3
+      description: PE1 management
+      ip: 10.0.10.202/24
+      state: active
+    vpn:
+    - name: RED
+      rd: "65001:1"
+      ospf: {'id': 10, 'area': 0}
+      state: active
+    - name: BLUE
+      rd: "65001:2"
+      ospf: {'id': 20, 'area': 0}
+      state: active
+    loopback: {ip: 10.1.1.1, ospf: { id: 1, area: 0}}
+    provider: True
+
+  - name: PE2
+    mgmt: 10.0.10.204
+    bgp:
+      - { neighbor: PE1, ip: 10.1.1.1, asn: 65001 }
+    asn: 65001
+    interfaces:
+    - name: GigabitEthernet2
+      description: To P1;Gi1
+      ip: 10.203.55.6/30
+      state: active
+      ospf: {id: 1, area: 0}
+    - name: GigabitEthernet1
+      description: To CE2;Gi2
+      ip: 10.203.55.13/30
+      state: active
+      ospf: {id: 10, area: 0}
+      vrf: RED
+    - name: GigabitEthernet4
+      description: To CE4;Gi2
+      ip: 10.203.55.129/30
+      state: active
+      ospf: {id: 20, area: 0}
+      vrf: BLUE
+    - name: GigabitEthernet3
+      description: PE2 management
+      ip: 10.0.10.204/24
+      state: active
+    vpn:
+    - name: RED
+      rd: "65001:1"
+      ospf: {'id': 10, 'area': 0}
+      state: active
+    - name: BLUE
+      rd: "65001:2"
+      ospf: {'id': 20, 'area': 0}
+      state: active
+    loopback: {ip: 10.3.3.3, ospf: { id: 1, area: 0}}
+    provider: True
+
+  - name: CE1
+    mgmt: 10.0.10.201
+    bgp:
+    interfaces:
+    - name: GigabitEthernet1
+      description: To PE1;Gi2
+      ip: 10.203.55.9/30
+      state: active
+      ospf: {id: 10, area: 0}
+    - name: GigabitEthernet2
+      state: shutdown
+    - name: GigabitEthernet3
+      description: CE1 management
+      ip: 10.0.10.201/24
+      state: active
+    - name: GigabitEthernet4
+      state: shutdown
+    loopback: {ip: 172.16.1.1, ospf: { id: 10, area: 0}}
+    provider: False
+
+  - name: CE2
+    mgmt: 10.0.10.205
+    bgp:
+    interfaces:
+    - name: GigabitEthernet2
+      description: To PE2;Gi1
+      ip: 10.203.55.14/30
+      state: active
+      ospf: {id: 10, area: 0}
+    - name: GigabitEthernet1
+      state: shutdown
+    - name: GigabitEthernet3
+      description: CE2 management
+      ip: 10.0.10.205/24
+      state: active
+    - name: GigabitEthernet4
+      state: shutdown
+    loopback: {ip: 172.16.2.2, ospf: { id: 10, area: 0}}
+    provider: False
+
+  - name: CE3
+    mgmt: 10.0.10.206
+    bgp:
+    interfaces:
+    - name: GigabitEthernet1
+      description: To PE1;Gi4
+      ip: 10.203.55.17/30
+      state: active
+      ospf: {id: 20, area: 0}
+    - name: GigabitEthernet2
+      state: shutdown
+    - name: GigabitEthernet3
+      description: CE3 management
+      ip: 10.0.10.206/24
+      state: active
+    - name: GigabitEthernet4
+      state: shutdown
+    loopback: {ip: 172.16.3.3, ospf: { id: 20, area: 0}}
+    provider: False
+
+  - name: CE4
+    mgmt: 10.0.10.207
+    bgp:
+    interfaces:
+    - name: GigabitEthernet2
+      description: To PE2;Gi4
+      ip: 10.203.55.130/30
+      state: active
+      ospf: {id: 20, area: 0}
+    - name: GigabitEthernet1
+      state: shutdown
+    - name: GigabitEthernet3
+      description: CE4 management
+      ip: 10.0.10.207/24
+      state: active
+    - name: GigabitEthernet4
+      state: shutdown
+    loopback: {ip: 172.16.4.4, ospf: { id: 20, area: 0}}
+    provider: False
