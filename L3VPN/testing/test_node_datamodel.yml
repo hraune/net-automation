@@ -18,7 +18,7 @@
   - name: "Lint output file (YML)"
     local_action:
       module: shell
-      _raw_params: yamllint scenario/{{ scenario }}/output_nodes.yml
+      _raw_params: yamllint output_nodes.yml
       chdir: "scenario/{{ scenario }}"
     register: lint_result
 
