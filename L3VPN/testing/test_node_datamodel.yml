@@ -42,11 +42,10 @@
 
   - name: "Remove old test report for '{{ scenario }}'"
     file:
-      path: "scenario/{{ scenario }}/test_report.txt"
+      path: "{{ report_path }}/{{ scenario }}_test_report.txt"
       state: absent
 
   - name: "Generate test report for '{{ scenario }}'"
     template:
       src: "{{ template_path }}/generate_test_report.j2"
-      dest: "scenario/{{ scenario }}/test_report.txt"
-
+      dest: "{{ report_path }}/{{ scenario }}_test_report.txt"

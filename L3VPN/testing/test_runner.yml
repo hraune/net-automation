@@ -3,9 +3,15 @@
   gather_facts: no
   vars:
     - template_path: ../templates
-    - output_path: output
+    - report_path: test_reports
 
   tasks:
+    - name: Create test report directory
+      local_action:
+        module: file
+        path: "{{ report_path }}"
+        state: directory
+
     - name: Find all test directories
       find:
         paths: "{{ playbook_dir }}/scenario"
@@ -16,3 +22,9 @@
     - name: Loop over tests
       include: test_node_datamodel.yml scenario="{{ item.path.split('/')[-1] }}"
       with_items: "{{ scenario_list.files }}"
+
+    - name: Assemble all test reports
+      local_action:
+        module: assemble
+        src: "{{ report_path }}"
+        dest: "combined_test_report_{{ '%Y%m%d%H%M%S' | strftime }}.txt"
