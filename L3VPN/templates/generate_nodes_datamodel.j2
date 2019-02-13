@@ -4,13 +4,13 @@
 nodes:
 {% for node in nodes %}
 
-    - name: {{ node.name }}
-      mgmt: {{ node.mgmt }}
+  - name: {{ node.name }}
+    mgmt: {{ node.mgmt }}
 {# Prepare some lists to store variables in; lists lets you work around jinja2s scoping behaviour. #}
 {%   set asn = [] %}
 {%   set vpns = [] %}
 {%   set lo_ospf_id = [] %}
-      bgp:
+    bgp:
 {#   Populating all the bgp neighbors of a node; provider nodes only #}
 {%   for bgp in mpbgp -%}
 {%     for neighbor in bgp.neighbors %}
@@ -30,9 +30,9 @@ nodes:
 {%     endfor %}
 {%-   endfor %}
 {%   if asn|length > 0 %}
-      asn: {{ asn[0] }}
+    asn: {{ asn[0] }}
 {%   endif %}
-      interfaces:
+    interfaces:
 {#   To store node this interface is connected to #}
 {%   set to_node = "" %}
 {#   List to store all interfaces that is in use on this node #}
@@ -68,12 +68,12 @@ nodes:
 {%         for vpn in VPNV4 if VPNV4|length > 0 and VPNV4 is defined -%}
 {%           for key,value in vpn.nodes.items() -%}
 {%             if node.name in isp_nodes and value == node.name and key == to_node %}
-      ospf: {id: {{ vpn.ospfid }}, area: 0}
-      vrf: {{ vpn.name }}
+        ospf: {id: {{ vpn.ospfid }}, area: 0}
+        vrf: {{ vpn.name }}
 {%               do vpns.append({'name': vpn.name, 'rd': vpn.rd, 
                 'ospf': {'id': vpn.ospfid, 'area': 0 }, 'state': vpn.state}) %}
 {%             elif key == node.name %}
-      ospf: {id: {{ vpn.ospfid }}, area: 0}
+        ospf: {id: {{ vpn.ospfid }}, area: 0}
 {%               do lo_ospf_id.append(vpn.ospfid) %}
 {%             endif %}
 {%-           endfor %}
@@ -84,23 +84,23 @@ nodes:
 {#   Add information about interfaces that are either not in use or in use by management #}
 {%   for type in hardware if node.name in type.devices and hardware is defined %}
 {%     for interface in type.interfaces if interface not in active_int %}
-    - name: {{ interface }}
+      - name: {{ interface }}
 {%       if interface == type.mgmt_int %}
-      description: {{ node.name }} management
-      ip: {{ node.mgmt }}/24
-      state: active
+        description: {{ node.name }} management
+        ip: {{ node.mgmt }}/24
+        state: active
 {%       else %}
-      state: shutdown
+        state: shutdown
 {%       endif %}
 {%     endfor %}
 {%   endfor %}
 {%   if vpns|length > 0 %}
     vpn:
 {%     for vpn in vpns %}
-    - name: {{ vpn['name'] }}
-      rd: "{{ vpn['rd'] }}"
-      ospf: {{ vpn['ospf'] }}
-      state: {{ vpn['state'] }}
+      - name: {{ vpn['name'] }}
+        rd: "{{ vpn['rd'] }}"
+        ospf: {{ vpn['ospf'] }}
+        state: {{ vpn['state'] }}
 {%     endfor %}
 {%   endif %}
     loopback: {ip: {{ node.loopback }}, ospf: {id: {% if node.name in isp_nodes %}1{% elif lo_ospf_id|length > 0 %}{{ lo_ospf_id[0] }}{% endif %}, area: 0}}
