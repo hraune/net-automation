@@ -29,7 +29,7 @@ nodes:
   - name: PE1
     mgmt: 10.0.10.202
     bgp:
-      - { neighbor: PE2, ip: 10.3.3.3, asn: 65001 }
+      - {neighbor: PE2, ip: 10.3.3.3, asn: 65001}
     asn: 65001
     interfaces:
       - name: GigabitEthernet1
@@ -60,7 +60,7 @@ nodes:
   - name: PE2
     mgmt: 10.0.10.204
     bgp:
-      - { neighbor: PE1, ip: 10.1.1.1, asn: 65001 }
+      - {neighbor: PE1, ip: 10.1.1.1, asn: 65001}
     asn: 65001
     interfaces:
       - name: GigabitEthernet1
