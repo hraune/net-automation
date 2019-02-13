@@ -23,10 +23,10 @@ nodes:
 {%       endfor %}
 {%       if neighbor.left == node.name %}
 
-      - { neighbor: {{ neighbor.right }}, ip: {{ neigh_lo[0] }}, asn: {{ bgp.asn }} }
+      - {neighbor: {{ neighbor.right }}, ip: {{ neigh_lo[0] }}, asn: {{ bgp.asn }}}
 {%       elif neighbor.right == node.name %}
 
-      - { neighbor: {{ neighbor.left }}, ip: {{ neigh_lo[0] }}, asn: {{ bgp.asn }} }
+      - {neighbor: {{ neighbor.left }}, ip: {{ neigh_lo[0] }}, asn: {{ bgp.asn }}}
 {%       else %} []
 {%       endif %}
 {%     endfor %}
