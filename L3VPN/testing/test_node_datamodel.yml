@@ -11,6 +11,9 @@
         - yml
         - yaml
       ignore_unknown_extensions: yes
+      ignore_files:
+        - expected_nodes.yml
+        - output_nodes.yml
 
   - name: "Generate testing nodes-datamodel for '{{ scenario }}'"
     template:
