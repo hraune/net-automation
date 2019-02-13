@@ -28,7 +28,7 @@
   - name: "Compare generated nodes file with expected result"
     local_action:
       module: shell
-      _raw_params: shell diff output_nodes.yml expected_nodes.yml
+      _raw_params: diff output_nodes.yml expected_nodes.yml
       chdir: "scenario/{{ scenario }}"
     register: diff_result
 
