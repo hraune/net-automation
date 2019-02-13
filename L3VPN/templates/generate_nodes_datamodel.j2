@@ -4,13 +4,13 @@
 nodes:
 {% for node in nodes %}
 
-  - name: {{ node.name }}
-    mgmt: {{ node.mgmt }}
+    - name: {{ node.name }}
+      mgmt: {{ node.mgmt }}
 {# Prepare some lists to store variables in; lists lets you work around jinja2s scoping behaviour. #}
 {%   set asn = [] %}
 {%   set vpns = [] %}
 {%   set lo_ospf_id = [] %}
-    bgp:
+      bgp:
 {#   Populating all the bgp neighbors of a node; provider nodes only #}
 {%   for bgp in mpbgp -%}
 {%     for neighbor in bgp.neighbors %}
@@ -23,16 +23,16 @@ nodes:
 {%         do asn.append(bgp.asn) %}
 {%       endfor %}
 {%       if neighbor.left == node.name %}
-      - { neighbor: {{ neighbor.right }}, ip: {{ neigh_lo[0] }}, asn: {{ bgp.asn }} }
+        - { neighbor: {{ neighbor.right }}, ip: {{ neigh_lo[0] }}, asn: {{ bgp.asn }} }
 {%       elif neighbor.right == node.name %}
-      - { neighbor: {{ neighbor.left }}, ip: {{ neigh_lo[0] }}, asn: {{ bgp.asn }} }
+        - { neighbor: {{ neighbor.left }}, ip: {{ neigh_lo[0] }}, asn: {{ bgp.asn }} }
 {%       endif %}
 {%     endfor %}
 {%-   endfor %}
 {%   if asn|length > 0 %}
-    asn: {{ asn[0] }}
+      asn: {{ asn[0] }}
 {%   endif %}
-    interfaces:
+      interfaces:
 {#   To store node this interface is connected to #}
 {%   set to_node = "" %}
 {#   List to store all interfaces that is in use on this node #}
@@ -44,24 +44,24 @@ nodes:
                                      linknet.fabric_linknets|length == fabric|length %}
 {%       if pair.left == node.name %}
 {%         do active_int.append(pair.left_port) %}
-    - name: {{ pair.left_port }}
-      description: To {{ pair.right }};{{ pair.right_port[:2] }}{{ pair.right_port[-1:] }}
+      - name: {{ pair.left_port }}
+        description: To {{ pair.right }};{{ pair.right_port[:2] }}{{ pair.right_port[-1:] }}
 {#    Pick IP address from fabric_linknets based on fabric pairs number/place in the fabric 
       list. Left addresses gets the first address from the subnet, right gets second. #}
-      ip: {{ linknet.fabric_linknets[loop.index0]|ipaddr('1') }}
-      state: active
+        ip: {{ linknet.fabric_linknets[loop.index0]|ipaddr('1') }}
+        state: active
 {%         set to_node = pair.right %}
 {%       elif pair.right == node.name %}
 {%         do active_int.append(pair.right_port) %}
-    - name: {{ pair.right_port }}
-      description: To {{ pair.left }};{{ pair.left_port[:2] }}{{ pair.left_port[-1:] }}
-      ip: {{ linknet.fabric_linknets[loop.index0]|ipaddr('2') }}
-      state: active
+      - name: {{ pair.right_port }}
+        description: To {{ pair.left }};{{ pair.left_port[:2] }}{{ pair.left_port[-1:] }}
+        ip: {{ linknet.fabric_linknets[loop.index0]|ipaddr('2') }}
+        state: active
 {%         set to_node = pair.left %}
 {%       endif %}
 {#       If both interfaces belongs to provider nodes, set up OSPF id 1 and area 0 #}
 {%       if pair.left in isp_nodes and pair.right in isp_nodes %}
-      ospf: {id: 1, area: 0}
+        ospf: {id: 1, area: 0}
 {%       else %}
 {#         If there is any VPNs defined, and the current node is a member and this interface
            is connected to the correct node; add ospf and vrf info. #}
@@ -103,7 +103,7 @@ nodes:
       state: {{ vpn['state'] }}
 {%     endfor %}
 {%   endif %}
-    loopback: {ip: {{ node.loopback }}, ospf: { id: {% if node.name in isp_nodes %}1{% elif lo_ospf_id|length > 0 %}{{ lo_ospf_id[0] }}{% endif %}, area: 0}}
-    provider: {% if node.name in isp_nodes %}True{% else %}False{% endif %}
+    loopback: {ip: {{ node.loopback }}, ospf: {id: {% if node.name in isp_nodes %}1{% elif lo_ospf_id|length > 0 %}{{ lo_ospf_id[0] }}{% endif %}, area: 0}}
+    provider: {% if node.name in isp_nodes %}true{% else %}false{% endif %}
 
 {% endfor %}
