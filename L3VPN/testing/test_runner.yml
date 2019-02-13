@@ -5,7 +5,6 @@
     - template_path: ../templates
     - output_path: output
 
-
   tasks:
     - name: Find all test directories
       find:
@@ -13,9 +12,6 @@
         recurse: no
         file_type: directory
       register: scenario_list
-
-    #- debug: msg="{{ item.path.split('/')[-1] }}"
-     # with_items: "{{ scenario_list.files }}"
 
     - name: Loop over tests
       include: test_node_datamodel.yml scenario="{{ item.path.split('/')[-1] }}"
