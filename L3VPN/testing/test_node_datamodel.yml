@@ -1,16 +1,41 @@
 ---
-  - name: "Remove old node datamodels for {{ scenario }}"
+  - name: "Remove old node datamodels for '{{ scenario }}'"
     file:
       path: "scenario/{{ scenario }}/output_nodes.yml"
       state: absent
   
-  - name: "Including variables for {{ scenario }}"
+  - name: "Including variables for '{{ scenario }}'"
     include_vars: 
       dir: scenario/{{ scenario }}
       extensions: 
         - yml
 
-  - name: "Generate nodes datamodel for {{ scenario }}"
+  - name: "Generate testing nodes-datamodel for '{{ scenario }}'"
     template:
       src: "{{ template_path }}/generate_nodes_datamodel.j2"
       dest: "scenario/{{ scenario }}/output_nodes.yml"
+
+  - name: "Lint output file (YML)"
+    local_action:
+      module: shell
+      _raw_params: yamllint scenario/{{ scenario }}/output_nodes.yml
+      chdir: "scenario/{{ scenario }}"
+    register: lint_result
+
+  - name: "Compare generated nodes file with expected result"
+    local_action:
+      module: shell
+      _raw_params: shell diff output_nodes.yml expected_nodes.yml
+      chdir: "scenario/{{ scenario }}"
+    register: diff_result
+
+  - name: "Remove old test report for '{{ scenario }}'"
+    file:
+      path: "scenario/{{ scenario }}/test_report.txt"
+      state: absent
+
+  - name: "Generate test report for '{{ scenario }}'"
+    template:
+      src: "{{ template_path }}/generate_test_report.j2"
+      dest: "scenario/{{ scenario }}/test_report.txt"
+
