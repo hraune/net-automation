@@ -31,6 +31,9 @@
       _raw_params: diff output_nodes.yml expected_nodes.yml
       chdir: "scenario/{{ scenario }}"
     register: diff_result
+    failed_when: 
+      - "diff_result.stderr != ''"
+      - "diff_result.rc != 0"
 
   - name: "Remove old test report for '{{ scenario }}'"
     file:
