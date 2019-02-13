@@ -1,9 +1,11 @@
 # Test Report for '{{ scenario }}'
 
-## Lint: {% if lint_result.stdout == "" %}PASS{% elif 'warning' in lint_result.stdout and 'error' not in lint_result.stdout %}WARNING{% else %}FAIL{% endif +%}
+## Lint: {% if lint_result.stdout == "" %}PASS{% elif 'warning' in lint_result.stdout and 'error' not in lint_result.stdout %}WARNING{% else %}FAIL{% endif %}
+
 {{ lint_result.stdout }}
 
-## Diff: {% if diff_result.stdout == "" %}PASS{% else %}FAIL{% endif +%}
+## Diff: {% if diff_result.stdout == "" %}PASS{% else %}FAIL{% endif %}
+
 {{ diff_result.stdout }}
 
 
