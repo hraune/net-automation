@@ -5,7 +5,7 @@ nodes:
 
   - name: P1
     mgmt: 10.0.10.203
-    bgp:
+    bgp: []
     interfaces:
       - name: GigabitEthernet1
         state: shutdown
@@ -60,7 +60,7 @@ nodes:
 
   - name: CE1
     mgmt: 10.0.10.201
-    bgp:
+    bgp: []
     interfaces:
       - name: GigabitEthernet1
         state: shutdown
@@ -77,7 +77,7 @@ nodes:
 
   - name: CE2
     mgmt: 10.0.10.205
-    bgp:
+    bgp: []
     interfaces:
       - name: GigabitEthernet1
         state: shutdown
