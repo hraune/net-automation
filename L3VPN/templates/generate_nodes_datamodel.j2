@@ -10,9 +10,8 @@ nodes:
 {%   set asn = [] %}
 {%   set vpns = [] %}
 {%   set lo_ospf_id = [] %}
-    bgp:
 {#   Populating all the bgp neighbors of a node; provider nodes only #}
-{%-   for bgp in mpbgp -%}
+    bgp:{%   for bgp in mpbgp -%}
 {%     for neighbor in bgp.neighbors %}
 {#       For keeping loopback0 of each neighbor #}
 {%       set neigh_lo = [] %}
