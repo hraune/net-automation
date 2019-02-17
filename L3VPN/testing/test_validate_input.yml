@@ -1,5 +1,9 @@
 # Validates all the inputs in the various vars files that everything is based on.
 ---
+  - name: "Resetting scenario variables"
+    include_vars: 
+      file: scenario/reset.yml
+
   - name: "Including variables for '{{ scenario }}'"
     include_vars: 
       dir: scenario/{{ scenario }}
