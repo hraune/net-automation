@@ -14,6 +14,7 @@
         module: file
         path: "{{ report_path }}"
         state: directory
+      tags: test_setup
 
     - name: Find all test directories
       find:
@@ -21,6 +22,7 @@
         recurse: no
         file_type: directory
       register: scenario_list
+      tags: test_setup
 
     - name: Loop over test node datamodel
       include: test_node_datamodel.yml scenario="{{ item.path.split('/')[-1] }}"
@@ -37,3 +39,4 @@
         module: assemble
         src: "{{ report_path }}"
         dest: "combined_test_report_{{ '%Y%m%d%H%M%S' | strftime }}.txt"
+      tags: nodes

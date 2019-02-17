@@ -114,5 +114,8 @@ class FilterModule(object):
         'nodes_not_in_fabric': nodes_not_in_fabric,
         'unique_list':unique_list,
         'get_all_node_names':get_all_node_names,
+        'get_all_fabric_names':get_all_fabric_names,
+        'subtract_list':subtract_list,
+        'merge_lists_from_list_of_dict':merge_lists_from_list_of_dict,
         } 
 
