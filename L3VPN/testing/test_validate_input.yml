@@ -24,12 +24,17 @@
         - "(fabric_infrastructure|length + fabric_customer|length) == linknet.fabric_linknets|length"
     tags: enough_linknets
 
-  - name: Validate that the hardware is defined for all nodes
+  - name: Validate that the hardware is defined
+    assert:
+      that:
+        - "hardware is defined"
+    tags: hardware_defined
+
+  - name: Validate that the hardware is defined for all node
     assert:
       that:
         # Merges all the device lists from the hardware dicts and subtracts the list of all the node names;
         # the result should be zero if there is hardware defined for all nodes
-        - "hardware is defined"
         - "hardware|merge_lists_from_list_of_dict('devices')|length > 0"
         - "hardware|merge_lists_from_list_of_dict('devices')|subtract_list(nodes|get_all_node_names)|length == 0"
     tags: hardware_defined
