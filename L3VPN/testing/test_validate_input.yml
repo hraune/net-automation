@@ -1,10 +1,15 @@
 # Validates all the inputs in the various vars files that everything is based on.
 ---
-  - name: Create report directory
-    local_action:
-      module: file
-      path: "{{ report_path }}"
-      state: directory
+  - name: "Including variables for '{{ scenario }}'"
+    include_vars: 
+      dir: scenario/{{ scenario }}
+      extensions:
+        - yml
+        - yaml
+      ignore_unknown_extensions: yes
+      ignore_files:
+        - expected_nodes.yml
+        - output_nodes.yml
 
   - name: Validate that all nodes are connected via fabric
     assert:
