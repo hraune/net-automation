@@ -6,7 +6,7 @@
 hardware:
   - name: CSR1000V
     interfaces: [GigabitEthernet1, GigabitEthernet2, GigabitEthernet3, GigabitEthernet4]
-    devices: [P1, PE1, PE2, CE1]
+    devices: [P1, PE1, PE2, CE1, CE2]
     mgmt_int: GigabitEthernet3
 
 fabric_infrastructure:
@@ -44,4 +44,7 @@ nodes:
     loopback: 10.3.3.3
   - name: CE1
     mgmt: 10.0.10.201
+    loopback: 172.16.1.1
+  - name: CE2
+    mgmt: 10.0.10.205
     loopback: 172.16.1.1
