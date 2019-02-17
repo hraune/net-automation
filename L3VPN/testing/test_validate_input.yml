@@ -31,7 +31,8 @@
         - hardware != ''
     tags: hardware_defined
 
-  - debug: "{{ hardware is defined }}"
+  - debug:
+      var: hardware
 
   - name: Validate that the hardware is defined for all nodes
     assert:
