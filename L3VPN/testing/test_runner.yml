@@ -22,9 +22,15 @@
         file_type: directory
       register: scenario_list
 
-    - name: Loop over tests
+    - name: Loop over test node datamodel
       include: test_node_datamodel.yml scenario="{{ item.path.split('/')[-1] }}"
       with_items: "{{ scenario_list.files }}"
+      tags: nodes
+
+    - name: Loop over test input validate
+      include: test_validate_input.yml scenario="{{ item.path.split('/')[-1] }}"
+      with_items: "{{ scenario_list.files }}"
+      tags: validate
 
     - name: Assemble all test reports
       local_action:
