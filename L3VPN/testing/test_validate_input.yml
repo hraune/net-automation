@@ -28,12 +28,6 @@
         - (fabric_infrastructure|length + fabric_customer|length) == linknet.fabric_linknets|length
     tags: enough_linknets
 
-  - name: Validate that the hardware is defined
-    assert:
-      that:
-        - hardware is defined
-    tags: hardware_defined
-
   - name: Validate that the hardware is defined for all devices
     assert:
       that:
@@ -42,3 +36,9 @@
         - hardware|merge_lists_from_list_of_dict('devices')|length > 0
         - hardware|merge_lists_from_list_of_dict('devices')|subtract_list(nodes|get_all_node_names)|length == 0
     tags: hardware_defined
+
+  - name: Validate for identical services
+    assert:
+      that:
+        - VPNV4|length == VPNV4|count_unique_entries_in_list_of_dicts()
+    tags: identical_services

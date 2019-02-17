@@ -99,6 +99,11 @@ def merge_lists_from_list_of_dict(baselist,dict_key):
     of all the lists for a given key'''
     return [i for item in baselist for i in item[dict_key]]
 
+def count_unique_entries_in_list_of_dicts(baselist):
+    '''Counts unique entries in a list of dictionaries'''
+    ret = list({item['name']:item for item in baselist}.values())
+    return len(ret)
+
 class FilterModule(object): 
     def filters(self): 
         return {
@@ -117,5 +122,6 @@ class FilterModule(object):
         'get_all_fabric_names':get_all_fabric_names,
         'subtract_list':subtract_list,
         'merge_lists_from_list_of_dict':merge_lists_from_list_of_dict,
+        'count_unique_entries_in_list_of_dicts':count_unique_entries_in_list_of_dicts
         } 
 
