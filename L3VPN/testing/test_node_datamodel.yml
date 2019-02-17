@@ -1,3 +1,5 @@
+# Creates node datamodels for one given 'scenario', comparing results with 
+# premade expected results
 ---
   - name: "Remove old node datamodels for '{{ scenario }}'"
     file:

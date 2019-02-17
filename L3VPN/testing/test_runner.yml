@@ -1,9 +1,12 @@
+# Runs the tests for generating node datamodels on each scenario defined
+# in the scenario directory. 
 ---
 - hosts: localhost
   gather_facts: no
   vars:
     - template_path: ../templates
     - report_path: test_reports
+    - scenario_path: "{{ playbook_dir }}/scenario"
 
   tasks:
     - name: Create test report directory
@@ -14,7 +17,7 @@
 
     - name: Find all test directories
       find:
-        paths: "{{ playbook_dir }}/scenario"
+        paths: "{{ scenario_path }}"
         recurse: no
         file_type: directory
       register: scenario_list
