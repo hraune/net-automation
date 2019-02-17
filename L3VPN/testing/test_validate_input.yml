@@ -15,3 +15,12 @@
     assert:
       that:
         - "nodes|nodes_not_in_fabric(fabric_infrastructure, fabric_customer)|length == 0"
+    tags: fabric_connected
+
+  - name: Validate that there is enough linknets for the fabric
+    assert:
+      that:
+        - "(fabric_infrastructure|length + fabric_customer|length) == linknet.fabric_linknets|length"
+    tags: enough_linknets
+
+    
