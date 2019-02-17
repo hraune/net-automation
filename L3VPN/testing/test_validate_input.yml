@@ -33,6 +33,8 @@
 
   - debug:
       var: hardware
+      tags: test_setup
+
 
   - name: Validate that the hardware is defined for all nodes
     assert:
