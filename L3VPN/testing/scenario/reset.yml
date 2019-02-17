@@ -1,0 +1,17 @@
+---
+# Reset
+#
+# Resets all vars to empty values/lists/etc..
+
+hardware: []
+fabric_infrastructure: []
+fabric_customer: []
+mpbgp: []
+services: []
+isp_nodes: []
+nodes: []
+linknet:
+  size: 0
+  fabric_linknets: []
+  available_subnets: []
+VPNV4: []

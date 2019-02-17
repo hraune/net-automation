@@ -28,14 +28,9 @@
     assert:
       that:
         - hardware is defined
-        - hardware != ''
     tags: hardware_defined
 
-  - debug:
-      var: hardware
-    tags: test_setup
-
-  - name: Validate that the hardware is defined for all nodes
+  - name: Validate that the hardware is defined for all devices
     assert:
       that:
         # Merges all the device lists from the hardware dicts and subtracts the list of all the node names;

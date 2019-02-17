@@ -5,6 +5,10 @@
     file:
       path: "scenario/{{ scenario }}/output_nodes.yml"
       state: absent
+
+  - name: "Resetting scenario variables"
+    include_vars: 
+      file: scenario/reset.yml
   
   - name: "Including variables for '{{ scenario }}'"
     include_vars: 
