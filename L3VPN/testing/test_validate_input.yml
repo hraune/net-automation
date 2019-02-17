@@ -10,6 +10,7 @@
       ignore_files:
         - expected_nodes.yml
         - output_nodes.yml
+    tags: test_setup
 
   - name: Validate that all nodes are connected via fabric
     assert:
@@ -23,4 +24,10 @@
         - "(fabric_infrastructure|length + fabric_customer|length) == linknet.fabric_linknets|length"
     tags: enough_linknets
 
-    
+  - name: Validate that the hardware is defined for all nodes
+    assert:
+      that:
+        # Merges all the device lists from the hardware dicts and subtracts the list of all the node names;
+        # the result should be zero if there is hardware defined for all nodes
+        - "hardware|merge_lists_from_list_of_dict('devices')|subtract_list(nodes|get_all_node_names)|length == 0"
+    tags: hardware_defined

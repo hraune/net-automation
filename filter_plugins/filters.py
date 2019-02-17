@@ -82,6 +82,23 @@ def unique_list(arg):
     '''Returns a list containing only unique elements, order is not preserved!'''
     return list(set(arg))
 
+def get_all_node_names(arg):
+    '''Returns a list of all the node names'''
+    return [node['name'] for node in arg]
+
+def get_all_fabric_names(arg):
+    '''Returns a list of all the node names in a fabric dictionary'''
+    return [node for item in arg for node in [item['right'],item['left']]]
+
+def subtract_list(x,y):
+    '''Subtracts all elements in y from x and returns it as a list'''
+    return list(set(x)-set(y))
+
+def merge_lists_from_list_of_dict(baselist,dict_key):
+    '''Given a list of dictionaries with the same keys, returns a merged list
+    of all the lists for a given key'''
+    return [i for item in baselist for i in item[dict_key]]
+
 class FilterModule(object): 
     def filters(self): 
         return {
@@ -95,5 +112,7 @@ class FilterModule(object):
         'subtract_subnet': subtract_subnet,
         'is_in_tuplist': is_in_tuplist,
         'nodes_not_in_fabric': nodes_not_in_fabric,
+        'unique_list':unique_list,
+        'get_all_node_names':get_all_node_names,
         } 
 
