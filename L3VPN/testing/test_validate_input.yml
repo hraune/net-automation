@@ -27,14 +27,14 @@
   - name: Validate that the hardware is defined
     assert:
       that:
-        - "hardware is defined"
+        - hardware is defined
     tags: hardware_defined
 
-  - name: Validate that the hardware is defined for all node
+  - name: Validate that the hardware is defined for all nodes
     assert:
       that:
         # Merges all the device lists from the hardware dicts and subtracts the list of all the node names;
         # the result should be zero if there is hardware defined for all nodes
-        - "hardware|merge_lists_from_list_of_dict('devices')|length > 0"
-        - "hardware|merge_lists_from_list_of_dict('devices')|subtract_list(nodes|get_all_node_names)|length == 0"
+        - hardware|merge_lists_from_list_of_dict('devices')|length > 0
+        - hardware|merge_lists_from_list_of_dict('devices')|subtract_list(nodes|get_all_node_names)|length == 0
     tags: hardware_defined
