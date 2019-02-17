@@ -14,4 +14,4 @@
   - name: Validate that all nodes are connected via fabric
     assert:
       that:
-        - "{{ nodes|nodes_not_in_fabric(fabric_infrastructure, fabric_customer)|length }} == 0"
+        - "nodes|nodes_not_in_fabric(fabric_infrastructure, fabric_customer)|length == 0"
