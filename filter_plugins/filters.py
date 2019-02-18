@@ -113,7 +113,7 @@ def count_unique_entries_in_list_of_dicts(baselist):
 def nodes_is_fully_defined(arg):
     '''Verifies that each node in a list of nodes has a name, mgmt IP 
     and loopback IP'''
-    for node in nodes:
+    for node in arg:
         if 'name' in node and node['name'] != '':
             return False
         if 'mgmt' in node and node['mgmt'] != '':
