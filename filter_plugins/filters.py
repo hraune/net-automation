@@ -141,6 +141,7 @@ class FilterModule(object):
         'get_all_fabric_names':get_all_fabric_names,
         'subtract_list':subtract_list,
         'merge_lists_from_list_of_dict':merge_lists_from_list_of_dict,
-        'count_unique_entries_in_list_of_dicts':count_unique_entries_in_list_of_dicts
+        'count_unique_entries_in_list_of_dicts':count_unique_entries_in_list_of_dicts,
+        'nodes_is_fully_defined':nodes_is_fully_defined,
         } 
 
