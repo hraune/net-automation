@@ -114,15 +114,11 @@ def nodes_is_fully_defined(arg):
     '''Verifies that each node in a list of nodes has a name, mgmt IP 
     and loopback IP'''
     for node in arg:
-        print (node)
-        if 'name' in node and (node['name'] != '' or node['name'] != None):
-            print ('name')
+        if not ('name' in node and node['name'] != ''):
             return False
-        if 'mgmt' in node and (node['mgmt'] != '' or node['mgmt'] != None):
-            print ('mgmt')
+        if not ('mgmt' in node and node['mgmt'] != ''):
             return False
-        if 'loopback' in node and (node['loopback'] != '' or node['loopback'] != None):
-            print ('lo')
+        if not ('loopback' in node and node['loopback'] != ''):
             return False
     return True
 
