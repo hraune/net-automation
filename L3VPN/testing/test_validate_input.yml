@@ -52,5 +52,5 @@
   - name: Validate that all nodes have name, mgmt IP and loopback IP defined and non-empty
     assert:
       that:
-        - nodes|nodes_is_fully_defined() is True
+        - nodes|nodes_is_fully_defined()
     tags: node_defined
