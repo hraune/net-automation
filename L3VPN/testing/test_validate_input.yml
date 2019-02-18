@@ -22,6 +22,14 @@
         - nodes|nodes_not_in_fabric(fabric_infrastructure, fabric_customer)|length == 0
     tags: fabric_connected
 
+  - debug:
+      var: (fabric_infrastructure + fabric_customer)|fabric_dict_to_tuples|unique_list
+    tags: interface_once
+
+  - debug:
+      var: (fabric_infrastructure + fabric_customer)|length
+    tags: interface_once
+
   - name: Validate that each interface is only used once
     assert:
       that:
