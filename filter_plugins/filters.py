@@ -115,13 +115,13 @@ def nodes_is_fully_defined(arg):
     and loopback IP'''
     for node in arg:
         print (node)
-        if 'name' in node and node['name'] != '' and node['name'] != None:
+        if 'name' in node and (node['name'] != '' or node['name'] != None):
             print ('name')
             return False
-        if 'mgmt' in node and node['mgmt'] != '' and node['mgmt'] != None:
+        if 'mgmt' in node and (node['mgmt'] != '' or node['mgmt'] != None):
             print ('mgmt')
             return False
-        if 'loopback' in node and node['loopback'] != '' and node['loopback'] != None:
+        if 'loopback' in node and (node['loopback'] != '' or node['loopback'] != None):
             print ('lo')
             return False
     return True
