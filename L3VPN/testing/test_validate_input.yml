@@ -53,3 +53,4 @@
     assert:
       that:
         - nodes|nodes_is_fully_defined()
+    tags: node_defined
