@@ -84,7 +84,9 @@ def unique_list(arg):
 
 def fabric_dict_to_tuples(fab):
     '''Converts a list of dictionaries into a list of tuples'''
-    return [(item['right'],item['right_port']) for item in fab ] + [(item['left'],item['left_port']) for item in fab ]
+    ret = [(item['right'],item['right_port']) for item in fab ] 
+            + [(item['left'],item['left_port']) for item in fab ]
+    return ret
 
 def get_all_node_names(arg):
     '''Returns a list of all the node names'''
@@ -107,6 +109,18 @@ def count_unique_entries_in_list_of_dicts(baselist):
     '''Counts unique entries in a list of dictionaries'''
     ret = list({item['name']:item for item in baselist}.values())
     return len(ret)
+
+def nodes_is_fully_defined(arg):
+    '''Verifies that each node in a list of nodes has a name, mgmt IP 
+    and loopback IP'''
+    for node in nodes:
+        if 'name' in node and node['name'] != '':
+            return False
+        if 'mgmt' in node and node['mgmt'] != '':
+            return False
+        if 'loopback' in node and node['loopback'] != '':
+            return False
+    return True
 
 class FilterModule(object): 
     def filters(self): 

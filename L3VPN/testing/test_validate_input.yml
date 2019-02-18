@@ -49,3 +49,7 @@
         - VPNV4|length == VPNV4|count_unique_entries_in_list_of_dicts()
     tags: identical_services
 
+  - name: Validate that all nodes have name, mgmt IP and loopback IP defined and non-empty
+    assert:
+      that:
+        - nodes|nodes_is_fully_defined()
