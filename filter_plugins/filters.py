@@ -84,8 +84,8 @@ def unique_list(arg):
 
 def fabric_dict_to_tuples(fab):
     '''Converts a list of dictionaries into a list of tuples'''
-    ret = [(item['right'],item['right_port']) for item in fab ] 
-            + [(item['left'],item['left_port']) for item in fab ]
+    ret = ([(item['right'],item['right_port']) for item in fab ] 
+            + [(item['left'],item['left_port']) for item in fab ])
     return ret
 
 def get_all_node_names(arg):
