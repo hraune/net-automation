@@ -22,6 +22,12 @@
         - nodes|nodes_not_in_fabric(fabric_infrastructure, fabric_customer)|length == 0
     tags: fabric_connected
 
+  - name: Validate that each interface is only used once
+    assert:
+      that:
+        - (fabric_infrastructure + fabric_customer)|list_of_dict_to_list_of_tuples|unique_list == (fabric_infrastructure + fabric_customer)|length
+    tags: interface_once
+
   - name: Validate that there is enough linknets for the fabric
     assert:
       that:
@@ -42,3 +48,4 @@
       that:
         - VPNV4|length == VPNV4|count_unique_entries_in_list_of_dicts()
     tags: identical_services
+

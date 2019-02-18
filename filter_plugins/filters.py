@@ -82,6 +82,10 @@ def unique_list(arg):
     '''Returns a list containing only unique elements, order is not preserved!'''
     return list(set(arg))
 
+def list_of_dict_to_list_of_tuples(arg):
+    '''Converts a list of dictionaries into a list of tuples'''
+    return [(key,value) for item in arg for key,value in item.items()]
+
 def get_all_node_names(arg):
     '''Returns a list of all the node names'''
     return [node['name'] for node in arg]
@@ -118,6 +122,7 @@ class FilterModule(object):
         'is_in_tuplist': is_in_tuplist,
         'nodes_not_in_fabric': nodes_not_in_fabric,
         'unique_list':unique_list,
+        'list_of_dict_to_list_of_tuples':list_of_dict_to_list_of_tuples,
         'get_all_node_names':get_all_node_names,
         'get_all_fabric_names':get_all_fabric_names,
         'subtract_list':subtract_list,
