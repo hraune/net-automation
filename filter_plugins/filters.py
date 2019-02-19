@@ -122,6 +122,32 @@ def nodes_is_fully_defined(arg):
             return False
     return True
 
+def bgp_is_fully_defined(arg):
+    for bgp in arg:
+        if not ('asn' in bgp and 1 < bgp['asn'] < 4294967294):
+            return False
+        for neighbor in bgp['neighbors']:
+            if not ('left' in neighbor and neighbor['left'] != ''):
+                return False
+            if not ('right' in neighbor and neighbor['right'] != ''):
+                return False
+    return True
+
+def hardware_is_fully_defined(arg):
+    for hardware in arg:
+        if not ('name' in hardware and hardware['name'] != ''):
+            return False
+        if not ('mgmt_int' in hardware and hardware['mgmt_int'] != ''):
+            return False
+        if not ('interface' in hardware and len(hardware['interfaces']) > 0):
+            return False
+        if not ('devices' in hardware and len(hardware['devices']) > 0):
+            return False
+        if hardware['mgmt_int'] not in hardware['interfaces']:
+            return False
+    return True
+
+
 class FilterModule(object): 
     def filters(self): 
         return {
@@ -143,5 +169,7 @@ class FilterModule(object):
         'merge_lists_from_list_of_dict':merge_lists_from_list_of_dict,
         'count_unique_entries_in_list_of_dicts':count_unique_entries_in_list_of_dicts,
         'nodes_is_fully_defined':nodes_is_fully_defined,
+        'bgp_is_fully_defined':bgp_is_fully_defined,
+        'hardware_is_fully_defined':hardware_is_fully_defined,
         } 
 

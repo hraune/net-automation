@@ -1,6 +1,9 @@
 # Validates all the inputs in the various vars files that everything is based on.
 ---
   - name: "Resetting scenario variables"
+    # Runs include_vars with a vars file that contains only empty values/lists/etc.
+    # Need to do this to prevent separate runs to be contaminated by previous runs,
+    # especially if testing for empty or non defined values.
     include_vars: 
       file: scenario/reset.yml
 
@@ -19,18 +22,26 @@
   - name: Validate that all nodes are connected via fabric
     assert:
       that:
+        # Uses a custom filter that extracts all node names from the fabric and subtracts
+        # those node names from the nodes list. If this list is empty, all nodes have
+        # been used in the fabric.
         - nodes|nodes_not_in_fabric(fabric_infrastructure, fabric_customer)|length == 0
     tags: fabric_connected
 
   - name: Validate that each interface is only used once
     assert:
       that:
+        # Uses custom filters to first convert the fabric dictionaries into tuples, and then
+        # using set operations to create a list of only unique tuples. Compares the length of 
+        # the new list with the length of the original list of fabric dictionaries
         - (fabric_infrastructure + fabric_customer)|fabric_dict_to_tuples|unique_list|length == (fabric_infrastructure + fabric_customer)|length*2
     tags: interface_once
 
   - name: Validate that there is enough linknets for the fabric
     assert:
       that:
+        # Compares the length of the list of fabric dictionaries with the list of computed
+        # linknets.
         - (fabric_infrastructure|length + fabric_customer|length) == linknet.fabric_linknets|length
     tags: enough_linknets
 
@@ -46,6 +57,7 @@
   - name: Validate for identical services
     assert:
       that:
+        # Uses a custom filter to create a list of unique services, comparing the length of both.
         - VPNV4|length == VPNV4|count_unique_entries_in_list_of_dicts()
     tags: identical_services
 
@@ -54,3 +66,35 @@
       that:
         - nodes|nodes_is_fully_defined()
     tags: node_defined
+
+  - name: Validate that services are defined
+    assert:
+      that:
+        - services|length > 0
+    tags: services_defined
+
+  - name: Validate that at least one provider node is defined
+    assert:
+      that:
+        - isp_nodes|length > 1
+    tags: provider_defined
+
+  - name: Validate that the fabric for the infrastructure is defined
+    assert:
+      that:
+        - fabric_infrastructure > 0
+    tags: infrastructure_defined
+
+  - name: Validate that BGP is properly defined and at least one pair of neighbors is defined
+    assert:
+      that:
+        - mpbgp|length > 0
+        - mpbgp|bgp_is_fully_defined()
+    tags: bgp_defined
+
+  - name: Validate that there is at least one hardware defined and they are properly defined.
+    assert:
+      that:
+        - hardware|length > 0
+        - hardware|hardware_is_fully_defined()
+    tags: hardware_defined
