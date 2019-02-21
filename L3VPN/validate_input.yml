@@ -13,37 +13,16 @@
         path: "{{ report_path }}"
         state: directory
 
-    - name: Validate that all nodes have name, mgmt IP and loopback IP defined and non-empty
-      assert:
-        that:
-          - nodes|nodes_is_fully_defined()
-
-    - name: Validate that services are defined
+    - name: Validate that all vars are properly defined and not empty
       assert:
         that:
           - services|length > 0
-
-    - name: Validate that at least one provider node is defined
-      assert:
-        that:
           - isp_nodes|length > 1
-
-    - name: Validate that the fabric for the infrastructure is defined
-      assert:
-        that:
-          - fabric_infrastructure > 0
-
-    - name: Validate that BGP is properly defined and at least one pair of neighbors is defined
-      assert:
-        that:
-          - mpbgp|length > 0
-          - mpbgp|bgp_is_fully_defined()
-
-    - name: Validate that there is at least one hardware defined and they are properly defined.
-      assert:
-        that:
-          - hardware|length > 0
-          - hardware|hardware_is_fully_defined()
+          - fabric_infrastructure|length > 0 and fabric_infrastructure|fabric_is_fully_defined(hardware)
+          - fabric_customer|length > 0 and fabric_customer|fabric_is_fully_defined(hardware)
+          - mpbgp|length > 0 and mpbgp|bgp_is_fully_defined()
+          - hardware|length > 0 and hardware|hardware_is_fully_defined()
+          - nodes|nodes_is_fully_defined()
 
     - name: Validate that all nodes are connected via fabric
       assert:

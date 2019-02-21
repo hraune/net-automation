@@ -58,7 +58,7 @@
     assert:
       that:
         # Uses a custom filter to create a list of unique services, comparing the length of both.
-        - VPNV4|length == VPNV4|count_unique_entries_in_list_of_dicts()
+        - VPNV4|length == VPNV4|unique_entries_in_list_of_dicts()
     tags: identical_services
 
   - name: Validate that all nodes have name, mgmt IP and loopback IP defined and non-empty
