@@ -33,7 +33,7 @@
 
 ### IP vars is properly defined
 - linknet.size: {% if linknet.size is defined and 8 <= linknet.size <= 31 %}PASS{% else %}FAIL{% endif %}
-- linknet.fabric_linknets: {% if linknet.fabric_linknets|length > 0 and linknet.fabric_linknets|proper_linknets() %}
+- linknet.fabric_linknets: {% if linknet.fabric_linknets|length > 0 and linknet.fabric_linknets|proper_linknets() %}PASS{% else %}FAIL{% endif %}
 - linknet.available_subnets: {% if linknet.available_subnets|length > 0 and linknet.available_subnets|proper_linknets() %}PASS{% else %}FAIL{% endif %}
 
 ### Enough linknets for all fabric links
