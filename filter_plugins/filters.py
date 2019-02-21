@@ -117,9 +117,8 @@ def merge_lists_from_list_of_dict(arg,dict_key):
     return [i for item in arg for i in item[dict_key]]
 
 def unique_entries_in_list_of_dicts(arg):
-    '''Returns unique entries in a list of dictionaries'''
-    ret = list({item['name']:item for item in arg}.values())
-    return ret
+    '''Returns a list of unique entries in a list of dictionaries'''
+    return list({item['name']:item for item in arg}.values())
 
 def nodes_is_fully_defined(arg):
     '''Verifies that each node in a list of nodes has a name, mgmt IP 
