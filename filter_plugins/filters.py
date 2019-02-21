@@ -93,10 +93,10 @@ def unique_list(arg):
     not preserved!'''
     return list(set(arg))
 
-def fabric_dict_to_tuples(fab):
+def fabric_dict_to_tuples(arg):
     '''Converts a list of dictionaries into a list of tuples'''
-    ret = ([(item['right'],item['right_port']) for item in fab ] 
-            + [(item['left'],item['left_port']) for item in fab ])
+    ret = ([(item['right'],item['right_port']) for item in arg ] 
+            + [(item['left'],item['left_port']) for item in arg ])
     return ret
 
 def get_all_node_names(arg):
@@ -111,14 +111,14 @@ def subtract_list(x,y):
     '''Subtracts all elements in y from x and returns it as a list'''
     return list(set(x)-set(y))
 
-def merge_lists_from_list_of_dict(baselist,dict_key):
+def merge_lists_from_list_of_dict(arg,dict_key):
     '''Given a list of dictionaries with the same keys, returns a merged list
     of all the lists for a given key'''
-    return [i for item in baselist for i in item[dict_key]]
+    return [i for item in arg for i in item[dict_key]]
 
-def count_unique_entries_in_list_of_dicts(baselist):
+def count_unique_entries_in_list_of_dicts(arg):
     '''Counts unique entries in a list of dictionaries'''
-    ret = list({item['name']:item for item in baselist}.values())
+    ret = list({item['name']:item for item in arg}.values())
     return len(ret)
 
 def nodes_is_fully_defined(arg):
