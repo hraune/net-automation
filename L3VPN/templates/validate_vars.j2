@@ -2,7 +2,7 @@
 {# See testing/test_validate_input and the filter.py source for comments/docs. #}
 
 ## fabric.yml
-
+{#
 ### Fabric vars is properly defined
 - hardware: {% if hardware|length > 0 and hardware|hardware_is_fully_defined() %}PASS{% else %}FAIL{% endif %}
 - fabric_infrastructure: {% if fabric_infrastructure|length > 0 and fabric_infrastructure|fabric_is_fully_defined(hardware) %}PASS{% else %}FAIL{% endif %}
@@ -20,7 +20,7 @@
 
 ### Each interface is only used once
 - {% if (fabric_infrastructure + fabric_customer)|fabric_dict_to_tuples|unique_list|length == (fabric_infrastructure + fabric_customer)|length*2 %}PASS{% else %}FAIL{% endif %}
-
+#}
 ## services.yml
 
 ### Service vars is properly defined
