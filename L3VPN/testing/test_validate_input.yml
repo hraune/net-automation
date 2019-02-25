@@ -115,5 +115,5 @@
   - name: Validate that all vars are properly defined and not empty within a j2 template
     template:
       src: "{{ template_path }}/validate_vars.j2"
-      dest: "{{ report_path }}/vars_validation_report_{{ scenario }}.yml"
+      dest: "{{ report_path }}/vars_validation_report_{{ scenario }}.txt"
     tags: j2
