@@ -21,19 +21,19 @@ Empty list of VPNs for each provider node, no VRF defined on interfaces toward C
 One VPN is defined in **service.yml**, one pair of CE nodes is defined in **fabric.yml**.
 
 #### Expected result
-Working 1 VPN node.yml file generated
+Working node.yml file for 1 VPN is generated
 
-### 2 VPNs
-Two identical VPNs is defined in **service.yml**, two pairs of CE nodes is defined in **fabric.yml**.
+### 2 VPNs defined
+Two different VPNs is defined in **service.yml**, two pairs of CE nodes is defined in **fabric.yml**.
 
 #### Expected results
-Working 2 VPN node.yml file generated.
+Working VPN node.yml file for 2 VPNs is generated.
 
 ### 2 identical VPNs
 Two identical VPNs is defined in **service.yml**, two pairs of CE nodes is defined in **fabric.yml**.
 
 #### Expected result
-As if only *one* VPN is defined (ignore duplicates). Should give a warning.
+As if only *one* VPN is defined (ignore duplicates).
 
 ### 1 VPN and incomplete fabric
 One VPN is defined in **service.yml**, but only one CE node is defined in **fabric.yml**.
