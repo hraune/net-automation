@@ -1,4 +1,5 @@
 # Validates all the inputs in the various vars files that everything is based on.
+# See testing/test_validate_input.yml for all tests that are used.
 ---
 - hosts: localhost
   gather_facts: no
