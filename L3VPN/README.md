@@ -64,3 +64,6 @@ The network config is deployed with the **ios_config** module in Ansible, servic
 
 ### Config validation
 During config generation, a validation file for **napalm_validate** is also generated. It checks that all interfaces is configured with the correct IP, that BGP is running correctly, and that all devices in a VPN can ping each other. A report is finally generated in the configs device specific directory.
+
+### Logging
+When the var logging is set to *True* it will log the output of the following actions; all config deployment via the **ios_config** module, all validations done by the **napalm_validate** module. All this logging will be stored in the logging directory.
