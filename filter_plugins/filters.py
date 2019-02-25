@@ -155,7 +155,7 @@ def hardware_is_fully_defined(arg):
             return False
         if not ('mgmt_int' in hardware and hardware['mgmt_int'] != ''):
             return False
-        if not ('interface' in hardware and len(hardware['interfaces']) > 0):
+        if not ('interfaces' in hardware and len(hardware['interfaces']) > 0):
             return False
         if not ('devices' in hardware and len(hardware['devices']) > 0):
             return False
