@@ -39,8 +39,8 @@
 - {% if VPNV4|length == VPNV4|unique_entries_in_list_of_dicts()|length %}PASS{% else %}FAIL{% endif %}
 
 
-## ip_addresses.yml
 
+## ip_addresses.yml
 
 ### IP vars is properly defined
 - linknet.size: {% if linknet.size is defined and 8 <= linknet.size <= 31 %}PASS{% else %}FAIL{% endif %}
