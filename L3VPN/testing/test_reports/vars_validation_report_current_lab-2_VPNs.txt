@@ -1,0 +1,41 @@
+# Vars Validation Report
+
+## fabric.yml
+
+### Fabric vars is properly defined
+- hardware: PASS
+- fabric_infrastructure: PASS
+- fabric_customer: PASS
+- mpbgp: PASS
+- services: PASS
+- isp_nodes: PASS
+- nodes: PASS
+### Hardware is defined for all devices
+- PASS
+### All nodes are connected via fabric
+- PASS
+### Each interface is only used once
+- PASS
+
+
+## services.yml
+
+### Service vars is properly defined
+- VPNV4: PASS
+
+### No identical services
+- PASS
+
+
+## ip_addresses.yml
+
+### IP vars is properly defined
+- linknet.size: PASS
+- linknet.fabric_linknets: PASS
+- linknet.available_subnets: PASS
+
+### Enough linknets for all fabric links
+- PASS
+
+--
+2019-02-25 19:33:16

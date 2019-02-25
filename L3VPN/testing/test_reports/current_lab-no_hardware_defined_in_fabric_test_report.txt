@@ -1,0 +1,55 @@
+# Test Report for 'current_lab-no_hardware_defined_in_fabric'
+
+## Lint: PASS
+
+
+
+
+## Diff: FAIL
+
+20,25d19
+<       - name: GigabitEthernet3
+<         description: P1 management
+<         ip: 10.0.10.203/24
+<         state: active
+<       - name: GigabitEthernet4
+<         state: shutdown
+46,51d39
+<       - name: GigabitEthernet3
+<         description: PE1 management
+<         ip: 10.0.10.202/24
+<         state: active
+<       - name: GigabitEthernet4
+<         state: shutdown
+77,82d64
+<       - name: GigabitEthernet3
+<         description: PE2 management
+<         ip: 10.0.10.204/24
+<         state: active
+<       - name: GigabitEthernet4
+<         state: shutdown
+100,107d81
+<       - name: GigabitEthernet2
+<         state: shutdown
+<       - name: GigabitEthernet3
+<         description: CE1 management
+<         ip: 10.0.10.201/24
+<         state: active
+<       - name: GigabitEthernet4
+<         state: shutdown
+120,127d93
+<       - name: GigabitEthernet1
+<         state: shutdown
+<       - name: GigabitEthernet3
+<         description: CE2 management
+<         ip: 10.0.10.205/24
+<         state: active
+<       - name: GigabitEthernet4
+<         state: shutdown
+
+
+--
+Test run at 2019-02-17 14:27:30
+
+===============================================================================
+

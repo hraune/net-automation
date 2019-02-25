@@ -1,0 +1,31 @@
+# Test Report for 'current_lab-no_isp_nodes_defined_in_fabric'
+
+## Lint: FAIL
+output_nodes.yml
+  47:40     error    too many spaces before comma  (commas)
+  70:40     error    too many spaces before comma  (commas)
+
+## Diff: FAIL
+29,30c29
+<     bgp:
+<       - {neighbor: PE2, ip: 10.3.3.3, asn: 65001}
+---
+>     bgp: []
+47c46
+<     loopback: {ip: 10.1.1.1, ospf: {id: , area: 0}}
+---
+>     loopback: {ip: 10.1.1.1}
+52,53c51
+<     bgp:
+<       - {neighbor: PE1, ip: 10.1.1.1, asn: 65001}
+---
+>     bgp: []
+70c68
+<     loopback: {ip: 10.3.3.3, ospf: {id: , area: 0}}
+---
+>     loopback: {ip: 10.3.3.3}
+
+
+--
+Test run at 2019-02-13 21:57:24
+

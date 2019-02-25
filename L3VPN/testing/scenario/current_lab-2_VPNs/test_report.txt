@@ -1,0 +1,12 @@
+# Test Report for 'current_lab-2_VPNs'
+
+## Lint: PASS
+
+
+## Diff: PASS
+
+
+
+--
+Test run at 2019-02-13 21:57:20
+

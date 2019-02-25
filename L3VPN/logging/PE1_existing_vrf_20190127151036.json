@@ -1,0 +1,16 @@
+{
+    "changed": false,
+    "failed": false,
+    "stdout": [
+        "Name                             Default RD            Protocols   Interfaces\n  BLUE                             65001:2               ipv4        Gi4\n  MGMT                             64999:1               ipv4        Gi3\n  Pink                             65001:3               ipv4        \n  RED                              65001:1               ipv4        Gi2"
+    ],
+    "stdout_lines": [
+        [
+            "Name                             Default RD            Protocols   Interfaces",
+            "  BLUE                             65001:2               ipv4        Gi4",
+            "  MGMT                             64999:1               ipv4        Gi3",
+            "  Pink                             65001:3               ipv4        ",
+            "  RED                              65001:1               ipv4        Gi2"
+        ]
+    ]
+}

@@ -1,0 +1,14 @@
+# Test Report for 'current_lab-no_fabric_ip_addresses_defined'
+
+## Lint: FAIL
+output_nodes.yml
+  75:42     error    too many spaces before comma  (commas)
+  92:42     error    too many spaces before comma  (commas)
+
+## Diff: PASS
+
+
+
+--
+Test run at 2019-02-13 21:57:28
+

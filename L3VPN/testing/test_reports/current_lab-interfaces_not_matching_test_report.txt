@@ -1,0 +1,30 @@
+# Test Report for 'current_lab-interfaces_not_matching'
+
+## Lint: PASS
+
+
+
+
+## Diff: FAIL
+
+40,45d39
+<       - name: GigabitEthernet1
+<         description: To CE1;Gi1
+<         ip: 10.203.55.10/30
+<         state: active
+<         ospf: {id: 10, area: 0}
+<         vrf: RED
+73,78d66
+<       - name: GigabitEthernet2
+<         description: To CE2;Gi2
+<         ip: 10.203.55.13/30
+<         state: active
+<         ospf: {id: 10, area: 0}
+<         vrf: RED
+
+
+--
+Test run at 2019-02-17 14:27:33
+
+===============================================================================
+

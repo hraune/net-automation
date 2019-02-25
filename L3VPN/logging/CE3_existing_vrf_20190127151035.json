@@ -1,0 +1,13 @@
+{
+    "changed": false,
+    "failed": false,
+    "stdout": [
+        "Name                             Default RD            Protocols   Interfaces\n  MGMT                             64999:1               ipv4        Gi3"
+    ],
+    "stdout_lines": [
+        [
+            "Name                             Default RD            Protocols   Interfaces",
+            "  MGMT                             64999:1               ipv4        Gi3"
+        ]
+    ]
+}

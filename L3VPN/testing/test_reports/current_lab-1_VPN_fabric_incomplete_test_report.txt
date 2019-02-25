@@ -1,0 +1,82 @@
+# Test Report for 'current_lab-1_VPN_fabric_incomplete'
+
+## Lint: FAIL
+
+output_nodes.yml
+  75:42     error    too many spaces before comma  (commas)
+  92:42     error    too many spaces before comma  (commas)
+
+
+## Diff: FAIL
+
+10,11d9
+<       - name: GigabitEthernet1
+<         state: shutdown
+13c11,19
+<         state: shutdown
+---
+>         description: To PE1;Gi1
+>         ip: 10.203.55.2/30
+>         state: active
+>         ospf: {id: 1, area: 0}
+>       - name: GigabitEthernet1
+>         description: To PE2;Gi2
+>         ip: 10.203.55.5/30
+>         state: active
+>         ospf: {id: 1, area: 0}
+30c36,39
+<         state: shutdown
+---
+>         description: To P1;Gi2
+>         ip: 10.203.55.1/30
+>         state: active
+>         ospf: {id: 1, area: 0}
+32c41,45
+<         state: shutdown
+---
+>         description: To CE1;Gi1
+>         ip: 10.203.55.10/30
+>         state: active
+>         ospf: {id: 10, area: 0}
+>         vrf: RED
+38a52,56
+>     vpn:
+>       - name: RED
+>         rd: "65001:1"
+>         ospf: {'id': 10, 'area': 0}
+>         state: active
+66c84,87
+<         state: shutdown
+---
+>         description: To PE1;Gi2
+>         ip: 10.203.55.9/30
+>         state: active
+>         ospf: {id: 10, area: 0}
+75,92c96
+<     loopback: {ip: 172.16.1.1, ospf: {id: , area: 0}}
+<     provider: false
+< 
+<   - name: CE2
+<     mgmt: 10.0.10.205
+<     bgp: []
+<     interfaces:
+<       - name: GigabitEthernet1
+<         state: shutdown
+<       - name: GigabitEthernet2
+<         state: shutdown
+<       - name: GigabitEthernet3
+<         description: CE2 management
+<         ip: 10.0.10.205/24
+<         state: active
+<       - name: GigabitEthernet4
+<         state: shutdown
+<     loopback: {ip: 172.16.1.1, ospf: {id: , area: 0}}
+---
+>     loopback: {ip: 172.16.1.1, ospf: {id: 10, area: 0}}
+
+
+--
+Test run at 2019-02-17 14:27:31
+
+===============================================================================
+

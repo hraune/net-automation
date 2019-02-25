@@ -1,0 +1,36 @@
+# Test Report for 'current_lab-0_VPNs_defined'
+
+## Lint: PASS
+
+
+
+
+## Diff: FAIL
+
+45d44
+<         vrf: RED
+52,56c51
+<     vpn:
+<       - name: RED
+<         rd: "65001:1"
+<         ospf: {'id': 10, 'area': 0}
+<         state: active
+---
+>     vpn: []
+76d70
+<         vrf: RED
+83,87c77
+<     vpn:
+<       - name: RED
+<         rd: "65001:1"
+<         ospf: {'id': 10, 'area': 0}
+<         state: active
+---
+>     vpn: []
+
+
+--
+Test run at 2019-02-17 14:27:28
+
+===============================================================================
+
