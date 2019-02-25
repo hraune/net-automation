@@ -22,10 +22,10 @@
 - {% if (fabric_infrastructure + fabric_customer)|fabric_dict_to_tuples|unique_list|length == (fabric_infrastructure + fabric_customer)|length*2 %}PASS{% else %}FAIL{% endif %}
 
 ## services.yml
-{#
+
 ### Service vars is properly defined
 - VPNV4: {% if VPNV4|length > 0 and VPNV4|vpnv4_is_fully_defined() %}PASS{% else %}FAIL{% endif %}
-#}
+
 ### No identical services
 - {% if VPNV4|length == VPNV4|unique_entries_in_list_of_dicts()|length %}PASS{% else %}FAIL{% endif %}
 

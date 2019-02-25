@@ -217,7 +217,7 @@ def vpnv4_is_fully_defined(arg):
     '''Verifies that a list vpnv4 services is valid; valid route distinguisher,
     ospf ID, list of nodes and a state'''
     for vpn in arg:
-        if not  (vpn['name'] != '' and len(vpn['name'] <= 32)):
+        if not  (vpn['name'] != '' and len(vpn['name']) <= 32):
             return False
         if not (check_route_distinguisher(vpn['rd'])):
             return False
