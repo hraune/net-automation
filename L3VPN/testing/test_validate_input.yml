@@ -61,18 +61,15 @@
         - VPNV4|length == VPNV4|unique_entries_in_list_of_dicts()
     tags: identical_services
 
-  - name: Validate that all nodes have name, mgmt IP and loopback IP defined and non-empty
-    assert:
-      that:
-        - nodes|nodes_is_fully_defined()
-    tags: node_defined
-
   - name: Validate that services are defined
     assert:
       that:
         - services|length > 0
     tags: services_defined
 
+  # The following asserts check that vars is defined, and in most cases also checks
+  # that they are properly defined with custom filters. The filters checks that each
+  # entry follows the rules for that type (ie. got a name, using legal values etc.)
   - name: Validate that at least one provider node is defined
     assert:
       that:
@@ -82,7 +79,15 @@
   - name: Validate that the fabric for the infrastructure is defined
     assert:
       that:
-        - fabric_infrastructure > 0
+        - fabric_infrastructure|length > 0
+        - fabric_infrastructure|fabric_is_fully_defined(hardware)
+    tags: infrastructure_defined
+
+  - name: Validate that the fabric for the infrastructure is defined
+    assert:
+      that:
+        - fabric_customer|length > 0
+        - fabric_customer|fabric_is_fully_defined(hardware)
     tags: infrastructure_defined
 
   - name: Validate that BGP is properly defined and at least one pair of neighbors is defined
@@ -98,3 +103,16 @@
         - hardware|length > 0
         - hardware|hardware_is_fully_defined()
     tags: hardware_defined
+
+  - name: Validate that all nodes have name, mgmt IP and loopback IP defined and non-empty
+    assert:
+      that:
+        - nodes|length > 0
+        - nodes|nodes_is_fully_defined()
+    tags: node_defined
+
+  - name: Validate that all vars are properly defined and not empty within a j2 template
+    template:
+      src: "{{ template_path }}/validate_vars.j2"
+      dest: "{{ report_path }}/vars_validation_report_{{ '%Y%m%d%H%M%S'|strftime }}.yml"
+    tags: j2
