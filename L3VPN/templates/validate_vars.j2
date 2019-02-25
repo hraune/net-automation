@@ -25,7 +25,7 @@
 
 ### Service vars is properly defined
 - VPNV4: {% if VPNV4|length > 0 and VPNV4|vpnv4_is_fully_defined() %}PASS{% else %}FAIL{% endif %}
-
+#}
 ### No identical services
 - {% if VPNV4|length == VPNV4|unique_entries_in_list_of_dicts()|length %}PASS{% else %}FAIL{% endif %}
 
@@ -41,4 +41,3 @@
 
 --
 Test run at {{ '%Y-%m-%d %H:%M:%S' | strftime }}
-#}
