@@ -6,6 +6,7 @@
     # especially if testing for empty or non defined values.
     include_vars: 
       file: scenario/reset.yml
+    tags: test_setup
 
   - name: "Including variables for '{{ scenario }}'"
     include_vars: 
@@ -114,5 +115,5 @@
   - name: Validate that all vars are properly defined and not empty within a j2 template
     template:
       src: "{{ template_path }}/validate_vars.j2"
-      dest: "{{ report_path }}/vars_validation_report_{{ '%Y%m%d%H%M%S'|strftime }}.yml"
+      dest: "{{ report_path }}/vars_validation_report_{{ scenario }}.yml"
     tags: j2
