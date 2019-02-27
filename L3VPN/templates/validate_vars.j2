@@ -4,7 +4,7 @@
 ## fabric.yml
 
 ### Fabric vars is properly defined
-- hardware: {% if hardware|length > 0 and hardware|hardware_is_fully_defined() %}PASS{% else %}FAIL{% endif %}
+- hardware: {{ 'PASS' if hardware|length > 0 and hardware|hardware_is_fully_defined() else 'FAIL' }}
 
 - fabric_infrastructure: {% if fabric_infrastructure|length > 0 and fabric_infrastructure|fabric_is_fully_defined(hardware) %}PASS{% else %}FAIL{% endif %}
 
