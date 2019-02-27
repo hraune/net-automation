@@ -38,7 +38,7 @@
 ### IP vars is properly defined
 - linknet.size: {{ 'PASS' if linknet.size is defined and 8 <= linknet.size <= 31 else 'FAIL' }}
 - linknet.fabric_linknets: {{ 'PASS' if linknet.fabric_linknets|length > 0 and linknet.fabric_linknets|proper_linknets() else 'FAIL' }}
-- linknet.available_subnets: {{ 'PASS' if linknet.available_subnets|length > 0 and linknet.available_subnets|proper_linknets() 'FAIL' }}
+- linknet.available_subnets: {{ 'PASS' if linknet.available_subnets|length > 0 and linknet.available_subnets|proper_linknets() else 'FAIL' }}
 
 ### Enough linknets for all fabric links
 - {{ 'PASS' if (fabric_infrastructure|length + fabric_customer|length) == linknet.fabric_linknets|length else 'FAIL' }}
