@@ -9,7 +9,7 @@
 - fabric_customer: {{ 'PASS' if fabric_customer|length > 0 and fabric_customer|fabric_is_fully_defined(hardware) else 'FAIL' }}
 - mpbgp: {{ 'PASS' if mpbgp|length > 0 and mpbgp|bgp_is_fully_defined() else 'FAIL' }}
 - services: {{ 'PASS' if services|length > 0 else 'FAIL' }}
-- isp_nodes: {{ if isp_nodes|length > 1 else 'FAIL' }}
+- isp_nodes: {{ 'PASS' if isp_nodes|length > 1 else 'FAIL' }}
 - nodes: {{ 'PASS' if nodes|length > 0 and nodes|nodes_is_fully_defined() else 'FAIL' }}
 
 ### Hardware is defined for all devices
